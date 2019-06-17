@@ -1,0 +1,12 @@
+<% include modules/_header %>
+
+<h3>Submit a new campground</h3>
+<form action="/campgrounds" method="POST">
+    <input type="text" name="newName" placeholder="Enter name of new campsite..." id="">
+    <input type="text" name="newImage" placeholder="Enter url of new image..." id="">
+    <button>Submit</button>
+</form>
+
+<a href="/campgrounds">Go Back</a>
+
+<% include modules/_footer %>
