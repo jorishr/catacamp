@@ -1,0 +1,32 @@
+<% include modules/_header %>
+<div class="container">
+    <a href="/">HOME</a>
+    <header class="jumbotron text-center">
+        <h1><strong>Welcome to Yelp Camp</strong></h1>
+        <h3>Check out these amazing campgrounds from all around the world!</h3>
+        
+        <p>Want to share a fantastic campsite that is no listed yet?</p>
+        <a  class="btn btn-large btn-primary" 
+            href="/campgrounds/new">
+            submit
+        </a>
+    </header>
+    <div class="row text-center">
+        <!-- <h3>Our most popular campgrounds</h3> -->
+        <% campgrounds.forEach(campground => { %>
+            <div class="col-md-3 col-sm-6">
+                <div class="card">
+                    <img    class="card-img-top"
+                            src="/<%= campground.image %>" alt="Image of the campground">
+                    <div class="card-body">
+                        <h4 class="card-title"><%= campground.name %></h4>
+                    </div>
+                    <a  href="/campgrounds/<%= campground._id %>"
+                        class="btn btn-primary">More info...</a>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+
+<% include modules/_footer %>

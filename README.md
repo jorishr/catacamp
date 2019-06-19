@@ -8,3 +8,5 @@ Customizations:
 
 -   Modified the file structure to seperate configuration files from the app 
     files. This requires the use of PATH in the EXPRESS setup. 
+
+-   Used a local install of bootstrap v4 instead of the CDN version 3

@@ -49,7 +49,7 @@ function bsReload(cb) {
 };
 
 function watchFiles(){
-    watch(styleFiles, stylesTasks.scssTask);
+    watch(styleFiles, series(stylesTasks.scssTask, bsReload));
     watch(htmlFiles, bsReload);
 };
 

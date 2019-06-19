@@ -1,12 +1,26 @@
 <% include modules/_header %>
 
-<h3>Submit a new campground</h3>
-<form action="/campgrounds" method="POST">
-    <input type="text" name="newName" placeholder="Enter name of new campsite..." id="">
-    <input type="text" name="newImage" placeholder="Enter url of new image..." id="">
-    <button>Submit</button>
-</form>
-
-<a href="/campgrounds">Go Back</a>
+<div class="container">
+    <h3>Submit a new campground</h3>
+    <div class="row">
+        <form action="/campgrounds" method="POST">
+            <div class="form-group">
+                <input  class="form-control" type="text" name="newName" 
+                placeholder="Enter name of new campsite..." id="">
+            </div>
+            <div class="form-group">
+                <input  class="form-control" type="text" name="newImage"
+                placeholder="Enter url of new image..." id="">
+            </div>
+            <div class="form-group">
+                <input  class="form-control" type="text" name="newDescription"
+                        placeholder="Enter a desription of the campground..." id="">
+            </div>
+            <button class="btn btn-lg btn-default btn-block btn-primary">Submit</button>
+        </form>
+        
+    </div>
+    <a href="/campgrounds">Go Back</a>
+</div>
 
 <% include modules/_footer %>
