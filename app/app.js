@@ -4,7 +4,12 @@ const   path        = require('path'),
         port        = 3000,
         bodyParser  = require('body-parser'),
         mongoose    = require('mongoose'),
-        db          = mongoose.connection;    
+        db          = mongoose.connection,
+        seedDB      = require('./seeds'),
+        Campground  = require('./models/campground'),
+        Comment     = require('./models/comments');
+
+
        
 //  BASIC EXPRESS/MONGO CONFIG
 
@@ -14,31 +19,11 @@ db.on('error', console.error.bind(console, 'connection error:'));
 app.listen(port, () => console.log(`Express Server is listening on port ${port}`));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}));
+
+seedDB();   //  new ID's are generated on server restart
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
-//  ============
-//  SCHEMA SETUP
-//  ============
-
-let campgroundSchema = new mongoose.Schema({
-    name: String,
-        image: String,
-        description: String
-});
-
-let Campground = mongoose.model('Campground', campgroundSchema);
-
-/* Campground.create(
-    {name: 'Salmon Creek', image: 'images/2164766085.png', description: 'Test'},
-    (err, savedData) => {
-            //  the second argument is the data object written to the db
-            //  name it what you want
-        if (err) {return console.error(err);}
-        else {return console.log('Succesfully saved:\n', savedData)}
-    }
-); */
-
 
 //  ========
 //  ROUTES
@@ -66,7 +51,7 @@ app.get('/campgrounds', (req, res) => {
         if (err) {return console.error(err);}
             else {
                     //  pass the retrieved the data to the ejs file
-                res.render('index', {campgrounds:allCampgrounds}) 
+                res.render('campgrounds/index', {campgrounds:allCampgrounds}) 
                 return console.log('Retrieved Succesfully from db:\n', allCampgrounds)
             }
     })
@@ -93,7 +78,7 @@ app.post('/campgrounds', (req, res) => {
 //  NEW ROUTE
 
 app.get('/campgrounds/new', (req, res) => {
-    res.render('new-campground');
+    res.render('campgrounds/new-campground');
 });
 
 //  SHOW ROUTE
@@ -101,10 +86,47 @@ app.get('/campgrounds/new', (req, res) => {
 //  be considered a /:id
 
 app.get('/campgrounds/:id', (req, res) => {
-    Campground.findById(req.params.id, (err, foundData) => {
+        //  use populate to transform associated comments id into commentObject 
+    Campground.findById(req.params.id).populate('comments').exec((err, foundData) => {
         if(err){console.log('Error', err)}
         else {
-            res.render('show-campground', {campground: foundData});
+            res.render('campgrounds/show-campground', {campground: foundData});
         }
     });
 })
+
+//  ===============
+//  COMMENTS ROUTE
+//  ===============
+
+app.get('/campgrounds/:id/comments/new', (req, res) => {
+    Campground.findById(req.params.id, (err, foundData) => {
+        if(err){console.log('Error: ', err)}
+            else {
+                res.render('comments/new-comment', {campground: foundData});
+            };
+    });
+});
+
+app.post('/campgrounds/:id/comments', (req, res) => {
+    //  lookup campground id
+    Campground.findById(req.params.id, (err, foundData) => {
+        if (err){console.log('Error: ', err)}
+            else {
+                console.log('Found in DB: \n'. foundData);
+                //  store new comment in db
+                Comment.create(req.body.comment, (err, savedComment) => {
+                    if(err){console.log('Error: ', err)}
+                        else {
+                            {console.log('Saved comment in DB: \n', savedComment)}
+                            //  associate comment to campground 
+                            foundData.comments.push(savedComment);
+                            foundData.save();   //  comments array in foundData(=campground:id)
+                            //  redirect
+                            res.redirect(`/campgrounds/${req.params.id}`);
+                                        //  or id also stored in foundData._id
+                        }
+                })
+            }
+    })
+});

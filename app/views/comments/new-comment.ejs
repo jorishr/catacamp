@@ -1,0 +1,22 @@
+<% include ../modules/_header %>
+
+<div class="container">
+    <h3>Add a comment to campground: <%= campground.name %> </h3>
+    <div class="row">
+        <form action="/campgrounds/<%= campground._id %>/comments" method="POST">
+            <div class="form-group">
+                <input  class="form-control" type="text" name="comment[author]"
+                placeholder="Enter your name..." id="">
+            </div>
+            <div class="form-group">
+                <input  class="form-control" type="text" name="comment[text]" 
+                placeholder="Write your comment here..." id="">
+            </div>
+            <button class="btn btn-lg btn-default btn-block btn-primary">Submit</button>
+        </form>
+        
+    </div>
+    <a href="/campgrounds/<%= campground._id %>">Go Back</a>
+</div>
+
+<% include ../modules/_footer %>

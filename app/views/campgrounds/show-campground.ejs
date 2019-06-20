@@ -1,0 +1,15 @@
+<% include ../modules/_header %>
+
+<h1>All about Campground <%= campground.name %></h1>
+<p><%= campground.description %></p>
+<img src="/<%= campground.image %>" alt="<%= campground.name %>">
+    
+<% campground.comments.forEach((comment) => { %>
+    <p> <strong><%= comment.author %></strong> wrote:
+        <%= comment.text %></p> 
+<% }); %>
+<p>
+        <a  class="btn btn-success"
+            href="/campgrounds/<%= campground._id %>/comments/new">Add new comment</a>
+    </p>
+<% include ../modules/_footer %>

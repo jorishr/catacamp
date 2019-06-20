@@ -1,11 +1,11 @@
-const {src, dest, series} = require('gulp'),
-    autoprefixer = require('autoprefixer'),
-    sass = require('gulp-sass'),
-    postcss = require('gulp-postcss');
+const   {src, dest}     = require('gulp'),
+        autoprefixer    = require('autoprefixer'),
+        sass            = require('gulp-sass'),
+        postcss         = require('gulp-postcss');
     
 sass.compiler = require('node-sass');
 
-let styleFiles = './app/public/styles/**/*.scss';
+// let styleFiles = './app/public/styles/**/*.scss';
 
 //  scss styles task
 
