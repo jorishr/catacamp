@@ -5,12 +5,12 @@ const   {src, dest}     = require('gulp'),
     
 sass.compiler = require('node-sass');
 
-// let styleFiles = './app/public/styles/**/*.scss';
+let styleFiles = './app/public/styles/**/*.scss';
 
 //  scss styles task
 
 function scssStyles(){
-    return src('./app/public/styles/main.scss')
+    return src(styleFiles)
         .pipe(sass().on('error', sass.logError))
         .pipe(postcss([autoprefixer]))
         .pipe(dest('./app/public'))

@@ -39,7 +39,7 @@ app.set('view engine', 'ejs');
 //  DESTROY         /campgrounds/:id        DELETE  delete in DB, then redirect
 
 app.get('/', (req, res) => {
-    res.render('home')
+    res.render('landing')
 });
 
 // INDEX ROUTE
