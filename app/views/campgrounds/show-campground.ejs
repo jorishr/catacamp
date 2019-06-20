@@ -1,15 +1,53 @@
 <% include ../modules/_header %>
+<div class="row">
+    <div class="col-md-3">
+        <p class="lead">Yelp Camp</p>
+        <div class="list-group">
+            <li class="list-group-item active">Info1</li>
+            <li class="list-group-item">Info2</li>
+            <li class="list-group-item">Info3</li>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card mb-3">
+            <h3 class="card-header text-muted""><%= campground.name %></h3>
+            <div class="card-body">
+                <img    src="/<%= campground.image %>" alt="<%= campground.name %>"
+                        class="card-img-top">
+                <p class="float-right">from 100 EUR/night</p> 
+                <h4 class="card-title">About campground <%= campground.name %></h4>
+                <p class="card-text"><%= campground.description %></p>
+            </div>
+            <!-- <p class="card-footer text-muted text-center">Listed on Yelp Camp since <%= campground.created %></p> -->
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="text-right">
+                    <a  class="btn btn-success"
+                        href="/campgrounds/<%= campground._id %>/comments/new">
+                        Add new comment</a>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <% campground.comments.forEach((comment) => { %>
+                    <div class="col-md-12 mb-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-left">
+                                    <p class="card-title"><%= comment.author %></p>
+                                    <p class="text"><%= comment.text %></p>
+                                </div>
+                                <div class="float-right">
+                                    <p>Created 10 days ago</p>
+                                </div>
+                            </div>
+                        </div>                       
+                    </div>
+                <% }); %> 
+            </div>
+        </div>
+    </div>
+</div> 
 
-<h1>All about Campground <%= campground.name %></h1>
-<p><%= campground.description %></p>
-<img src="/<%= campground.image %>" alt="<%= campground.name %>">
-    
-<% campground.comments.forEach((comment) => { %>
-    <p> <strong><%= comment.author %></strong> wrote:
-        <%= comment.text %></p> 
-<% }); %>
-<p>
-        <a  class="btn btn-success"
-            href="/campgrounds/<%= campground._id %>/comments/new">Add new comment</a>
-    </p>
 <% include ../modules/_footer %>
