@@ -14,7 +14,6 @@ const   path            = require('path'),
         commentRoutes       = require('./routes/comments'),
         campgroundRoutes    = require('./routes/campgrounds');
 
-      
 //  BASIC EXPRESS/MONGO CONFIG
 
 mongoose.connect('mongodb://localhost/yelp-camp', {useNewUrlParser: true});
@@ -24,7 +23,9 @@ app.listen(port, () => console.log(`Express Server is listening on port ${port}`
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}));
 
-seedDB();   //  new ID's are generated on server restart
+//  new ID's are generated on server restart
+//  seedDB();
+//  no longer needed once user data association is setup   
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

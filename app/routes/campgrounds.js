@@ -1,6 +1,7 @@
-const   express = require('express'),
-        router  = express.Router(),
-        Campground = require('../models/campground');
+const   express     = require('express'),
+        router      = express.Router(),
+        Campground  = require('../models/campground'),
+        middleware  = require('../middleware');
         
 //  INDEX ROUTE
 
@@ -21,16 +22,18 @@ router.get('/', (req, res) => {
 
 // CREATE ROUTE
 
-router.post('/', (req, res) => {
+router.post('/', middleware.isLoggedIn, (req, res) => {
     // get data from form at page 'new-campground' and add to campgrounds array
+    console.log(req.user)
     let newName = req.body.newName;
     let newImage = req.body.newImage;
     let newDescription = req.body.newDescription;
-    let newCampground = {name: newName, image: newImage, description: newDescription};
+    let author = {id: req.user._id, username: req.user.username}
+    let newCampground = {name: newName, image: newImage, description: newDescription, author: author};
     Campground.create(newCampground, (err, newDataEntry) => {
         if(err) {return console.log(err);}
         else {
-                // redirect to campgrounds page
+            // redirect to campgrounds page
             res.redirect('campgrounds');
             console.log('Succesfully added to DB:\n', newDataEntry);
         }
@@ -39,7 +42,7 @@ router.post('/', (req, res) => {
 
 //  NEW ROUTE
 
-router.get('/new', (req, res) => {
+router.get('/new', middleware.isLoggedIn, (req, res) => {
     res.render('campgrounds/new-campground');
 });
 

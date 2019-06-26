@@ -7,8 +7,15 @@ let campgroundSchema = new mongoose.Schema({
     name: String,
     image: String,
     description: String,
+    author: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        username: String
+    },
     comments: [
-        {       //  data association, see seeds.js
+        {   //  data association, see seeds.js
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Comment'
         }
