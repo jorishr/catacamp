@@ -7,10 +7,13 @@ const   path        = require('path'),
         db          = mongoose.connection,
         seedDB      = require('./seeds'),
         Campground  = require('./models/campground'),
-        Comment     = require('./models/comments');
+        Comment     = require('./models/comments'),
+        passport    = require('passport'),
+        LocalStrategy = require('passport-local'),
+        expressSession = require('express-session'),
+        User        = require('./models/user');
 
-
-       
+      
 //  BASIC EXPRESS/MONGO CONFIG
 
 mongoose.connect('mongodb://localhost/yelp-camp', {useNewUrlParser: true});
@@ -24,6 +27,30 @@ seedDB();   //  new ID's are generated on server restart
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+//  ===============
+//  PASSPORT CONFIG
+//  ===============
+
+app.use(expressSession({
+    secret: 'This is a secret',
+    saveUninitialized: false,
+    resave: false
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+//  make currentUser object available on all routes
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
+});
+
 
 //  ========
 //  ROUTES
@@ -51,7 +78,9 @@ app.get('/campgrounds', (req, res) => {
         if (err) {return console.error(err);}
             else {
                     //  pass the retrieved the data to the ejs file
-                res.render('campgrounds/index', {campgrounds:allCampgrounds}) 
+                    //  if the user is not logged in, req.user = undefined
+                    //  when logged in PassportJs adds session data to request
+                res.render('campgrounds/index', {campgrounds: allCampgrounds, currentUser: req.user}) 
                 return console.log('Retrieved Succesfully from db:\n', allCampgrounds)
             }
     })
@@ -99,7 +128,7 @@ app.get('/campgrounds/:id', (req, res) => {
 //  COMMENTS ROUTE
 //  ===============
 
-app.get('/campgrounds/:id/comments/new', (req, res) => {
+app.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
     Campground.findById(req.params.id, (err, foundData) => {
         if(err){console.log('Error: ', err)}
             else {
@@ -108,7 +137,7 @@ app.get('/campgrounds/:id/comments/new', (req, res) => {
     });
 });
 
-app.post('/campgrounds/:id/comments', (req, res) => {
+app.post('/campgrounds/:id/comments', isLoggedIn, (req, res) => {
     //  lookup campground id
     Campground.findById(req.params.id, (err, foundData) => {
         if (err){console.log('Error: ', err)}
@@ -130,3 +159,53 @@ app.post('/campgrounds/:id/comments', (req, res) => {
             }
     })
 });
+//  ===============
+//  AUTH ROUTE
+//  ===============
+
+app.get('/register', (req, res) => {
+    res.render('register');
+});
+
+app.post('/register', (req, res, next) => {
+    console.log('Starting user registration!');
+    User.register(new User({username: req.body.username}), req.body.password, (err) => {
+        if(err){
+            console.log('Error while registering new user', err);
+            return res.render('register');  //  if user already exists
+        }
+        console.log('User registered successfully!');
+        //  auto-login after registration and redirect
+        passport.authenticate('local')(req, res, function(){
+            console.log('User logged-in successfully!');
+            res.redirect('/campgrounds');
+        })
+
+    });
+});
+
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/campgrounds',
+    failureRedirect: '/login',
+}), 
+    (req, res, next) => {
+});
+
+app.get('/logout', (req, res) => {
+    req.logout();
+    console.log('User logout success!');
+    res.redirect('/');
+});
+
+//  custom middleware: check if user is logged in
+
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    };
+    res.redirect('/login');
+};
