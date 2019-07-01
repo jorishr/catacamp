@@ -1,7 +1,9 @@
 const   express     = require('express'),
         router      = express.Router({mergeParams: true}),  
-            //  important merge the params from campground and comments
-            //  without it the ID will not be found
+            /*  important; merge the params from campground and comments
+                without it the parameter ID for campgrounds will not be 
+                found when urls are shortened. mergeParams makes sure the 
+                camprgound ID is accesible here in the comment routes. */ 
         Campground  = require('../models/campground'),
         Comment     = require('../models/comments'),
         middleware  = require('../middleware');

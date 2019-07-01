@@ -60,4 +60,43 @@ router.get('/:id', (req, res) => {
     });
 });
 
+//  EDIT ROUTE
+
+router.get('/:id/edit', middleware.checkOwnership, (req, res) => {
+    Campground.findById(req.params.id, (err, foundData) => {
+        if(err){res.redirect('/camprounds')}
+            else {
+                res.render('campgrounds/edit-campground', {campground: foundData});
+            }
+    })
+});
+
+//  UPDATE ROUTE
+
+router.put('/:id', middleware.checkOwnership, (req, res) => {
+    Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, updatedData) => {
+        if(err){
+            console.log('Error while updating: ', err);
+            res.redirect('/campgrounds');
+        } else {
+            res.redirect(`/campgrounds/${req.params.id}`);
+        };
+    });
+});
+
+//  DESTROY ROUTE
+
+router.delete('/:id', middleware.checkOwnership, (req, res) => {
+    Campground.findByIdAndDelete(req.params.id, (err) => {
+        if(err){
+            console.log('Error while deleting:\n', err);
+            res.redirect(`/campgrounds/${req.params.id}`);
+        } else {
+            console.log(`Succesfully deleted campground`);
+            res.redirect('/campgrounds');
+        };
+    });
+});
+
+
 module.exports = router;

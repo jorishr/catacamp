@@ -17,6 +17,10 @@ textarea {
 	width: 100%;
 }
 
+.deleteForm {
+    display: inline-block;
+}
+
 // issue: bootstrap v4 row causes horizontal sroll of 15px
 .row {
     margin-left: 0px;

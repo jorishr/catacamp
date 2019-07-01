@@ -5,6 +5,7 @@ const   path            = require('path'),
         bodyParser      = require('body-parser'),
         mongoose        = require('mongoose'),
         db              = mongoose.connection,
+        methodOverride  = require('method-override'),
         seedDB          = require('./seeds'),
         passport        = require('passport'),
         LocalStrategy   = require('passport-local'),
@@ -21,6 +22,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 app.listen(port, () => console.log(`Express Server is listening on port ${port}`));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({extended: true}));
 
 //  new ID's are generated on server restart

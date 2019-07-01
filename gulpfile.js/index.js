@@ -14,7 +14,7 @@ function startNodemon (cb) {
         // nodemon our expressjs server
         script: './app/app.js',
         // watch core server file(s) that require server restart on change
-        watch: ['./app/app.js']
+        watch: ['./app/**/*.js']
     })
     .on('start', function onStart() {
         // ensure start only got called once

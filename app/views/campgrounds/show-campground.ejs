@@ -18,6 +18,18 @@
                 <h4 class="card-title pb-2">About campground <%= campground.name %></h4>
                 <p class="card-text"><%= campground.description %></p>
                 <p class="card-text"><em>Submitted by <%= campground.author.username %></em></p>
+                <% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
+                    <!--    
+                            if not logged-in -> currentUser undefined AND matching ids 
+                            for currentUser see passportjs config  
+                    -->
+                    <a  href="/campgrounds/<%= campground._id %>/edit" 
+                        class="btn btn-warning btn-sm">Edit</a>
+                    <form   action="/campgrounds/<%= campground._id %>?_method=DELETE" 
+                            method="post" class="deleteForm">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                <% } %>
             </div>
         </div>
         <div class="card pb-0">
