@@ -6,11 +6,11 @@ const mongoose = require('mongoose');
 let commentSchema = new mongoose.Schema({
     text: String,
     author: {
-        _id: {
+        id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
             //  each request now has a user object: req.user
-            //  with two properties: req.user.username and req.user.id        
+            //  with two properties: req.user.username and req.user._id        
         },
         username: String
     }

@@ -46,4 +46,49 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
     })
 });
 
+//  edit comment route
+
+router.get('/:comment_id/edit', middleware.checkCommentOwnership, (req, res) => {
+    Campground.findById(req.params.id, (err, foundData) => {
+        if(err){
+            console.log('Error looking up data in db: \n', err);
+            res.redirect('back');
+        } else {
+            Comment.findById(req.params.comment_id, (err, foundCommentData) => {
+                if(err){
+                    console.log('Error looking up comment data:\n', err);
+                    res.redirect('back');
+                } else {
+                    res.render('comments/edit-comment', {campground: foundData, comment: foundCommentData});
+                };
+            });
+        };
+    });
+})
+//  update comment route
+
+router.put('/:comment_id', middleware.checkCommentOwnership, (req, res) => {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
+        if(err){
+            console.log('Error updating the db:\n', err);
+            res.redirect('back');
+        } else {
+            res.redirect(`/campgrounds/${req.params.id}`);
+        }
+    });
+});
+
+//  delete comment route
+
+router.delete('/:comment_id', middleware.checkCommentOwnership, (req, res) => {
+    Comment.findByIdAndRemove(req.params.comment_id, (err) => {
+        if(err){
+            console.log('Error while deleting:\n', err);
+            res.redirect('back');
+        } else {
+            res.redirect(`/campgrounds/${req.params.id}`);
+            console.log('Succesfully deleted comment');
+        };
+    });
+});
 module.exports = router;

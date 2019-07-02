@@ -62,7 +62,7 @@ router.get('/:id', (req, res) => {
 
 //  EDIT ROUTE
 
-router.get('/:id/edit', middleware.checkOwnership, (req, res) => {
+router.get('/:id/edit', middleware.checkCampgroundOwnership, (req, res) => {
     Campground.findById(req.params.id, (err, foundData) => {
         if(err){res.redirect('/camprounds')}
             else {
@@ -73,7 +73,7 @@ router.get('/:id/edit', middleware.checkOwnership, (req, res) => {
 
 //  UPDATE ROUTE
 
-router.put('/:id', middleware.checkOwnership, (req, res) => {
+router.put('/:id', middleware.checkCampgroundOwnership, (req, res) => {
     Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, updatedData) => {
         if(err){
             console.log('Error while updating: ', err);
@@ -86,7 +86,7 @@ router.put('/:id', middleware.checkOwnership, (req, res) => {
 
 //  DESTROY ROUTE
 
-router.delete('/:id', middleware.checkOwnership, (req, res) => {
+router.delete('/:id', middleware.checkCampgroundOwnership, (req, res) => {
     Campground.findByIdAndDelete(req.params.id, (err) => {
         if(err){
             console.log('Error while deleting:\n', err);
