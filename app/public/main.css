@@ -22,7 +22,11 @@ textarea {
 
 .campgrounds-index {
   margin-left: -15px;
-}
+  margin-right: -15px; }
+
+#map {
+  height: 400px;
+  width: 100%; }
 
 /*  ==================== 
     sticky footer styles

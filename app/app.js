@@ -1,10 +1,12 @@
+require('dotenv').config({ debug: process.env.DEBUG });
+
 const   path            = require('path'),
         express         = require('express'),
         app             = express(),
-        port            = 3000,
         bodyParser      = require('body-parser'),
         mongoose        = require('mongoose'),
         db              = mongoose.connection,
+        port            = process.env.DB_PORT,
         methodOverride  = require('method-override'),
         flash           = require('connect-flash'),
         seedDB          = require('./seeds'),
@@ -17,11 +19,11 @@ const   path            = require('path'),
         campgroundRoutes    = require('./routes/campgrounds');
 
 //  BASIC EXPRESS/MONGO CONFIG
-
-mongoose.connect('mongodb://localhost/yelp-camp', {useNewUrlParser: true});
+mongoose.connect(process.env.DB_CONN, {useNewUrlParser: true});
 db.on('error', console.error.bind(console, 'connection error:'));
 
 app.listen(port, () => console.log(`Express Server is listening on port ${port}`));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -34,12 +36,15 @@ app.use(flash());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+//  make variable moment available in all view files 
+app.locals.moment = require('moment');  
+
 //  ===============
 //  PASSPORT CONFIG
 //  ===============
 
 app.use(expressSession({
-    secret: 'This is a secret',
+    secret: process.env.EXPRESS_SECRET,
     saveUninitialized: false,
     resave: false
 }))
