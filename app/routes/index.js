@@ -19,7 +19,7 @@ router.get('/register', (req, res) => {
 
 router.post('/register', (req, res, next) => {
     console.log('Starting user registration!');
-    User.register(new User({username: req.body.username}), req.body.password, (err) => {
+    User.register(new User({username: req.body.username, isAdmin: false}), req.body.password, (err) => {
         if(err){
             console.log('Error while registering new user', err);
             return res.render('register', {'error': err.message});

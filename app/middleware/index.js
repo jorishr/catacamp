@@ -18,7 +18,7 @@ middlewareObj.checkCampgroundOwnership = function (req, res , next){
                 req.flash('error', 'No corresponding data found in the database!');
                 res.redirect('/campgrounds');
             } else {     
-                if(foundData.author.id.equals(req.user._id)){
+                if(foundData.author.id.equals(req.user._id) || req.user.isAdmin){
                     //  the first one is a mongoose object, the second a string
                     //  use the mongoose method instead if standard ===
                     next();
@@ -41,7 +41,7 @@ middlewareObj.checkCommentOwnership = function (req, res , next){
                 req.flash('error', 'No corresponding comment found in the database!');
                 res.redirect('back');
             } else {
-                if(foundCommentData.author.id.equals(req.user._id)){
+                if(foundCommentData.author.id.equals(req.user._id) || req.user.isAdmin){
                     //  the first one is a mongoose object, the second a string
                     //  use the mongoose method instead if standard ===
                     next();
