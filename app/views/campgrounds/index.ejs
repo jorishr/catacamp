@@ -1,6 +1,5 @@
 <% include ../modules/_header %>
-<div class="wrapper">
-
+<div class="container">
 
     <header class="jumbotron text-center">
         <h1><i class="fas fa-campground"></i></span><strong>Welcome to Yelp Camp</strong></h1>
@@ -12,8 +11,7 @@
             submit
         </a>
     </header>
-    <div class="row text-center">
-        <!-- <h3>Our most popular campgrounds</h3> -->
+    <div class="row campgrounds-index text-center">
         <% campgrounds.forEach(campground => { %>
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card">

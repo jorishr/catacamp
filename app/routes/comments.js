@@ -38,6 +38,7 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
                             foundData.comments.push(savedComment);
                             foundData.save();   //  comments array in foundData(=campground:id)
                             //  redirect
+                            req.flash('success', 'New comment added!');
                             res.redirect(`/campgrounds/${req.params.id}`);
                                         //  or id also stored in foundData._id
                         }
@@ -73,6 +74,7 @@ router.put('/:comment_id', middleware.checkCommentOwnership, (req, res) => {
             console.log('Error updating the db:\n', err);
             res.redirect('back');
         } else {
+            req.flash('success', 'Comment succesfully updated!');
             res.redirect(`/campgrounds/${req.params.id}`);
         }
     });
@@ -86,6 +88,7 @@ router.delete('/:comment_id', middleware.checkCommentOwnership, (req, res) => {
             console.log('Error while deleting:\n', err);
             res.redirect('back');
         } else {
+            req.flash('success', 'Comment succesfully deleted!');
             res.redirect(`/campgrounds/${req.params.id}`);
             console.log('Succesfully deleted comment');
         };

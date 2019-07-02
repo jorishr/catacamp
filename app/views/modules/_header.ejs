@@ -23,7 +23,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md">
-        <a class="navbar-brand" href="/">Yelp Camp</a>
+        <a class="navbar-brand" href="/campgrounds">Yelp Camp</a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <% if(!currentUser) { %>
@@ -40,3 +40,16 @@
             </ul>
         </div>
     </nav>
+    <div class="container">
+        <% if(error && error.length > 0) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+        <% if(success && success.length > 0) { %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+        <% } %>
+    </div>
+

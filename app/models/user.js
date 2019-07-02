@@ -6,7 +6,14 @@ let UserSchema = new mongoose.Schema({
     password: String
 });
 
-UserSchema.plugin(passportLocalMongoose);
+let options = {
+    errorMessages: {
+        IncorrectPasswordError: 'Password is incorrect',
+        IncorrectUsernameError: 'Username is incorrect or does not exist'
+    }
+};
+
+UserSchema.plugin(passportLocalMongoose, options);
 
 let User = mongoose.model('User', UserSchema);
 

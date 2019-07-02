@@ -6,6 +6,7 @@ const   path            = require('path'),
         mongoose        = require('mongoose'),
         db              = mongoose.connection,
         methodOverride  = require('method-override'),
+        flash           = require('connect-flash'),
         seedDB          = require('./seeds'),
         passport        = require('passport'),
         LocalStrategy   = require('passport-local'),
@@ -24,6 +25,7 @@ app.listen(port, () => console.log(`Express Server is listening on port ${port}`
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(flash());
 
 //  new ID's are generated on server restart
 //  seedDB();
@@ -49,10 +51,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//  make currentUser object available on all routes
+//  make currentUser object and flash messages available on all routes
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash('error');
+    res.locals.success = req.flash('success');
     next();
 });
 
