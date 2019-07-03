@@ -18,7 +18,7 @@
                 <p class="float-right">from <%= campground.price %> EUR/night</p> 
                 <h4 class="card-title pb-2">About campground <%= campground.name %></h4>
                 <p class="card-text"><%= campground.description %></p>
-                <p class="card-text"><em>Submitted by <%= campground.author.username %>, <%= moment(campground.createdAt).fromNow() %></em></p>
+                <p class="card-text"><em>Submitted by <a href="/user/<%= campground.author.id %>"><%= campground.author.username %></a>, <%= moment(campground.createdAt).fromNow() %></em></p>
                 <% if(currentUser && (campground.author.id.equals(currentUser._id) || currentUser.isAdmin)){ %>
                     <!--    
                             if not logged-in -> currentUser undefined AND matching ids 

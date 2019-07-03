@@ -1,0 +1,43 @@
+<% include ../modules/_header %>
+
+<div class="row">
+    <div class="col-md-5 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h1>Yelp Camp profile for <em><%= userData.username %></em></h1>
+            </div>
+            <div class="card-body">
+                <p><strong>First Name</strong></p>
+                <p><%= userData.firstname %></p>
+                <p><strong>Last Name</strong></p>
+                <p><%= userData.lastname %></p>
+                <p><strong>Date of Birth</strong></p>
+                <p><%= userData.dateOfBirth %></p>
+                <p><strong>Email</strong></p>
+                <p><a href="mailto:<%= userData.email %>" ><%= userData.email %></a></p>
+            </div>
+            <% if(currentUser && (userData._id.equals(currentUser._id) || currentUser.isAdmin)){ %>
+            <div class="card-footer">
+                <a href="/user/<%= userData.id %>/edit" class="btn btn-warning">edit profile</a>
+            </div>
+            <% } %>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="card card-header">
+            <h2>Campgrounds added by <em><%= userData.username %></em></h2>
+        </div>
+        <div class="card-body">
+            <% campgroundData.forEach(campground => { %>
+            <ul>
+                <li>
+                    <a href="/campgrounds/<%= campground.id %>"><h3><%= campground.name %></h3></a>
+                    <p><%= campground.location %></p>
+                </li>
+            </ul>
+            <% }) %>
+        </div>
+    </div>
+</div>
+
+<% include ../modules/_footer %>

@@ -32,8 +32,11 @@
                     <% } else { %>
                         <li class="nav-item">
                             <a  class="nav-link" 
-                                href="#"> Logged in as <%= currentUser.username %>
+                                href="/user/<%= currentUser._id %>"> Logged in as <%= currentUser.username %>
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <a  class="nav-link" href="/user/<%= currentUser._id %>">Profile</a>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
                         <% } %>

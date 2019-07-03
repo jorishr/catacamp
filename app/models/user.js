@@ -4,7 +4,13 @@ const   mongoose                = require('mongoose'),
 let UserSchema = new mongoose.Schema({
     username: String,
     password: String,
-    isAdmin: {type: Boolean, default: false}
+    firstname: String,
+    lastname: String,
+    email: String,
+    dateOfBirth: Date,
+    isAdmin: {type: Boolean, default: false},
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 });
 
 let options = {

@@ -23,6 +23,16 @@ let starterData = [
         image: 'images/31115219468.png',
         description: 'Nice historic town with traditional gastronomy. Lots of hiking oportunities in the region. Lorem ipsum dolor sit amet, an nam nostrum rationibus definitionem, sint tollit verear nec ne. Vix ad nisl illud epicuri, eum an mundi homero signiferumque. Est homero minimum vituperatoribus in, sonet probatus id ius, cu assum probatus definiebas ius. Ius at postea omnesque. Nam in munere laoreet fuisset, vide iudico indoctum quo te, commune laboramus ex quo. Graeco atomorum mel in. Commune prodesset intellegebat ne eos, ut soluta invenire mel. Sed brute summo te. In vis nostro antiopam.'
     },
+    {
+        name: 'Cadaques',
+        image: 'images/838671.png',
+        description: 'Great beach town in the famous Empordà region. Lorem ipsum dolor sit amet, an nam nostrum rationibus definitionem, sint tollit verear nec ne. Vix ad nisl illud epicuri, eum an mundi homero signiferumque. Est homero minimum vituperatoribus in, sonet probatus id ius, cu assum probatus definiebas ius. Ius at postea omnesque. Nam in munere laoreet fuisset, vide iudico indoctum quo te, commune laboramus ex quo. Graeco atomorum mel in. Commune prodesset intellegebat ne eos, ut soluta invenire mel. Sed brute summo te. In vis nostro antiopam.'
+    },
+    {
+        name: 'Massís del Montseny',
+        image: 'images/947235.png',
+        description: 'Great 360º view of the region from the mountain top. Lot\'s hiking trails. Can be busy on weekends and holidays. Lorem ipsum dolor sit amet, an nam nostrum rationibus definitionem, sint tollit verear nec ne. Vix ad nisl illud epicuri, eum an mundi homero signiferumque. Est homero minimum vituperatoribus in, sonet probatus id ius, cu assum probatus definiebas ius. Ius at postea omnesque. Nam in munere laoreet fuisset, vide iudico indoctum quo te, commune laboramus ex quo. Graeco atomorum mel in. Commune prodesset intellegebat ne eos, ut soluta invenire mel. Sed brute summo te. In vis nostro antiopam.'
+    }
 ];
 
 let dummyComment = {
