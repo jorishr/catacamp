@@ -2,6 +2,7 @@
 //  SCHEMA SETUP FOR CAMPGROUND DATA
 //  ============
 const mongoose = require('mongoose');
+const Comment = require('./comments');
 
 let campgroundSchema = new mongoose.Schema({
     name: String,
@@ -27,16 +28,23 @@ let campgroundSchema = new mongoose.Schema({
     ]
 });
 
+campgroundSchema.pre('remove', async function(next){
+    console.log('\nStarting pre-hook\n');
+    try {
+        await Comment.remove({
+            "_id": {
+                $in: this.comments
+    //  this refers to the campground object the remove method is called upon
+    //  comments that are referenced in the comments array of the campground object will be deleted
+            }
+        });
+        next();
+    } 
+    catch(err){
+        next(err);
+    }
+});
+
 let Campground = mongoose.model('Campground', campgroundSchema);
 
 module.exports = Campground;
-
-/* Campground.create(
-    {name: 'Salmon Creek', image: 'images/2164766085.png', description: 'Test'},
-    (err, savedData) => {
-            //  the second argument is the data object written to the db
-            //  name it what you want
-        if (err) {return console.error(err);}
-        else {return console.log('Succesfully saved:\n', savedData)}
-    }
-); */

@@ -5,6 +5,7 @@ const   express     = require('express'),
         passport    = require('passport'),
         User        = require('../models/user'),
         Campground  = require('../models/campground'),
+        middleware  = require('../middleware'),
         async       = require('async'),
         crypto      = require('crypto'),
         mailgun     = require("mailgun-js");
@@ -35,7 +36,7 @@ router.post('/register', (req, res, next) => {
             dateOfBirth:    req.body.dateOfBirth,      
             isAdmin:        false
             }), req.body.password, (err) => {
-        
+       
         if(err){
             console.log('Error while registering new user', err);
             return res.render('register', {'error': err.message});
@@ -103,7 +104,7 @@ router.get('/user/:id', (req, res) => {
 
 //  edit profile route
 
-router.get('/user/:id/edit', (req, res) =>{
+router.get('/user/:id/edit', middleware.checkProfileOwnership, (req, res) =>{
     User.findById(req.params.id, (err, foundUser) => {
         if(err){
             console.log('Error\n\n', err);
@@ -115,34 +116,15 @@ router.get('/user/:id/edit', (req, res) =>{
     });
 });
 
-//  update profile route    NOTE: TODO update author.id of each campground when username is changed
+//  update profile route
 
 router.put('/user/:id', (req, res) => {
-/*     let userAssociatedCampgrounds = [];
-    Campground.find().where('author.id').equals(req.params.id).exec((err, userAssociatedData) => {
-        if(err){console.log('\nError looking up user associated data.\n', err)}
-        else {
-            userAssociatedCampgrounds = userAssociatedData;
-            console.log('userAssociatedCampgrounds Type:', typeof userAssociatedCampgrounds);
-        };
-    }); 
-*/
     User.findByIdAndUpdate(req.params.id, req.body.profile, (err, updatedUser) => {
         if(err){
             console.log('\nError\n\n', err);
             req.flash('error', 'Error while updating profile data. Try again.');
             res.redirect(`/user/${req.params.id}/edit`);
         } else {
-/*             userAssociatedCampgrounds.forEach(campground => {
-                console.log('\nCampground Author Type\n', typeof campground.author.username);
-                console.log(campground.author.username !== req.body.profile.username);
-                if(campground.author.username !== req.body.profile.username){
-                    campground.author.username = req.body.profile.username;
-                    campground.save();
-                    console.log(`\n New username: ${campground.author.username} for campground: ${campground.name}`)
-                };
-            });
-*/
             console.log('\nProfile update success!\n\n', updatedUser);
             req.flash('success', 'Profile updated successfully!');
             res.redirect(`/user/${req.params.id}`);
@@ -153,15 +135,29 @@ router.put('/user/:id', (req, res) => {
 //  delete user profile
 
 router.delete('/user/:id', (req, res) => {
-    User.findByIdAndRemove(req.params.id, (err) => {
+    User.findById(req.params.id, (err, foundUser) => {
         if(err){
             console.log('\nError while deleting user profile:\n', err);
             req.flash('error', 'Error while deleting your user profile. Try again!');
             res.redirect(`/user/${req.params.id}/edit`);
         } else {
-            console.log('\nDeleting user profile, success!\n');
-            req.flash('success', 'Sad to see you go! Your profile was deleted succesfully.');
-            res.redirect('/campgrounds');
+            Campground.find().where('author.id').equals(foundUser.id).exec((err, foundCampgrounds)=>{
+                if(err){
+                    console.log('\nError while looking up user associated data:\n', err);
+                    req.flash('error', 'Error while deleting your user profile. Try again!');
+                    res.redirect(`/user/${req.params.id}/edit`);
+                } else {
+                //  remove user and user associated data from db
+                //  comments associated to each campground are taken care of with pre-hook in the model
+                    foundCampgrounds.forEach((campground)=> {
+                        campground.remove();
+                    });
+                    foundUser.remove();
+                    req.flash('success', 'Sad to see you go! Your profile was deleted succesfully.');
+                    res.redirect('/campgrounds');
+                    console.log('\nDeleting user profile, success!\n');
+                };
+            });
         };
     }); 
 });
@@ -170,6 +166,12 @@ router.delete('/user/:id', (req, res) => {
 //  RESET PASSWORD ROUTES
 //  =====================
 
+//  mailgun basic setup
+
+const mailgunDomain = process.env.MAILGUN_DOMAIN;
+const mailgunApiKey = process.env.MAILGUN_APIKEY;
+const mg = mailgun({apiKey: mailgunApiKey, domain: mailgunDomain});
+
 //  forgot password route
 
 router.get('/forgot', (req, res) => {
@@ -177,12 +179,6 @@ router.get('/forgot', (req, res) => {
 });
 
 //  reset password start route
-
-//  mailgun basic setup
-
-const mailgunDomain = process.env.MAILGUN_DOMAIN;
-const mailgunApiKey = process.env.MAILGUN_APIKEY;
-const mg = mailgun({apiKey: mailgunApiKey, domain: mailgunDomain});
 
 router.post('/forgot', (req, res, next) => {
     async.waterfall([

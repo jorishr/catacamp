@@ -124,12 +124,14 @@ router.put('/:id', middleware.checkCampgroundOwnership, (req, res) => {
 //  DESTROY ROUTE
 
 router.delete('/:id', middleware.checkCampgroundOwnership, (req, res) => {
-    Campground.findByIdAndDelete(req.params.id, (err) => {
+    Campground.findById(req.params.id, (err, foundCampground) => {
         if(err){
             req.flash('error', 'Error while deleting campground!');
             console.log('Error while deleting:\n', err);
-            res.redirect(`/campgrounds/${req.params.id}`);
+            res.redirect(`/campgrounds/${req.params.id}`)
         } else {
+            foundCampground.remove();
+            //  associated comment deleting is handled as pre-hook Schema method in data model
             console.log(`Succesfully deleted campground`);
             req.flash('success', 'Campground succesfully deleted!');
             res.redirect('/campgrounds');
