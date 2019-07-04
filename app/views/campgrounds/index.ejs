@@ -2,16 +2,32 @@
 <div class="container">
 
     <header class="jumbotron text-center">
-        <h1><i class="fas fa-campground"></i></span><strong>Welcome to Yelp Camp</strong></h1>
-        <h3>Check out these amazing campgrounds in Catalonia!</h3>
-        
-        <p>Want to share a fantastic campsite that is no listed yet?</p>
-        <a  class="btn btn-large btn-primary" 
-            href="/campgrounds/new">
-            submit
-        </a>
+        <div class="container">
+            <h1><i class="fas fa-campground"></i></span><strong>Welcome to Yelp Camp</strong></h1>
+            <h3 class="mb-3">Check out these amazing campgrounds in Catalonia!</h3>     
+            <form action="/campgrounds" method="GET" class="form-inline justify-content-center mb-3">
+                <div class="form-group">
+                    <label for="search-form"></label>
+                    <input  class="form-control" type="text" name="search" 
+                            placeholder="Enter a location or name..." id="">
+                    <input  class="btn btn-light" type="submit" value="search">
+                </div>
+            </form>
+            <p>Want to share a fantastic campsite that is not listed yet?<p>
+            <p>
+                <a  class="btn btn-large btn-outline-info" 
+                    href="/campgrounds/new">Add a new campground</a>
+            </p>
+
+        </div>
     </header>
     <div class="row campgrounds-index text-center">
+        <% if(noMatch !== null){ %> 
+            <div class="container">
+                <p><%= noMatch %></p>
+                <a href="/campgrounds" class="btn btn-info mb-3">See all campgrounds</a>
+            </div>
+        <% } %>
         <% campgrounds.forEach(campground => { %>
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card">
