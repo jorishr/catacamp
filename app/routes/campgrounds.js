@@ -15,19 +15,54 @@ let geocoder = NodeGeocoder(options);
         
 //  INDEX ROUTE
 
+//  escape regex function for search
+
+function escapeRegex(queryString) {
+    return queryString.replace(
+    /[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
+let noMatch = null;     //  part of HTML index template, get's value when no search results found 
+
 router.get('/', (req, res) => {
-    Campground.find({}, (err, allCampgrounds) => {
-            //  the second argument is the data retrieved from the database
-            //  call it whatever you want
+    console.log('\nGET index route initiated')
+    //  search form logic
+    //  display all campgrounds when search is blank and page rendered without search query
+    if(req.query.search){
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        Campground.find({$or:[
+            {'name': regex},
+            {'location': regex},
+            {'author.username': regex}
+        ]}, (err, foundCampgrounds) => {
         if (err) {return console.error(err);}
-            else {
-                    //  pass the retrieved the data to the ejs file
-                    //  if the user is not logged in, req.user = undefined
-                    //  when logged in PassportJs adds session data to request
-                res.render('campgrounds/index', {campgrounds: allCampgrounds}) 
-                return console.log('Retrieved Succesfully from db:\n', allCampgrounds)
-            }
-    })
+            else {                
+                if(foundCampgrounds.length < 1){
+                    let noMatch = 'No matching locations, campground names or users found. Try again!'
+                    console.log('\nSearch success, but no matching data found!\n');
+                    res.render('campgrounds/index', {campgrounds: foundCampgrounds, noMatch: noMatch})    
+                } else {
+                    console.log('\nSearch success! One or more matching objects found:\n');
+                    res.render('campgrounds/index', {campgrounds: foundCampgrounds, noMatch: noMatch}); 
+                    return console.log('\nSearch success!\nData objects retrieved succesfully from db')
+                };
+            };
+    });
+    } else {
+        console.error('\nNo search query submitted, proceeding to rendering all campgrounds')
+        Campground.find({}, (err, allCampgrounds) => {
+                //  the second argument is the data retrieved from the database
+                //  call it whatever you want
+            if (err) {return console.error(err);}
+                else {
+                        //  pass the retrieved the data to the ejs file
+                        //  if the user is not logged in, req.user = undefined
+                        //  when logged in PassportJs adds session data to request
+                    res.render('campgrounds/index', {campgrounds: allCampgrounds, noMatch: noMatch}) 
+                    return console.log('\nGET route success! Data objects retrieved succesfully from db');
+                };
+        });
+    };
 });
 
 // CREATE ROUTE
