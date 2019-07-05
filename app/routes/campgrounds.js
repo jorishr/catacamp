@@ -80,18 +80,19 @@ router.get('/', (req, res) => {
 
 // CREATE ROUTE
 
-router.post('/', middleware.isLoggedIn, middleware.ipRestricted, (req, res) => {
+router.post('/', middleware.isLoggedIn, (req, res) => {
     // get data from form at page 'new-campground' and add to campgrounds array
-    console.log(req.user)
+    console.log(`\n${req.user.username} submits a new campground.`);
+    let placeholderImg = '/via.placeholder.com/1600x1200.png?text=CataCamp!+All+the+best+campsites+in+Catalonia+in+one+place' 
     let newName = req.body.newName;
-    let newImage = req.body.newImage;
+    let newImage = req.body.newImage || placeholderImg;
     let newPrice = req.body.newPrice;
     let newDescription = req.body.newDescription;
-    let author = {id: req.user._id, username: req.user.username}
+    let author = {id: req.user._id, username: req.user.username};
     geocoder.geocode(req.body.newLocation, (err, locationData) => {
         if (err || !locationData.length) {
             console.log('ERROR\n\n', err);
-            req.flash('error', 'Invalid campground address');
+            req.flash('error', 'Invalid campground location address');
             return res.redirect('/campgrounds');
         };
         let lat = locationData[0].latitude;
