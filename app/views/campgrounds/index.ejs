@@ -3,9 +3,12 @@
 
     <header class="jumbotron text-center">
         <div class="container">
-            <h1><i class="fas fa-campground"></i></span><strong>Welcome to CataCamp</strong></h1>
-            <h3 class="mb-3">Check out these amazing campgrounds in Catalonia!</h3>     
-            <form action="/campgrounds" method="GET" class="form-inline justify-content-center mb-3">
+            <div class="jumbotron__title d-flex justify-content-center pb-3">
+                <i class="fas fa-campground fa-5x pr-4"></i>
+                <h1 class="text pt-3"><strong>Welcome to CataCamp</strong></h1>
+            </div>
+            <h3 class="pb-3">Check out these amazing campgrounds in Catalonia!</h3>     
+            <form action="/campgrounds" method="GET" class="form-inline justify-content-center pb-3">
                 <div class="form-group">
                     <label for="search-form"></label>
                     <input  class="form-control mb-1" type="text" name="search" 
@@ -13,10 +16,10 @@
                     <input  class="btn btn-light mb-1" type="submit" value="search">
                 </div>
             </form>
-            <p>Want to share a fantastic campsite that is not listed yet?<p>
+            <p class="text">Want to share a fantastic campsite that is not listed yet?<p>
             <p>
                 <a  class="btn btn-large btn-outline-info" 
-                    href="/campgrounds/new">Add a new campground</a>
+                    href="/campgrounds/new"><i class="fas fa-plus pr-2"></i>Add a new campground</a>
             </p>
 
         </div>
@@ -38,7 +41,7 @@
                 </div>
                 <div class="card-footer">
                     <a  href="/campgrounds/<%= campground._id %>"
-                        class="btn btn-outline-primary">More info...</a>
+                        class="btn btn-outline-primary">More info...<i class="fas fa-chevron-right pl-1"></i></a>
                 </div>
             </div>
         </div>

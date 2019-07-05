@@ -2,7 +2,7 @@
 
 <div class="row justify-content-center wrapper">
     <div class="col-md-12 text-center mb-2">
-        <h2>Update your user profile</h2>
+        <h2><i class="fas fa-user-edit pr-3"></i>Update your user profile</h2>
     </div>
     <div class="col-xs-12 col-md-6 col-lg-4">
         <form action="/user/<%= userData._id %>?_method=PUT" method="POST" class="mb-3">
@@ -26,12 +26,12 @@
                 <input  class="form-control" type="date" name="profile[dateOfBirth]" 
                         id="" required value="<%= userData.dateOfBirth.toLocaleDateString(('es-ES'), {year: 'numeric', month: '2-digit', day: '2-digit'}) %>">
             </div>
-            <button class="btn btn-lg btn-default btn-block btn-primary">Update</button>
+            <button class="btn btn-lg btn-default btn-block btn-primary"><i class="far fa-share-square pr-3"></i>Update</button>
         </form>
-        <a  class="btn btn-outline-dark btn-small float-right" href="/campgrounds">Go Back</a>
+        <a  class="btn btn-outline-dark btn-small float-right" href="/campgrounds"><i class="fas fa-long-arrow-alt-left pr-3"></i>Go Back</a>
         <form   action="/user/<%= userData._id %>?_method=DELETE" 
                 method="post" class="float-left deleteForm">
-            <button class="btn btn-outline-danger btn-sm">Delete your profile</button>
+            <button class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt pr-1"></i>Delete your profile</button>
         </form>
     </div>
 </div>

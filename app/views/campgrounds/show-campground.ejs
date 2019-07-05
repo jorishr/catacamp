@@ -3,40 +3,54 @@
     <!-- SIDEBAR SECTION -->
     <div class="col-md-3">
         <div class="card mb-3">
-            <p class="card-header text"><strong>Campground details</strong></p>
+            <p class="card-header text"><i class="fas fa-info pr-3"></i><strong>Campground details</strong></p>
             <div class="card-body">
                 <ul>
-                    <li><p class="text">Open: <em>all year round</em></p></li>
-                    <li><p class="text">Recommend season: <em>summer</em></p></li>
-                    <li><p class="text">Price: <em>from <%= campground.price %> EUR/night</em></p></li>
+                    <li><p class="text"><i class="far fa-calendar-alt pr-2"></i>Open: <em>all year round</em></p></li>
+                    <li><p class="text"></i>Recommend season: <em>summer</em></p></li>
+                    <li>
+                        <p class="text">
+                            <i class="fas fa-euro-sign pr-2"></i>
+                            <em>from <%= campground.price %> EUR/night</em>
+                        </p>
+                    </li>
                 </ul>
             </div>
         </div>
         <div class="card mb-4">
-            <p class="card-header text"><strong>Campground location</strong></p>
+            <p class="card-header text">
+                <i class="far fa-compass pr-3"></i><strong>Campground location</strong>
+            </p>
             <div id="map"></div>
         </div>
     </div>
     <!-- MAIN CAMPGROUND SECTION -->
     <div class="col-md-9">
         <div class="card mb-3">
-            <h1 class="card-header text-muted""><%= campground.name %></h1>
+            <div class="card-header d-flex justify-content-start campground__header">
+                <i class="fas fa-campground fa-3x pr-3 text-muted pt-3"></i>
+                <h1 class="text text-muted pt-3">
+                    <%= campground.name %>
+                </h1>
+            </div>
             <div class="card-body">
                 <img    src="/<%= campground.image %>" alt="<%= campground.name %>"
                         class="card-img-top pb-4">
                 <h4 class="card-title pb-2">About campground <%= campground.name %></h4>
                 <p class="card-text"><%= campground.description %></p>
-                <p class="card-text"><em>Submitted by <a href="/user/<%= campground.author.id %>"><%= campground.author.username %></a>, <%= moment(campground.createdAt).fromNow() %></em></p>
+                <p class="card-text">
+                    <em>Submitted by <i class="far fa-user-circle pr-1 pl-1"></i> 
+                    <a href="/user/<%= campground.author.id %>"> <%= campground.author.username %> </a> <i class="far fa-calendar-alt pr-1 pl-1"></i> <%= moment(campground.createdAt).fromNow() %></em></p>
                 <% if(currentUser && (campground.author.id.equals(currentUser._id) || currentUser.isAdmin)){ %>
                     <!--    
                             if not logged-in -> currentUser undefined AND matching ids 
                             for currentUser see passportjs config  
                     -->
                     <a  href="/campgrounds/<%= campground._id %>/edit" 
-                        class="btn btn-warning btn-sm">Edit</a>
+                        class="btn btn-warning btn-sm"><i class="far fa-edit pr-1"></i>Edit</a>
                     <form   action="/campgrounds/<%= campground._id %>?_method=DELETE" 
                             method="post" class="deleteForm">
-                        <button class="btn btn-danger btn-sm">Delete</button>
+                        <button class="btn btn-danger btn-sm"><i class="far fa-trash-alt pr-1"></i>Delete</button>
                     </form>
                 <% } %>
             </div>
@@ -44,13 +58,15 @@
 
         <!-- COMMENTS SECTION START-->
         <div class="card pb-0 mb-3">
-            <div class="card-body pb-0 d-flex justify-content-between">
-                    <h4 class="card-title">Comments about <%= campground.name %>
-                        <!-- <span class="glyphicon glyphicon glyphicon-comment" aria-hidden="true"> -->
+            <div class="card-body pb-0 d-flex justify-content-between comment__body">
+                    <div class="card-title d-flex comment__title">
+                        <i class="far fa-comments fa-4x pr-3"></i>
+                        <h4 class="text pt-3 pl-3">Comments about <%= campground.name %>
+                    </div>
                     </h4>
-                    <p class=""><a  class="btn btn-success" data-toggle="collapse" href="#collapseComment" 
+                    <p><a  class="btn btn-success mt-2" data-toggle="collapse" href="#collapseComment" 
                         aria-expanded="false" aria-controls="collapseComment">
-                        <!-- <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> -->Add new comment</a></p>
+                        <i class="fas fa-pencil-alt pr-3"></i>Add new comment</a></p>
             </div>
             <!-- COLLAPSED 'ADD COMMENT' SECTION START -->
             <div class="row collapse" id="collapseComment">
@@ -70,11 +86,11 @@
                                     <input  class="form-control" type="password" name="password" 
                                             placeholder="Enter your password..." required>
                                 </div>
-                                <button class="btn btn-primary">Login</button>
+                                <button class="btn btn-primary"><i class="fas fa-sign-in-alt pr-2"></i>Login</button>
                             </form>
                             <div class="float-left">
                                 <p class="text">New here?</p>
-                                <a href="/register" class="btn btn-info">Sign Up!</a>
+                                <a href="/register" class="btn btn-info"><i class="fas fa-user-plus pr-2"></i>Sign Up!</a>
                             </div>
                         </div>
                     </div>   
@@ -119,16 +135,16 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="float-left">
-                                    <p class="card-title"><strong><%= comment.author.username %></strong></p>
+                                    <p class="card-title"><i class="far fa-user-circle pr-2"></i><strong><%= comment.author.username %></strong></p>
                                     <p class="text"><%= comment.text %></p>
                                 </div>
                                 <% if(currentUser && (comment.author.id.equals(currentUser._id) || currentUser.isAdmin)){ %>
-                                    <a  class="float-right mr-3 btn btn-warning btn-sm" href="#collapseEditComment<%= comment._id %>" 
+                                    <a  class="float-right mr-3 mb-3 btn btn-warning btn-sm" href="#collapseEditComment<%= comment._id %>" 
                                         data-toggle="collapse" aria-expanded="false" aria-controls="collapseComment">
-                                        Edit</a>                    
+                                        <i class="far fa-edit pr-1"></i>Edit</a>                    
                                 <% } %>
                                 <div class="float-right mr-3">
-                                    <p>Added <%= moment(comment.createdAt).fromNow() %></p>
+                                    <p><i class="far fa-calendar-alt pr-2"></i>Added <%= moment(comment.createdAt).fromNow() %></p>
                                 </div>
                             </div>
                             <!-- COLLAPSED EDIT FORM START -->
@@ -143,11 +159,11 @@
                                                     <label for=""><em>Update your comment for campground <%= campground.name %></em></label>
                                                     <textarea   name="comment[text]" class="" required><%= comment.text %></textarea>
                                                 </div>
-                                                    <button class="btn btn-info">Save changes</button>
+                                                    <button class="btn btn-info"><i class="far fa-share-square pr-2"></i>Save changes</button>
                                                 </form>
                                                 <form   action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" 
                                                         method="post" class="">
-                                                    <button class="btn btn-outline-danger btn-sm float-right">Permanently delete this comment</button>
+                                                    <button class="btn btn-outline-danger btn-sm float-right"><i class="far fa-trash-alt pr-1"></i>Permanently delete this comment</button>
                                                 </form>
                                             </div>
                                         </div>

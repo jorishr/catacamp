@@ -2,7 +2,7 @@
 
 <div class="row justify-content-center wrapper">
     <div class="col-md-12 text-center mb-2">
-        <h2>Edit campground</h2>
+        <h2><i class="far fa-edit pr-3"></i>Edit campground</h2>
     </div>
     <div class="col-xs-12 col-md-6 col-lg-4">
         <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" class="mb-3">
@@ -32,9 +32,9 @@
                 <textarea   name="campground[description]"><%= campground.description %>
                 </textarea>
             </div>
-            <button class="btn btn-lg btn-default btn-block btn-primary">Update</button>
+            <button class="btn btn-lg btn-default btn-block btn-primary"><i class="far fa-share-square pr-3"></i>Update</button>
         </form>
-        <a class="btn btn-light btn-small float-right" href="/campgrounds/<%= campground._id %>">Go Back</a>
+        <a class="btn btn-light btn-small float-right" href="/campgrounds/<%= campground._id %>"><i class="fas fa-long-arrow-alt-left pr-2"></i>Go Back</a>
     </div>
 </div>
 

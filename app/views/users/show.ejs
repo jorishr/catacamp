@@ -4,7 +4,7 @@
     <div class="col-md-5 mb-4">
         <div class="card">
             <div class="card-header">
-                <h4>Yelp Camp profile for <em><%= userData.username %></em></h4>
+                <h4><i class="far fa-id-card pr-3"></i>Yelp Camp profile for <em><%= userData.username %></em></h4>
             </div>
             <div class="card-body">
                 <p class="text"><strong>First Name</strong></p>
@@ -18,7 +18,7 @@
             </div>
             <% if(currentUser && (userData._id.equals(currentUser._id) || currentUser.isAdmin)){ %>
             <div class="card-footer">
-                <a href="/user/<%= userData.id %>/edit" class="btn btn-warning">edit profile</a>
+                <a href="/user/<%= userData.id %>/edit" class="btn btn-warning"><i class="far fa-edit pr-1"></i>edit profile</a>
             </div>
             <% } %>
         </div>
@@ -26,7 +26,7 @@
     <div class="col-md-7">
         <div class="card mb-4">
             <div class="card-header">
-                <h4>Campgrounds added by <em><%= userData.username %></em></h4>
+                <h4><i class="fas fa-campground pr-3"></i>Campgrounds added by <em><%= userData.username %></em></h4>
             </div>
             <% if(campgroundData.length === 0) { %>
             <div class="card-body">
@@ -40,7 +40,7 @@
                         <p class="text">
                             <a href="/campgrounds/<%= campground.id %>"><%= campground.name %></a>
                         </p>
-                        <p class="text">Location: <%= campground.location %></p>
+                        <p class="text"><i class="fas fa-location-arrow pr-2"></i><%= campground.location %></p>
                     </li>
                 </ul>
                 <% }) %>
