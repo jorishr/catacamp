@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label for="">Date of birth</label>
                 <input  class="form-control" type="date" name="profile[dateOfBirth]" 
-                        id="" required value="<%= userData.dateOfBirth %>">
+                        id="" required value="<%= userData.dateOfBirth.toLocaleDateString(('es-ES'), {year: 'numeric', month: '2-digit', day: '2-digit'}) %>">
             </div>
             <button class="btn btn-lg btn-default btn-block btn-primary">Update</button>
         </form>

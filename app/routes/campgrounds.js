@@ -80,7 +80,7 @@ router.get('/', (req, res) => {
 
 // CREATE ROUTE
 
-router.post('/', middleware.isLoggedIn, (req, res) => {
+router.post('/', middleware.isLoggedIn, middleware.ipRestricted, (req, res) => {
     // get data from form at page 'new-campground' and add to campgrounds array
     console.log(req.user)
     let newName = req.body.newName;

@@ -28,11 +28,20 @@ textarea {
 }
 
 @media (min-width: 576px) {
-    .campgrounds-index {
+    .card-deck {
         margin-left: -15px;
         margin-right: -15px;
     }
   }
+
+@media (max-width: 576px){
+    .campground {
+        flex-direction: column-reverse;
+    }
+    .comment__title {
+        float: none;
+    }
+}
 
 //  Google Maps
 #map {

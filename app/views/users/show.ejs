@@ -4,17 +4,17 @@
     <div class="col-md-5 mb-4">
         <div class="card">
             <div class="card-header">
-                <h1>Yelp Camp profile for <em><%= userData.username %></em></h1>
+                <h4>Yelp Camp profile for <em><%= userData.username %></em></h4>
             </div>
             <div class="card-body">
-                <p><strong>First Name</strong></p>
-                <p><%= userData.firstname %></p>
-                <p><strong>Last Name</strong></p>
-                <p><%= userData.lastname %></p>
-                <p><strong>Date of Birth</strong></p>
-                <p><%= userData.dateOfBirth %></p>
-                <p><strong>Email</strong></p>
-                <p><a href="mailto:<%= userData.email %>" ><%= userData.email %></a></p>
+                <p class="text"><strong>First Name</strong></p>
+                <p class="text"><%= userData.firstname %></p>
+                <p class="text"><strong>Last Name</strong></p>
+                <p class="text"><%= userData.lastname %></p>
+                <p class="text"><strong>Date of Birth</strong></p>
+                <p class="text"><%= userData.dateOfBirth.toLocaleDateString(('es-ES'), {year: 'numeric', month: '2-digit', day: '2-digit'}) %></p>
+                <p class="text"><strong>Email</strong></p>
+                <p class="text"><a href="mailto:<%= userData.email %>" ><%= userData.email %></a></p>
             </div>
             <% if(currentUser && (userData._id.equals(currentUser._id) || currentUser.isAdmin)){ %>
             <div class="card-footer">
@@ -24,18 +24,27 @@
         </div>
     </div>
     <div class="col-md-7">
-        <div class="card card-header">
-            <h2>Campgrounds added by <em><%= userData.username %></em></h2>
-        </div>
-        <div class="card-body">
-            <% campgroundData.forEach(campground => { %>
-            <ul>
-                <li>
-                    <a href="/campgrounds/<%= campground.id %>"><h3><%= campground.name %></h3></a>
-                    <p><%= campground.location %></p>
-                </li>
-            </ul>
-            <% }) %>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Campgrounds added by <em><%= userData.username %></em></h4>
+            </div>
+            <% if(campgroundData.length === 0) { %>
+            <div class="card-body">
+                <p class="text">No campgrounds added by <em><%= userData.username %></em></p>
+            </div>
+            <% } %>    
+            <div class="card-body">
+                <% campgroundData.forEach(campground => { %>
+                <ul>
+                    <li>
+                        <p class="text">
+                            <a href="/campgrounds/<%= campground.id %>"><%= campground.name %></a>
+                        </p>
+                        <p class="text">Location: <%= campground.location %></p>
+                    </li>
+                </ul>
+                <% }) %>
+            </div>
         </div>
     </div>
 </div>
