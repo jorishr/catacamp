@@ -16,7 +16,9 @@ const   path            = require('path'),
         User            = require('./models/user'),
         indexRoutes         = require('./routes/index'),
         commentRoutes       = require('./routes/comments'),
-        campgroundRoutes    = require('./routes/campgrounds');
+        campgroundRoutes    = require('./routes/campgrounds'),
+        resetPwRoutes       = require('./routes/reset_pw'),
+        userProfileRoutes   = require('./routes/profile');
 
 //  BASIC EXPRESS/MONGO CONFIG
 mongoose.connect(process.env.DB_CONN, {useNewUrlParser: true});
@@ -68,17 +70,6 @@ app.use((req, res, next) => {
 //  import all routes
 app.use(indexRoutes);
 app.use('/campgrounds/:id/comments', commentRoutes);
-app.use('/campgrounds', campgroundRoutes);
-
-//  ========
-//  ROUTES
-//  ========
-//  name            url                     verb    desc
-//  ===========================================================================
-//  INDEX route     /campgrounds            GET     list (all) data in db
-//  NEW route       /campgrounds/new        GET     show form to add new db data
-//  CREATE route    /campgrounds            POST    add to DB, then redirect
-//  SHOW            /campgrounds/:id        GET     show specific info
-//  EDIT            /campgrounds/:id/edit   GET     show edit form
-//  UPDATE          /campgrounds/:id        PUT     update db, then redirect
-//  DESTROY         /campgrounds/:id        DELETE  delete in DB, then redirect
+app.use('/campgrounds', campgroundRoutes),
+app.use(resetPwRoutes),
+app.use('/user', userProfileRoutes);

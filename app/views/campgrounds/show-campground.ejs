@@ -1,17 +1,17 @@
 <% include ../modules/_header %>
 <div class="row wrapper">
+    <!-- SIDEBAR SECTION -->
     <div class="col-md-3">
-        <p class="lead">Yelp Camp</p>
         <div class="list-group">
-            <li class="list-group-item active">Info1</li>
-            <li class="list-group-item">Info2</li>
-            <li class="list-group-item">Info3</li>
+            <li class="list-group-item">Campground <%= campground.name %></li>
+            <li class="list-group-item active">Campground location</li>
         </div>
         <div id="map"></div>
     </div>
+    <!-- MAIN CAMPGROUND SECTION -->
     <div class="col-md-9">
         <div class="card mb-3">
-            <h3 class="card-header text-muted""><%= campground.name %></h3>
+            <h1 class="card-header text-muted""><%= campground.name %></h1>
             <div class="card-body">
                 <img    src="/<%= campground.image %>" alt="<%= campground.name %>"
                         class="card-img-top pb-4">
@@ -33,16 +33,68 @@
                 <% } %>
             </div>
         </div>
+
+        <!-- COMMENTS SECTION START-->
         <div class="card pb-0">
             <div class="card-body">
                 <div class="text float-right">
-                    <a  class="btn btn-success"
-                        href="/campgrounds/<%= campground._id %>/comments/new">
-                        Add new comment</a>
+                    <a  class="btn btn-success" data-toggle="collapse" href="#collapseComment" 
+                        aria-expanded="false" aria-controls="collapseComment">
+                        <!-- <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> -->Add new comment</a>
                 </div>
-                <h4 class="card-title">Comments about <%= campground.name %></h4>
+                <h4 class="card-title">Comments about <%= campground.name %>
+                <!-- <span class="glyphicon glyphicon glyphicon-comment" aria-hidden="true"> -->
+                </h4>
             </div>
+            <!-- COLLAPSED 'ADD COMMENT' SECTION START -->
+            <div class="row collapse" id="collapseComment">
+                <!-- Not logged in: redirect to login page; else: show form -->
+                <% if(!currentUser) { %>
+                <div class="col-md-12 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-left">
+                                <p class="text">You need to be logged in to make a comment</p>
+                                <a href="/login" class="btn btn-info">Go to the login page</a>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+                <% } %>
+                <% if(currentUser) { %>
+                <div class="col-md-12 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-left">
+                                <form action="/campgrounds/<%= campground._id %>/comments" method="POST" class="mb-3">
+                                    <div class="form-group">
+                                        <label for="Comment">Add your comment for campground <%= campground.name %></label>
+                                        <textarea   name="comment[text]" class="" required
+                                                    placeholder="Write your comment here..." id="">
+                                        </textarea>
+                                    </div>
+                                    <button class="btn btn-outline-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>   
+                </div>                    
+                <% } %>    
+            </div>
+            <!-- COLLAPSED CONTENT END -->
+            <!-- SHOW COMMENTS START -->
             <div class="row">
+                 <% if (campground.comments.length === 0) { %>
+                    <div class="col-md-12 mb-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-left">
+                                    <p class="text">No comments yet!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
                 <% campground.comments.forEach((comment) => { %>
                     <div class="col-md-12 mb-2">
                         <div class="card">
@@ -52,17 +104,38 @@
                                     <p class="text"><%= comment.text %></p>
                                 </div>
                                 <% if(currentUser && (comment.author.id.equals(currentUser._id) || currentUser.isAdmin)){ %>
-                                    <form   action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" 
-                                            method="post" class="float-right deleteForm">
-                                    <button class="btn btn-danger btn-sm">Delete</button>
-                                    </form>
-                                    <a  class="float-right mr-3 btn btn-warning btn-sm" 
-                                        href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">Edit</a>                     
+                                    <a  class="float-right mr-3 btn btn-warning btn-sm" href="#collapseEditComment<%= comment._id %>" 
+                                        data-toggle="collapse" aria-expanded="false" aria-controls="collapseComment">
+                                        Edit</a>                    
                                 <% } %>
                                 <div class="float-right mr-3">
                                     <p>Added <%= moment(comment.createdAt).fromNow() %></p>
                                 </div>
                             </div>
+                            <!-- COLLAPSED EDIT FORM START -->
+                            <div class="card-footer collapse" id="collapseEditComment<%= comment._id %>">
+                                <div class="col-md-12 mb-2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="float-left">
+                                                <form   action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=PUT" 
+                                                        method="POST" class="mb-3">
+                                                <div class="form-group">
+                                                    <label for=""><em>Update your comment for campground <%= campground.name %></em></label>
+                                                    <textarea   name="comment[text]" class="" required><%= comment.text %></textarea>
+                                                </div>
+                                                    <button class="btn btn-info">Save changes</button>
+                                                </form>
+                                                <form   action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" 
+                                                        method="post" class="">
+                                                    <button class="btn btn-outline-danger btn-sm float-right">Permanently delete this comment</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>   
+                                </div>      
+                            </div>
+                            <!-- COLLAPSED EDIT FORM END -->
                         </div>  
                     </div>
                 <% }); %> 

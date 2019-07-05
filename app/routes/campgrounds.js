@@ -3,7 +3,20 @@ const   express     = require('express'),
         Campground  = require('../models/campground'),
         middleware  = require('../middleware'),
         NodeGeocoder = require('node-geocoder');
- 
+
+//  =================
+//  CAMPGROUND ROUTES
+//  =================
+//  name            url                     verb    desc
+//  ===========================================================================
+//  INDEX route     /campgrounds            GET     list (all) data in db
+//  NEW route       /campgrounds/new        GET     show form to add new db data
+//  CREATE route    /campgrounds            POST    add to DB, then redirect
+//  SHOW            /campgrounds/:id        GET     show specific info
+//  EDIT            /campgrounds/:id/edit   GET     show edit form
+//  UPDATE          /campgrounds/:id        PUT     update db, then redirect
+//  DESTROY         /campgrounds/:id        DELETE  delete in DB, then redirect
+
 let options = {
     provider: 'google',
     httpAdapter: 'https',

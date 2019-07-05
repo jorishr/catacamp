@@ -8,10 +8,7 @@
                 method="POST" class="mb-3">
             <div class="form-group">
                 <label for="">Comment</label>
-                <textarea   name="comment[text]" class="" required
-                            placeholder="Write your comment here..." id="">
-                            <%= comment.text %>
-                </textarea>
+                <textarea   name="comment[text]" class="" required><%= comment.text %></textarea>
             </div>
             <button class="btn btn-lg btn-default btn-block btn-primary">Update</button>
         </form>

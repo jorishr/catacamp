@@ -20,9 +20,10 @@ textarea {
   margin-left: 0px;
   margin-right: 0px; }
 
-.campgrounds-index {
-  margin-left: -15px;
-  margin-right: -15px; }
+@media (min-width: 576px) {
+  .campgrounds-index {
+    margin-left: -15px;
+    margin-right: -15px; } }
 
 #map {
   height: 400px;

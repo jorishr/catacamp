@@ -21,16 +21,18 @@ textarea {
     display: inline-block;
 }
 
-// issue: bootstrap v4 row causes horizontal scroll of 15px
+// issue: bootstrap v4 row causes horizontal scroll of 15px?
 .row {
     margin-left: 0px;
     margin-right: 0px;
 }
 
-.campgrounds-index {
-    margin-left: -15px;
-    margin-right: -15px;
-}
+@media (min-width: 576px) {
+    .campgrounds-index {
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+  }
 
 //  Google Maps
 #map {
