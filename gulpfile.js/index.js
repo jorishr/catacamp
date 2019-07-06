@@ -53,4 +53,4 @@ function watchFiles(){
     watch(htmlFiles, bsReload);
 };
 
-exports.watch = parallel(series(startNodemon, startBrowserSync), watchFiles, stylesTasks.bootstrapTask);
+exports.watch = parallel(series(startNodemon, startBrowserSync), watchFiles);

@@ -17,10 +17,10 @@ function scssStyles(){
 };
 
 // bootstrap
-function compileBootstrap(){
-    return src('./node_modules/bootstrap/scss/**/*.scss')
-        .pipe(sass().on('error', sass.logError))
-        .pipe(dest('./app/public'))
-}
+// function compileBootstrap(){
+//    return src('./node_modules/bootstrap/scss/**/*.scss')
+//        .pipe(sass().on('error', sass.logError))
+//        .pipe(dest('./app/public'))
+//}
 exports.scssTask = scssStyles;
-exports.bootstrapTask = compileBootstrap; 
+//exports.bootstrapTask = compileBootstrap; 
