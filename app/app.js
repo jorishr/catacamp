@@ -18,9 +18,13 @@ const   path            = require('path'),
         commentRoutes       = require('./routes/comments'),
         campgroundRoutes    = require('./routes/campgrounds'),
         resetPwRoutes       = require('./routes/reset_pw'),
-        userProfileRoutes   = require('./routes/profile');
+        userProfileRoutes   = require('./routes/profile'),
+        errorHandler        = require('./middleware/error');
 
-//  BASIC EXPRESS/MONGO CONFIG
+//  =================================
+//  BASIC EXPRESS AND MONGOOSE CONFIG
+//  =================================
+
 mongoose.connect(process.env.DB_CONN, {useNewUrlParser: true});
 db.on('error', console.error.bind(console, 'connection error:'));
 
@@ -41,9 +45,9 @@ app.set('view engine', 'ejs');
 //  make variable moment available in all view files 
 app.locals.moment = require('moment');  
 
-//  ===============
-//  PASSPORT CONFIG
-//  ===============
+//  =================
+//  PASSPORTJS CONFIG
+//  =================
 
 app.use(expressSession({
     secret: process.env.EXPRESS_SECRET,
@@ -67,9 +71,28 @@ app.use((req, res, next) => {
     next();
 });
 
-//  import all routes
+//  =================
+//  IMPORT ALL ROUTES
+//  =================
+
 app.use(indexRoutes);
 app.use('/campgrounds/:id/comments', commentRoutes);
 app.use('/campgrounds', campgroundRoutes),
 app.use(resetPwRoutes),
 app.use('/user', userProfileRoutes);
+
+//  ==============
+//  ERROR HANDLING
+//  ==============
+
+//  catch 404 errors
+app.get('*', (req, res, next) => {
+    let err = new Error('The page you are looking for cannot be found!');
+    err.messageForConsole = `${req.ip} tried to reach ${req.originalUrl}`
+    err.statusCode = 404;
+    err.shouldRedirect = true;
+    next(err);
+});
+
+//  error handling middleware
+app.use(errorHandler);

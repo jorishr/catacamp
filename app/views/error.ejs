@@ -1,0 +1,20 @@
+<% include ./modules/_header %>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="card">
+            <h1 class="card-header text-info text-center">Something went wrong!</h1>
+            <div class="card-body">
+                <h2 class="card-body">Error: <%= error.message %></h2>
+                <h3 class="card-body text-warning">Status: <%= error.statusCode %></h3>
+            </div>
+            <div class="card-footer text-center">
+                <a class="btn btn-success mt-2" href="/">
+                    <i class="fas fa-long-arrow-alt-left pr-2"></i>Go to the homepage</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+
+<% include ./modules/_footer %>
