@@ -10,88 +10,66 @@ const   express     = require('express'),
 
 //  create new comment route
 
-router.get('/new', middleware.isLoggedIn, (req, res) => {
+router.get('/new', middleware.isLoggedIn, (req, res, next) => {
     Campground.findById(req.params.id, (err, foundData) => {
-        if(err){console.log('Error: ', err)}
-            else {
-                res.render('comments/new-comment', {campground: foundData});
-            };
+        if(err){err.shouldRedirect = true; return next(err);};
+        res.render('comments/new-comment', {campground: foundData});
     });
 });
 
-router.post('/', middleware.isLoggedIn, (req, res) => {
+router.post('/', middleware.isLoggedIn, (req, res, next) => {
     //  lookup campground id
     Campground.findById(req.params.id, (err, foundData) => {
-        if (err){console.log('Error: ', err)}
-            else {
-                console.log('Found in DB: \n', foundData);
-                //  store new comment in db
-                Comment.create(req.body.comment, (err, savedComment) => {
-                    if(err){console.log('Error: ', err)}
-                        else {
-                            savedComment.author.id = req.user._id;  
-                            //  isLoggedIn is dependency thus this will not be undefined
-                            savedComment.author.username = req.user.username;
-                            savedComment.save();
-                            console.log(`Saved comment in DB:\n${savedComment}\nComment made by: ${req.user.username}`)
-                            //  associate comment to campground 
-                            foundData.comments.push(savedComment);
-                            foundData.save();   //  comments array in foundData(=campground:id)
-                            //  redirect
-                            req.flash('success', 'New comment added!');
-                            res.redirect(`/campgrounds/${req.params.id}`);
-                                        //  or id also stored in foundData._id
-                        }
-                })
-            }
-    })
+        if (err){err.shouldRedirect = true; return next(err);};
+        //  store new comment in db
+        Comment.create(req.body.comment, (err, savedComment) => {
+            if (err){err.shouldRedirect = true; return next(err);}
+            savedComment.author.id = req.user._id;  
+            //  isLoggedIn is dependency thus this will not be undefined
+            savedComment.author.username = req.user.username;
+            savedComment.save();
+            console.log(`Saved comment in DB:\n${savedComment}\nComment made by: ${req.user.username}`)
+            //  associate comment to campground 
+            foundData.comments.push(savedComment);
+            foundData.save();   //  comments array in foundData(=campground:id)
+            //  redirect
+            req.flash('success', 'New comment added!');
+            res.redirect(`/campgrounds/${req.params.id}`);
+                    //  or id also stored in foundData._id
+        });
+    });
 });
 
 //  edit comment route
 
-router.get('/:comment_id/edit', middleware.checkCommentOwnership, (req, res) => {
+router.get('/:comment_id/edit', middleware.checkCommentOwnership, (req, res, next) => {
     Campground.findById(req.params.id, (err, foundData) => {
-        if(err){
-            console.log('Error looking up data in db: \n', err);
-            res.redirect('back');
-        } else {
-            Comment.findById(req.params.comment_id, (err, foundCommentData) => {
-                if(err){
-                    console.log('Error looking up comment data:\n', err);
-                    res.redirect('back');
-                } else {
-                    res.render('comments/edit-comment', {campground: foundData, comment: foundCommentData});
-                };
-            });
-        };
+        if(err){err.shouldRedirect = true; return next(err);};
+        Comment.findById(req.params.comment_id, (err, foundCommentData) => {
+            if(err){err.shouldRedirect = true; return next(err);};
+            res.render('comments/edit-comment', {campground: foundData, comment: foundCommentData});
+        });
     });
 })
 //  update comment route
 
-router.put('/:comment_id', middleware.checkCommentOwnership, (req, res) => {
+router.put('/:comment_id', middleware.checkCommentOwnership, (req, res, next) => {
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
-        if(err){
-            console.log('Error updating the db:\n', err);
-            res.redirect('back');
-        } else {
-            req.flash('success', 'Comment succesfully updated!');
-            res.redirect(`/campgrounds/${req.params.id}`);
-        }
+        if(err){err.shouldRedirect = true; return next(err)};
+        req.flash('success', 'Comment succesfully updated!');
+        res.redirect(`/campgrounds/${req.params.id}`);
     });
 });
 
 //  delete comment route
 
-router.delete('/:comment_id', middleware.checkCommentOwnership, (req, res) => {
+router.delete('/:comment_id', middleware.checkCommentOwnership, (req, res, next) => {
     Comment.findByIdAndRemove(req.params.comment_id, (err) => {
-        if(err){
-            console.log('Error while deleting:\n', err);
-            res.redirect('back');
-        } else {
-            req.flash('success', 'Comment succesfully deleted!');
-            res.redirect(`/campgrounds/${req.params.id}`);
-            console.log('Succesfully deleted comment');
-        };
+        if(err){err.shouldRedirect = true; return next(err);};
+        req.flash('success', 'Comment succesfully deleted!');
+        res.redirect(`/campgrounds/${req.params.id}`);
+        console.log('Succesfully deleted comment');
     });
 });
+
 module.exports = router;

@@ -7,9 +7,7 @@
         <form action="/campgrounds/<%= campground._id %>/comments" method="POST" class="mb-3">
             <div class="form-group">
                 <label for="">Comment</label>
-                <textarea   name="comment[text]" class="" required
-                            placeholder="Write your comment here..." id="">
-                </textarea>
+                <textarea autofocus name="comment[text]" required></textarea>
             </div>
             <button class="btn btn-lg btn-default btn-block btn-primary">Submit</button>
         </form>

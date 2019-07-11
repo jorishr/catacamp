@@ -26,18 +26,18 @@ router.get('/register', (req, res) => {
 router.post('/register', (req, res) => {
     console.log('Starting user registration!');
     User.register(new User({
-            username:       req.body.username,
-            firstname:      req.body.firstName,
-            lastname:       req.body.lastName,
-            email:          req.body.email,
-            dateOfBirth:    req.body.dateOfBirth,      
-            isAdmin:        false
-            }), req.body.password, (err) => {
-       
+        username:       req.body.username,
+        firstname:      req.body.firstName,
+        lastname:       req.body.lastName,
+        email:          req.body.email,
+        dateOfBirth:    req.body.dateOfBirth,      
+        isAdmin:        false
+    }), req.body.password, 
+    (err) => {      
         if(err){
             console.log('Error while registering new user', err);
             return res.render('register', {'error': err.message});
-                //  if user already exists, the err.message is part of mongoose error reporting  
+            //  if user already exists, the err.message is part of mongoose error reporting  
         }
         console.log('User registered successfully!');
         req.flash('success', `Welcome to Yelp Camp, ${req.body.username}! You are now registered successfully!`)
@@ -45,8 +45,7 @@ router.post('/register', (req, res) => {
         passport.authenticate('local')(req, res, function(){
             console.log('User logged-in successfully!');
             res.redirect('/campgrounds');
-        })
-
+        });
     });
 });
 
@@ -61,12 +60,13 @@ router.post('/login', passport.authenticate('local', {
     failureRedirect: '/login',
     failureFlash: true,
 }), 
-    (req, res) => {
+    (req, res, next) => {
+        if(err){err.shouldRedirect = true; return next(err);};
 });
 
 //  logout route
 
-router.get('/logout', (req, res) => {
+router.get('/logout', (req, res, next) => {
     req.logout();
     console.log('User logout success!');
     req.flash('success', 'Logged out successfully!')
