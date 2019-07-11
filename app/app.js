@@ -31,7 +31,7 @@ app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(flash());
 
-//  new ID's are generated on server restart
+//  seeding the db with new ID's generated on server restart
 //  seedDB();
 //  no longer needed once user data association is setup   
 
