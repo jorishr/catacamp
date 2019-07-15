@@ -4,7 +4,7 @@ const   express     = require('express'),
         User        = require('../models/user'),
         async       = require('async'),
         crypto      = require('crypto'),
-        mailgun     = require("mailgun-js");
+        mailgun     = require('mailgun-js');
 
 //  =====================
 //  RESET PASSWORD ROUTES
@@ -43,7 +43,7 @@ router.post('/forgot', (req, res, next) => {
                     res.redirect('/forgot');
                 } else {
                     foundUser.resetPasswordToken = token;
-                    foundUser.resetPasswordExpires = Date.now() + 36000000; //  1 hour
+                    foundUser.resetPasswordExpires = Date.now() + 3600000; //  1 hour
                     foundUser.save((err) => {
                         cb(err, token, foundUser);
                     });
@@ -115,16 +115,15 @@ router.post('/reset/:token', (req, res) => {
                 } 
                 if(req.body.password === req.body.confirm){
                     foundUser.setPassword(req.body.password, (err) => {
-                    foundUser.resetPasswordToken = undefined;
-                    foundUser.resetPasswordExpires = undefined;
-  
-                    foundUser.save((err) => {
-                        req.logIn(foundUser, (err) => {
-                            cb(err, foundUser);
+                        foundUser.resetPasswordToken = undefined;
+                        foundUser.resetPasswordExpires = undefined;
+                        foundUser.save((err) => {
+                            req.logIn(foundUser, (err) => {
+                                cb(err, foundUser);
+                            });
                         });
-                    });
                     console.log('\nPassword changed successfully!\n')
-                })
+                    });
                 } else {
                     req.flash('error', 'Passwords do not match.');
                     return res.redirect('back');

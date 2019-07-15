@@ -19,21 +19,25 @@ const   path            = require('path'),
         campgroundRoutes    = require('./routes/campgrounds'),
         resetPwRoutes       = require('./routes/reset_pw'),
         userProfileRoutes   = require('./routes/profile'),
-        errorHandler        = require('./middleware/error');
+        errorHandler        = require('./middleware/error'),
+        favicon             = require('serve-favicon');
 
 //  =================================
 //  BASIC EXPRESS AND MONGOOSE CONFIG
 //  =================================
+mongoose.connect(process.env.DB_CONN, { useNewUrlParser: true });
+db.on('error', console.error.bind(console, '\nConnection error:\n'));
+db.once('open', () => {
+    console.log('\nDatabase connection established');
+});
 
-mongoose.connect(process.env.DB_CONN, {useNewUrlParser: true});
-db.on('error', console.error.bind(console, 'connection error:'));
-
-app.listen(port, () => console.log(`Express Server is listening on port ${port}`));
+app.listen(port, () => console.log(`\nExpress Server is listening on port ${port}`));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(flash());
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 //  seeding the db with new ID's generated on server restart
 //  seedDB();
@@ -45,9 +49,9 @@ app.set('view engine', 'ejs');
 //  make variable moment available in all view files 
 app.locals.moment = require('moment');  
 
-//  =================
-//  PASSPORTJS CONFIG
-//  =================
+//  =====================================
+//  EXPRESS SESSION AND PASSPORTJS CONFIG
+//  =====================================
 
 app.use(expressSession({
     secret: process.env.EXPRESS_SECRET,
@@ -63,7 +67,6 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 //  make currentUser object and flash messages available on all routes
-
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     res.locals.error = req.flash('error');
@@ -87,7 +90,7 @@ app.use('/user', userProfileRoutes);
 
 //  catch 404 errors
 app.get('*', (req, res, next) => {
-    let err = new Error('The page you are looking for cannot be found!');
+    let err = new Error(`The page: '${req.originalUrl}' does not exist or cannot be found!`);
     err.messageForConsole = `${req.ip} tried to reach ${req.originalUrl}`
     err.statusCode = 404;
     err.shouldRedirect = true;

@@ -27,7 +27,17 @@ textarea {
     margin-left: 0px;
     margin-right: 0px;
 }
-
+/* 
+CLIP IMAGE TO TEXT
+.jumbotron__title h1 {
+    font-size: 10rem;
+    font-weight: 900;
+    color: transparent;
+    background-image: url(/images/emvhOnb.jpg);
+    background-size: contain;
+    background-clip: text; 
+}
+ */
 @media (min-width: 576px) {
     .card-deck {
         margin-left: -15px;

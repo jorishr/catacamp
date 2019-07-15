@@ -31,7 +31,7 @@ router.post('/register', (req, res) => {
         lastname:       req.body.lastName,
         email:          req.body.email,
         dateOfBirth:    req.body.dateOfBirth,      
-        isAdmin:        false
+        //isAdmin:        false
     }), req.body.password, 
     (err) => {      
         if(err){
