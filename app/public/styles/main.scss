@@ -2,6 +2,8 @@
 @import 'vendor/fontawesome/scss/fontawesome.scss';
 @import 'vendor/fontawesome/scss/solid.scss';
 @import 'vendor/fontawesome/scss/regular.scss';
+@import 'vendor/fontawesome/scss/brands.scss';
+
 
 /*  =========
     GRADIENTS
@@ -213,23 +215,34 @@ input[name="search"]:focus {
     padding: 6px;
 }
 
-
 /*  =======
     tooltip 
     =======    */
-.footer a {
-    position: relative;
-}
+    .footer a {
+        position: relative;
+    }
+    
+    .footer__tooltip:hover::after {
+        content: 'See more development work by Joris H. Raymaekers @ jorisr.com';
+        width: 400px;
+        height: 75px;
+        background: #4C4B4B;
+        color: white;
+        position: absolute;
+        top: -80px; 
+        left: 0;
+        padding: 15px;
+        border-radius: 75px;
+    }
 
-.footer__tooltip:hover::after {
-    content: 'See more development work by Joris H. Raymaekers @ jorisr.com';
-    width: 400px;
-    height: 75px;
-    background: #4C4B4B;
-    color: white;
-    position: absolute;
-    top: -80px; 
-    left: 0;
-    padding: 15px;
-    border-radius: 75px;
+/*  =======
+    sharing 
+    =======    */
+
+.social__text {
+    font-size: 1.25em;
+} 
+
+.social__link {
+    color: gray;
 }
