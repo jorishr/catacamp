@@ -38,7 +38,7 @@
                     <img    src="/<%= campground.image %>" alt="<%= campground.name %>"
                             class="card-img-top pb-4">
                     <h4 class="card-title pb-2">About campground <%= campground.name %></h4>
-                    <p class="card-text"><%= campground.description %></p>
+                    <p class="card-text description"><%= campground.description %></p>
                     <p class="card-text">
                         <em>Submitted by <i class="far fa-user-circle pr-1 pl-1"></i> 
                         <a href="/user/<%= campground.author.id %>"> <%= campground.author.username %> </a> <i class="far fa-calendar-alt pr-1 pl-1"></i> <%= moment(campground.createdAt).fromNow() %></em></p>

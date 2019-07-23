@@ -1,30 +1,32 @@
 <% include ../modules/_header %>
 <div class="container">
-
     <header class="jumbotron text-center">
         <div class="container">
             <div class="jumbotron__title d-flex justify-content-center pb-3">
                 <i class="fas fa-campground fa-5x mr-3"></i>
-                <h1 class="text pt-3"><strong>Welcome to CataCamp</strong></h1>
+                <h1 class="text pt-3"><strong>CataCamp</strong></h1>
             </div>
-            <h2 class="text pb-3">Browse the best campgrounds destination in Catalonia!</h2>     
+            <h2 class="text pb-3 jumbotron__subtitle">Browse the best campgrounds destinations in Catalonia!</h2>     
             <form action="/campgrounds" method="GET" class="form-inline justify-content-center pb-3">
                 <div class="form-group">
                     <label for="search-form"></label>
                     <input  class="form-control mb-1" type="text" name="search" 
-                            placeholder="Enter a location or name..." id="">
-                    <input  class="btn btn-light mb-1" type="submit" value="search">
+                            placeholder="Enter location or name...">
+                    <button class="btn btn-light mb-1 btn-search" type="submit"><i class="fas fa-search-location"></i></button>
                 </div>
             </form>
             <p class="text">Want to share a fantastic campsite that is not listed yet?<p>
             <p class="mb-0">
-                <a  class="btn btn-large btn-outline-info" 
-                    href="/campgrounds/new"><i class="fas fa-plus pr-2"></i>Add a new campground</a>
+                <a  class="btn btn-large btn-outline-info jumbotron__btn" 
+                    href="/campgrounds/new">
+                    <i class="fas fa-plus pr-2"></i>
+                    Add a new campground
+                </a>
             </p>
 
         </div>
     </header>
-    <div class="row text-center card-deck">
+    <div class="row text-center card-grid mb-3">
         <% if(noMatch !== null){ %> 
         <div class="container">
             <p><%= noMatch %></p>
@@ -32,8 +34,8 @@
         </div>
         <% } %>
         <% campgrounds.forEach(campground => { %>
-        <div class="col-sm-12 col-md-6 col-lg-3 mb-4 p-0">    
-            <div class="card h-100">
+        <!-- <div class="col-sm-12 col-md-6 col-lg-3 mb-4 p-0"> -->   
+            <div class="index-grid card h-100">
                 <img    class="card-img-top"
                         src="/<%= campground.image %>" alt="Image of the campground /<%= campground.name %>">
                 <div class="card-body">
@@ -41,10 +43,10 @@
                 </div>
                 <div class="card-footer">
                     <a  href="/campgrounds/<%= campground._id %>"
-                        class="btn btn-outline-primary">More info...<i class="fas fa-chevron-right pl-1"></i></a>
+                        class="btn btn-outline-secondary">see more...<i class="fas fa-chevron-right pl-1"></i></a>
                 </div>
             </div>
-        </div>
+<!--         </div> -->
         <% }) %>
     </div>
 </div>   

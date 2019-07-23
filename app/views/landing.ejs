@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <link rel="stylesheet" href="/landing.css">
     <link rel="stylesheet" href="/main.css">
     <title>CataCamp</title>
@@ -13,13 +14,13 @@
     <div class="landing-header">
         <h1>Welcome to CataCamp</h1>
         <h2>The most amazing campgrounds in Catalonia, all in one place!</h2>
-        <a class="btn btn-lg btn-info" href="/campgrounds">See all campgrounds</a>
+        <a class="btn btn-lg btn-info" href="/campgrounds">Start your journey here!</a>
         <form  action="/campgrounds" method="GET" class="form-inline justify-content-center mt-4">
             <div class="form-group">
                 <label for="search-form"></label>
                 <input  class="form-control mb-1" type="text" name="search" 
-                        placeholder="Enter a location or name..." id="">
-                <input  class="btn btn-light mb-1" type="submit" value="search">
+                        placeholder="Enter location or name...">
+                <button class="btn btn-light mb-1 btn-search" type="submit"><i class="fas fa-search-location"></i></button>
             </div>
         </form>
     </div>
