@@ -1,0 +1,31 @@
+/*  =========
+    JUMBOTRON
+    =========   */
+
+.jumbotron {
+    background-color: $mainBackground; 
+    background-image: var(--gradient-dark);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+}
+
+.jumbotron__title {
+    font-size: 1.5em;
+    color: $secondColor;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+}
+
+.jumbotron__btn {
+    text-transform: uppercase;
+    letter-spacing: .1em;
+}
+
+@media (max-width: 576px){
+    .jumbotron__title {
+        font-size: .9rem;
+    }
+
+    .jumbotron__btn{
+        font-size: .75rem;
+    }
+}

@@ -1,0 +1,15 @@
+/*  =======
+    sharing 
+    =======    */
+
+.social__text {
+    font-size: 1.25em;
+} 
+
+.social__link {
+    color: $firstColor;
+}
+
+.social__link:hover {
+    color: $secondColor;
+}

@@ -1,0 +1,52 @@
+/*  =====
+    CARDS
+    =====   */
+
+.card {
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+}
+
+//  index page
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 20px;
+}
+
+.index-grid.card {
+    transition: transform .5s ease-in-out .2s;
+    border: 0;
+}
+
+.index-grid.card:hover {
+    transform: scale(1.05);
+}
+
+//  zoom effect
+.card figure {
+    overflow: hidden;
+}
+
+figure img {
+    width: 100%;
+    transform: scale(1.3);
+    transition: transform .5s ease-in-out .2s;
+} 
+
+.card:hover figure img{
+    transform: scale(1);
+}
+
+//  campground show page
+.description::first-letter {
+    float: left;
+    font-weight: 600;
+    font-size: 3em;
+    line-height: .5;
+    margin: 10px 5px 0px 0px;
+    color:$secondColor;
+}
+
+.card-title__author {
+    color: $secondColor;
+}

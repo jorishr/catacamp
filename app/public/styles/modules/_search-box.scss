@@ -1,0 +1,59 @@
+/*  ==========
+    search box
+    ==========    */
+
+::placeholder {
+    color: $secondColor;
+}
+
+.search-box {
+    // rounded corner equal to height, height is taken from bootstrap
+    height: calc(1.5em + 0.75rem + 2px);
+    border-radius: calc(1.5em + 0.75rem + 2px);
+    background-color: $mainBackground;
+    padding: 0 0 0 1em;
+    // center the input element text
+    line-height: 2.25;
+}
+
+.search-box__text {
+    float: left;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: $secondColor;
+}
+
+.search-box__text:focus {
+    color: $mainBackground;   
+}
+
+.search-box:focus-within {
+    background: $secondColor;
+
+    .search-box__btn {
+        color: $mainBackground;
+    }
+}
+
+.search-box__btn {
+    background: none;
+    border: none;
+    color: $secondColor;
+    float: right;
+    // border
+    width: calc(1.5em + 0.75rem + 2px);
+    height: calc(1.5em + 0.75rem + 2px);
+    border-radius: 50%;
+    // align the icon inside the button
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media (max-width: 576px){
+    .search-box {
+        min-width: 240px;
+    }
+}

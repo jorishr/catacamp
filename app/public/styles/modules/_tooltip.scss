@@ -1,0 +1,19 @@
+/*  =======
+    tooltip 
+    =======    */
+.footer a {
+    position: relative;
+}
+
+.footer__tooltip:hover::after {
+    content: 'See more development work by Joris H. Raymaekers @ jorisr.com';
+    width: 400px;
+    height: 75px;
+    background: $secondColor;
+    color: $mainBackground;
+    position: absolute;
+    top: -80px; 
+    left: 0;
+    padding: 15px;
+    border-radius: 75px;
+}

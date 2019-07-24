@@ -1,0 +1,13 @@
+/*  ==================== 
+    sticky footer styles
+    ====================    
+
+    Also see general styles for related body styles.
+    All pages have a container with flex-grow:1;
+*/
+.footer {
+    height: 60px;
+    background-color: $mainBackground;
+    background-image: var(--gradient-dark);
+}
+
