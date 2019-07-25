@@ -10,7 +10,9 @@
         <form action="/register" method="POST" class="mb-4 p-3">
             <div class="form-group mb-5">
                 <label for="formUserName" class="form__label text-uppercase text-muted">Username</label>
-                <input  class="form__input" type="text" name="username" id="formUserName" 
+                <input  class="form__input" type="text" name="username" id="formUserName"
+                        title="Choose a user of min 3 and max 15 characters. No symbols or special characters allowed"
+                        pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{2,15}$"
                         placeholder="Enter a new username..." autofocus required>
             </div>
             <div class="form-group mb-5">
@@ -22,7 +24,9 @@
                 <label for="pwField" class="form__label text-uppercase text-muted">Password</label>
                 <div class="password-box">
                     <input  class="form__input" type="password" name="password" id="pwField" 
-                            placeholder="Enter a new password..." required>
+                            placeholder="Enter a new password..." required
+                            title="UpperCase, LowerCase, Number or SpecialChar and min 8 Characters"
+                            pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
                     <i  class="far fa-eye password-box__icon text-muted" 
                     onclick="passwordToggle()" id="pwIcon">
                     </i>
@@ -30,12 +34,16 @@
             </div>
             <div class="form-group mb-5">
                 <label for="formFirstName" class="form__label text-uppercase text-muted">First Name</label>
-                <input  class="form__input" type="text" name="firstName" id="formFirstName" 
+                <input  class="form__input" type="text" name="firstName" id="formFirstName"
+                        pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{2,20}$"
+                        title="Choose a name of min 3 and max 20 characters. No symbols or special characters allowed" 
                         placeholder="Enter your first name..." required>
             </div>
             <div class="form-group mb-5">
                 <label for="formLastName" class="form__label text-uppercase text-muted">Last Name</label>
                 <input  class="form__input" type="text" name="lastName" 
+                        pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{2,20}$"
+                        title="Choose a name of min 3 and max 20 characters. No symbols or special characters allowed"
                         placeholder="Enter your last name..." id="formLastName" required>
             </div>
             <div class="form-group mb-5">

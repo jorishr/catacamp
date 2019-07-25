@@ -134,9 +134,10 @@
                                     <form action="/campgrounds/<%= campground._id %>/comments" method="POST" class="mb-3">
                                         <div class="form-group">
                                             <label for="formComment">Add your comment for campground <%= campground.name %></label>
-                                            <textarea   name="comment[text]" class="" required
-                                                        placeholder="Write your comment here..." id="formComment">
-                                            </textarea>
+                                            <textarea   name="comment[text]" class="form__input p-3" id="formComment"
+                                                        minlength="10" maxlength="500"
+                                                        title="min 10 and max 500 characters"
+                                                        placeholder="Write your comment here..." required></textarea>
                                         </div>
                                         <button class="btn btn-outline-info"><i class="far fa-share-square pr-2"></i>Submit</button>
                                     </form>
@@ -189,8 +190,11 @@
                                                     <form   action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=PUT" 
                                                             method="POST" class="mb-3">
                                                     <div class="form-group">
-                                                        <label for=""><em>Update your comment for campground <%= campground.name %></em></label>
-                                                        <textarea   name="comment[text]" class="" required><%= comment.text %></textarea>
+                                                        <label for="formUpdate"><em>Update your comment for campground <%= campground.name %></em></label>
+                                                        <textarea   name="comment[text]" class="form__input p-3" id="formUpdate" 
+                                                                    title="Min 10 and maximum 500 characters"
+                                                                    minlength="10" maxlength="500"
+                                                                    required><%= comment.text %></textarea>
                                                     </div>
                                                         <button class="btn btn-outline-info"><i class="far fa-share-square pr-2"></i>Save changes</button>
                                                     </form>

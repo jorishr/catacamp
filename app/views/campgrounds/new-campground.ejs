@@ -8,20 +8,23 @@
         </h2>
         <form action="/campgrounds" method="POST" class="mb-3 p-md-5 w-100">
             <div class="form-group mb-5">
-                <label for="formName" class="form__label text-muted text-uppercase">Name</label>
-                <input  class="form__input" type="text" name="newName" id="formName"
-                        placeholder="Enter name of new campsite..." autofocus>
+                <label  for="formName" class="form__label text-muted text-uppercase">Name</label>
+                <input  class="form__input" type="text" name="newName" id="formName" 
+                        title="Enter a name of min 6 and max 20 characters. No symbols or special characters."
+                        placeholder="Enter name of new campsite..." pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{5,20}$" autofocus>
             </div>
             <div class="form-group mb-5">
-                <label for="formImage" class="form__label text-muted text-uppercase">Image</label>
+                <label  for="formImage" class="form__label text-muted text-uppercase">Image</label>
                 <input  class="form__input" type="text" name="newImage" id="formImage"
+                        title="If you don't have an image you can leave this blank"
                         placeholder="Enter url of new image...">
             </div>
 
             <div class="form-group mb-5">
-                <label for="formLocation" class="form__label text-muted text-uppercase">Location</label>
+                <label  for="formLocation" class="form__label text-muted text-uppercase">Location</label>
                 <input  class="form__input" type="text" name="newLocation" id="formLocation"
-                        id="location" placeholder="Indicate the address of the campground...">
+                        title="Enter the full address or just the city or town of the campground"
+                        placeholder="Indicate the address of the campground...">
             </div>
 
             <div class="form-group mb-5">
@@ -35,9 +38,9 @@
                 <label for="formDescription" class="form__label text-muted text-uppercase" id="formDescription">
                     Description
                 </label>
-                <textarea   name="newDescription"
-                            placeholder="Enter a desription of the campground...">
-                </textarea>
+                <textarea   name="newDescription" class="p-3 form__input" maxlength="2000"
+                            minlength="500" title="Add a description of min 500 and max 2000 characters"
+                            placeholder="Enter a desription of the campground...(min. 500 characters)"></textarea>
             </div>
             <button class="btn btn-md btn-block btn-outline-info">
                 <i class="far fa-share-square pr-3"></i>
@@ -45,7 +48,7 @@
             </button>
         </form>
         <a class="btn btn-light btn-sm mb-3 text-muted" href="/campgrounds">
-            <i class="fas fa-long-arrow-alt-left pr-2"></i>
+            <i class="fas fa-long-arrow-alt-left pr-1"></i>
             Go Back
         </a>
     </div>

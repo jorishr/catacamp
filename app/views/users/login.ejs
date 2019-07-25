@@ -10,6 +10,8 @@
             <div class="form-group mb-5">
                 <label for="username" class="form__label text-uppercase text-muted">Username</label>
                 <input  class="form__input" type="text" name="username" id="username" 
+                        title="A valid username has min 3 and max 15 characters. No symbols or special characters allowed"
+                        pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{2,15}$"
                         placeholder="Enter your username..." autofocus required>
             </div>
             <div class="form-group mb-5">

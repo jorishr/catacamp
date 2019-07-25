@@ -14,7 +14,10 @@
                 </label>
                 <div class="password-box">
                     <input  class="form__input password-box__input" type="password" name="password" id="pwField" 
-                            placeholder="Enter a new password..." autofocus required>
+                            placeholder="Enter a new password..." 
+                            title="UpperCase, LowerCase, Number or SpecialChar and min 8 Characters"
+                            pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                            autofocus required>
                     <i  class="far fa-eye password-box__icon text-muted" 
                         onclick="passwordToggle()" id="pwIcon">
                     </i>
@@ -24,7 +27,9 @@
                     <label  for="formPasswordConfirm" class="form__label text-muted text-uppercase">
                         Confirm new password
                     </label>
-                    <input  class="form__input" type="password" name="confirm" 
+                    <input  class="form__input" type="password" name="confirm"
+                            title="UpperCase, LowerCase, Number or SpecialChar and min 8 Characters"
+                            pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
                             placeholder="Repeat your new password..." id="formPasswordConfirm" required>
             </div>
             <button class="btn btn-md btn-block btn-outline-info">

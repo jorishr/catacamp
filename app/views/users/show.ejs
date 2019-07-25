@@ -9,7 +9,7 @@
                         Yelp Camp profile for <span class="text-info font-italic"><%= userData.username %></span>
                     </h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body text-muted">
                     <p class="text"><strong>First Name</strong></p>
                     <p class="text"><%= userData.firstname %></p>
                     <p class="text"><strong>Last Name</strong></p>
@@ -36,10 +36,10 @@
                 </div>
                 <% if(campgroundData.length === 0) { %>
                 <div class="card-body">
-                    <p class="text">No campgrounds added by <em><%= userData.username %></em></p>
+                    <p class="text-muted">No campgrounds added by <em><%= userData.username %></em></p>
                 </div>
                 <% } %>    
-                <div class="card-body">
+                <div class="card-body text-muted">
                     <% campgroundData.forEach(campground => { %>
                     <ul>
                         <li>
