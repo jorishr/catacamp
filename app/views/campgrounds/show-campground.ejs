@@ -60,7 +60,7 @@
                     <% } %>
                 </div>
                 <!-- SOCIAL MEDIA BLOCK -->
-                <div class="card-footer">
+                <div class="card-footer mb-1">
                     <span class="social__text font-italic pr-2">Share</span>
                     <a  href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" 
                         target="_blank" class="social__link pr-2" data-href="https://www.jorisr.com/campgrounds/<%= campground._id %>"
@@ -76,8 +76,12 @@
                         title="copy link to clipboard">
                         <i class="fas fa-link fa-2x"></i>
                     </a>
+                    <div class="tooltip-link">
+                        <span class="tooltip-link__text">Page url copied to clipboard!</span>
+                    </div>
                 </div>
             </div>
+
 
             <!-- COMMENTS SECTION START-->
             <div class="card mb-3">
@@ -96,25 +100,27 @@
                 <div class="row collapse" id="collapseComment">
                     <!-- Not logged in: redirect to login page; else: show form -->
                     <% if(!currentUser) { %>
-                    <div class="col-md-12 mb-2">
+                    <div class="col-md-6 mb-2 p-3">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-title">
+                                <p class="text-muted pr-3 pl-3 pb-0 mt-3">You need to be logged-in to post comments!</p>
+                            </div>
+                            <div class="card-body pt-0">
                                 <form action="/login" method="POST" class="mb-3">
                                     <div class="form-group">
-                                        <label for="">Username</label>
-                                        <input  class="form-control" type="text" name="username" 
+                                        <label  for="formUsername" class="form__label text-muted text-uppercase">Username</label>
+                                        <input  class="form__input" type="text" name="username" id="formUsername"
                                                 placeholder="Enter your username..." required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="">Password</label>
-                                        <input  class="form-control" type="password" name="password" 
+                                    <div class="form-group mb-4">
+                                        <label  for="pwField" class="form__label text-muted text-uppercase">Password</label>
+                                        <input  class="form__input" type="password" name="password" id="pwField"
                                                 placeholder="Enter your password..." required>
                                     </div>
-                                    <button class="btn btn-primary"><i class="fas fa-sign-in-alt pr-2"></i>Login</button>
+                                    <button class="btn btn-outline-info"><i class="fas fa-sign-in-alt pr-1"></i>Login</button>
                                 </form>
                                 <div class="float-left">
-                                    <p class="text">New here?</p>
-                                    <a href="/register" class="btn btn-info"><i class="fas fa-user-plus pr-2"></i>Sign Up!</a>
+                                    <a href="/register" class="btn btn-light btn-sm text-muted"><i class="fas fa-user-plus pr-2"></i>New here? Sign Up!</a>
                                 </div>
                             </div>
                         </div>   
@@ -127,12 +133,12 @@
                                 <div class="float-left">
                                     <form action="/campgrounds/<%= campground._id %>/comments" method="POST" class="mb-3">
                                         <div class="form-group">
-                                            <label for="Comment">Add your comment for campground <%= campground.name %></label>
+                                            <label for="formComment">Add your comment for campground <%= campground.name %></label>
                                             <textarea   name="comment[text]" class="" required
-                                                        placeholder="Write your comment here..." id="">
+                                                        placeholder="Write your comment here..." id="formComment">
                                             </textarea>
                                         </div>
-                                        <button class="btn btn-outline-primary"><i class="far fa-share-square pr-2"></i>Submit</button>
+                                        <button class="btn btn-outline-info"><i class="far fa-share-square pr-2"></i>Submit</button>
                                     </form>
                                 </div>
                             </div>
@@ -186,7 +192,7 @@
                                                         <label for=""><em>Update your comment for campground <%= campground.name %></em></label>
                                                         <textarea   name="comment[text]" class="" required><%= comment.text %></textarea>
                                                     </div>
-                                                        <button class="btn btn-info"><i class="far fa-share-square pr-2"></i>Save changes</button>
+                                                        <button class="btn btn-outline-info"><i class="far fa-share-square pr-2"></i>Save changes</button>
                                                     </form>
                                                     <form   action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" 
                                                             method="post" class="">
@@ -240,4 +246,5 @@
     let url=`https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
     document.getElementById('mapsApiScript').src = url;
 </script>
+<script src="/scripts/copyurl.js"></script>
 <% include ../modules/_footer %>

@@ -1,17 +1,15 @@
 <% include ../modules/_header %>
 <div class="row justify-content-center">
-    <div class="col-md-12 text-center mb-3">
-        <h2>Add a comment to campground: <%= campground.name %></h2>
-    </div>
     <div class="col-xs-12 col-md-6 col-lg-4">
+        <h2 class="text-center mb-3">Add a comment to campground: <%= campground.name %></h2>
         <form action="/campgrounds/<%= campground._id %>/comments" method="POST" class="mb-3">
             <div class="form-group">
-                <label for="">Comment</label>
-                <textarea autofocus name="comment[text]" required></textarea>
+                <label for="formComment">Comment</label>
+                <textarea autofocus name="comment[text]" id="formComment" required></textarea>
             </div>
-            <button class="btn btn-lg btn-default btn-block btn-primary">Submit</button>
+            <button class="btn btn-md btn-block btn-outline-info">Submit</button>
         </form>
-        <a class="btn btn-light float-right" href="/campgrounds/<%= campground._id %>">Go Back</a>
+        <a class="btn btn-sm btn-light" href="/campgrounds/<%= campground._id %>">Go Back</a>
     </div>
 </div>
 

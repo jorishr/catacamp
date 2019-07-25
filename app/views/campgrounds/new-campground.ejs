@@ -1,44 +1,53 @@
 <% include ../modules/_header %>
-<div class="row justify-content-center wrapper flex-grow-1">
-    <div class="col-md-12 text-center mb-2">
-        <h2><i class="far fa-edit pr-3"></i>Submit a new campground</h2>
-    </div>
-    <div class="col-xs-12 col-md-6 col-lg-4">
-        <form action="/campgrounds" method="POST" class="mb-3">
-            <div class="form-group">
-                <label for="">Name</label>
-                <input  class="form-control" type="text" name="newName" 
+<div class="row justify-content-center wrapper flex-grow-1 p-3">
+    <div    class="col-xs-12 col-md-8 col-lg-6 d-flex flex-column justify-content-start
+            align-items-center border border-info p-3 mb-3">
+        <h2 class="form__title text-muted text-center mb-5 pt-3">
+            <i class="far fa-edit pr-1"></i>
+            Submit a new campground
+        </h2>
+        <form action="/campgrounds" method="POST" class="mb-3 p-md-5 w-100">
+            <div class="form-group mb-5">
+                <label for="formName" class="form__label text-muted text-uppercase">Name</label>
+                <input  class="form__input" type="text" name="newName" id="formName"
                         placeholder="Enter name of new campsite..." autofocus>
             </div>
-            <div class="form-group">
-                <label for="">Image</label>
-                <input  class="form-control" type="text" name="newImage"
+            <div class="form-group mb-5">
+                <label for="formImage" class="form__label text-muted text-uppercase">Image</label>
+                <input  class="form__input" type="text" name="newImage" id="formImage"
                         placeholder="Enter url of new image...">
             </div>
 
-            <div class="form-group">
-                <label for="location">Location</label>
-                <input  class="form-control" type="text" name="newLocation" 
+            <div class="form-group mb-5">
+                <label for="formLocation" class="form__label text-muted text-uppercase">Location</label>
+                <input  class="form__input" type="text" name="newLocation" id="formLocation"
                         id="location" placeholder="Indicate the address of the campground...">
             </div>
 
-            <div class="form-group">
-                <label for="">Price per night in EUR</label>
-                <input  class="form-control" type="number" name="newPrice" 
+            <div class="form-group mb-5">
+                <label for="formPrice" class="form__label text-muted text-uppercase">Price per night in EUR</label>
+                <input  class="form__input" type="number" name="newPrice" id="formPrice"
                         placeholder="Enter price of the new campsite..."
                         min="0.01" step="0.01">
             </div>
 
-            <div class="form-group">
-                <label for="">Description</label>
-                <textarea   name="newDescription" id=""
+            <div class="form-group mb-5">
+                <label for="formDescription" class="form__label text-muted text-uppercase" id="formDescription">
+                    Description
+                </label>
+                <textarea   name="newDescription"
                             placeholder="Enter a desription of the campground...">
                 </textarea>
             </div>
-            <button class="btn btn-lg btn-default btn-block btn-primary"><i class="far fa-share-square pr-3"></i>Submit</button>
+            <button class="btn btn-md btn-block btn-outline-info">
+                <i class="far fa-share-square pr-3"></i>
+                Submit
+            </button>
         </form>
-        <a class="btn btn-light btn-small float-right mb-3" href="/campgrounds"><i class="fas fa-long-arrow-alt-left pr-2"></i>Go Back</a>
+        <a class="btn btn-light btn-sm mb-3 text-muted" href="/campgrounds">
+            <i class="fas fa-long-arrow-alt-left pr-2"></i>
+            Go Back
+        </a>
     </div>
 </div>
-
 <% include ../modules/_footer %>

@@ -7107,9 +7107,10 @@ h1 > i {
             rgba(0,0,0,.25)); }
 
 textarea {
-  min-height: 5em;
+  min-height: 30vh;
   max-height: 50vh;
-  width: 100%; }
+  width: 100%;
+  resize: none; }
 
 .deleteForm {
   display: inline-block; }
@@ -7189,6 +7190,48 @@ figure img {
 .card-title__author {
   color: #17a2b8; }
 
+.form__title {
+  font-size: 2em; }
+
+h1 > i {
+  font-size: 1.25em; }
+
+@media (max-width: 768px) {
+  .form__title {
+    font-size: 1.5em; }
+  h1 > i {
+    font-size: 1.25em; } }
+
+.form__input {
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid gray;
+  background-color: transparent;
+  padding: .25em;
+  width: 100%;
+  color: #17a2b8; }
+
+.form__input:focus {
+  box-shadow: 0 0.5rem 0 -0.35rem #17a2b8;
+  color: #17a2b8; }
+
+.form__label {
+  font-size: .9em; }
+
+.form__label::after {
+  content: '*';
+  color: red;
+  padding-left: 5px; }
+
+.password-box {
+  position: relative; }
+
+.password-box__icon {
+  position: absolute;
+  top: 25%;
+  right: 5%; }
+
 /*  ==========
     search box
     ==========    */
@@ -7253,6 +7296,35 @@ figure img {
 .social__link:hover {
   color: #17a2b8; }
 
+.tooltip-link {
+  position: relative;
+  display: inline-block;
+  opacity: 0;
+  transition: opacity .5s ease-in .1s; }
+  .tooltip-link--visible {
+    opacity: 1; }
+
+.tooltip-link__text {
+  margin-left: 1em;
+  position: relative;
+  background-color: #17a2b8;
+  color: #EAF0F1;
+  padding: .5em 1em;
+  border-radius: 15px 30px 30px 15px; }
+
+.tooltip-link__text::after {
+  content: '';
+  position: absolute;
+  right: 100%;
+  top: 30%;
+  border-width: .5em;
+  border-style: solid;
+  border-color: transparent #17a2b8 transparent transparent; }
+
+@media (max-width: 503px) {
+  .tooltip-link {
+    display: none; } }
+
 /*  =======
     tooltip 
     =======    */
@@ -7282,6 +7354,10 @@ figure img {
   height: 60px;
   background-color: #EAF0F1;
   background-image: var(--gradient-dark); }
+
+@media (max-width: 768px) {
+  .error__text {
+    font-size: 1.5em; } }
 
 /*!
  * Font Awesome Free 5.9.0 by @fontawesome - https://fontawesome.com

@@ -43,9 +43,10 @@ h1 > i {
 
 //  form
 textarea {
-	min-height: 5em;
+	min-height: 30vh;
 	max-height: 50vh;
-	width: 100%;
+    width: 100%;
+    resize: none;
 }
 
 .deleteForm {

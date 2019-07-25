@@ -1,29 +1,40 @@
 <% include ../modules/_header %>
-
-<div class="row justify-content-center flex-grow-1 p-0">
-    <div class="col-md-12 text-center mb-2">
-        <h2><i class="fas fa-sign-in-alt pr-3"></i>Login to the site</h2>
-    </div>
-    <div class="col-xs-12 col-md-6 col-lg-4">
-        <form action="/login" method="POST" class="mb-3">
-            <div class="form-group">
-                <label for="">Username</label>
-                <input  class="form-control" type="text" name="username" 
+<div class="row justify-content-center flex-grow-1 p-3 mb-3">
+    <div    class="col-xs-12 col-md-6 col-lg-4 d-flex flex-column justify-content-center 
+    align-items-center border border-info p-3">
+        <h1 class="text-muted form__title mb-5">
+            <i class="fas fa-sign-in-alt pr-1"></i>
+            Login to the site
+        </h1>
+        <form action="/login" method="POST" class="mb-5">
+            <div class="form-group mb-5">
+                <label for="username" class="form__label text-uppercase text-muted">Username</label>
+                <input  class="form__input" type="text" name="username" id="username" 
                         placeholder="Enter your username..." autofocus required>
             </div>
-            <div class="form-group">
-                <label for="">Password</label>
-                <input  class="form-control" type="password" name="password" 
-                        placeholder="Enter your password..." required>
+            <div class="form-group mb-5">
+                <label for="pwField" class="form__label text-uppercase text-muted">Password</label>
+                <div class="password-box">
+                    <input  class="form__input password-box__input" type="password" 
+                            name="password" placeholder="Enter your password..." id="pwField" required>
+                    <i  class="far fa-eye password-box__icon text-muted" 
+                        onclick="passwordToggle()" id="pwIcon">
+                    </i>
+                </div>
             </div>
-            <button class="btn btn-lg btn-default btn-block btn-primary">
+            <button class="btn btn-md btn-block btn-outline-info">
                 Login
             </button>
         </form>
-        <a class="btn btn-light btn-small float-right mb-3 ml-3" href="/campgrounds"><i class="fas fa-long-arrow-alt-left pr-2"></i>Go Back</a>
-        <a class="btn btn-light btn-small float-right mb-3" href="/forgot"><i class="fas fa-lock pr-3"></i>Forgot your password?</a>
-        <div>
-            <a class="btn btn-light btn-small float-right mb-3" href="/register">New here? Sign up!
+        <div class="d-flex flex-column">
+            <a  class="btn btn-light btn-small float-right text-nowrap text-muted mb-3" 
+                href="/forgot">
+                <i class="fas fa-lock pr-1"></i>
+                Forgot your password?
+            </a>
+            <a  class="btn btn-light btn-small float-right text-nowrap text-muted" 
+                href="/register">
+                New here? Sign up!
             </a>
         </div>
     </div>

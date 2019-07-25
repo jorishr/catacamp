@@ -13,3 +13,39 @@
 .social__link:hover {
     color: $secondColor;
 }
+
+.tooltip-link {
+    position: relative;
+    display: inline-block;
+    opacity: 0;
+    transition: opacity .5s ease-in .1s;
+    
+    &--visible {
+        opacity: 1;
+    }
+}
+
+.tooltip-link__text {
+    margin-left: 1em;
+    position: relative;
+    background-color: $secondColor;
+    color: $mainBackground;
+    padding: .5em 1em;
+    border-radius: 15px 30px 30px 15px;
+}
+
+.tooltip-link__text::after {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 30%;
+    border-width: .5em;
+    border-style: solid;
+    border-color: transparent $secondColor transparent transparent;
+}
+
+@media (max-width: 503px) {
+    .tooltip-link {
+        display: none;
+    }
+}

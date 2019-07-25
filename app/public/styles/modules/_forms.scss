@@ -1,0 +1,54 @@
+.form__title {
+    font-size: 2em;
+}
+
+h1 > i {
+    font-size: 1.25em;
+}
+
+@media (max-width: 768px){
+    .form__title {
+        font-size: 1.5em;
+    }
+    h1 > i {
+        font-size: 1.25em;
+    }
+}
+
+.form__input {
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid $firstColor;
+    background-color: transparent;
+    padding: .25em;
+    width: 100%;
+    color: $secondColor;
+}
+
+.form__input:focus{
+    box-shadow: 0 0.5rem 0 -0.35rem $secondColor;
+    color: $secondColor;
+}
+
+.form__label {
+    font-size: .9em;
+}
+
+.form__label::after {
+    content: '*';
+    color: red;
+    padding-left: 5px;
+}
+
+// password-box
+
+.password-box { 
+    position: relative;
+}
+
+.password-box__icon {
+    position: absolute;
+    top: 25%;
+    right: 5%;
+}

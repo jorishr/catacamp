@@ -1,44 +1,54 @@
 <% include ../modules/_header %>
 
-<div class="row justify-content-center flex-grow-1 p-0">
-    <div class="col-md-12 text-center mb-2">
-        <h2><i class="fas fa-user-plus pr-3"></i>Register as a new user</h2>
-    </div>
-    <div class="col-xs-12 col-md-6 col-lg-4 mb-3">
-        <form action="/register" method="POST" class="mb-3">
-            <div class="form-group">
-                <label for="">Username</label>
-                <input  class="form-control" type="text" name="username" 
+<div class="row justify-content-center flex-grow-1 p-3 mb-3">
+    <div    class="col-xs-12 col-md-6 col-lg-4 d-flex flex-column justify-content-center 
+            align-items-center border border-info p-3">
+        <h2 class="text-muted form__title text-center mb-4 pt-3">
+            <i class="fas fa-user-plus pr-1"></i>
+            Create new profile
+        </h2>
+        <form action="/register" method="POST" class="mb-4 p-3">
+            <div class="form-group mb-5">
+                <label for="formUserName" class="form__label text-uppercase text-muted">Username</label>
+                <input  class="form__input" type="text" name="username" id="formUserName" 
                         placeholder="Enter a new username..." autofocus required>
             </div>
-            <div class="form-group">
-                <label for="">Email</label>
-                <input  class="form-control" type="email" name="email" 
+            <div class="form-group mb-5">
+                <label for="formEmail" class="form__label text-uppercase text-muted">Email</label>
+                <input  class="form__input" type="email" name="email" id="formEmail" 
                         placeholder="Enter your email address..." required>
             </div>
-            <div class="form-group">
-                <label for="">Password</label>
-                <input  class="form-control" type="password" name="password" 
-                        placeholder="Enter a new password..." required>
+            <div class="form-group mb-5">
+                <label for="pwField" class="form__label text-uppercase text-muted">Password</label>
+                <div class="password-box">
+                    <input  class="form__input" type="password" name="password" id="pwField" 
+                            placeholder="Enter a new password..." required>
+                    <i  class="far fa-eye password-box__icon text-muted" 
+                    onclick="passwordToggle()" id="pwIcon">
+                    </i>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="">First Name</label>
-                <input  class="form-control" type="text" name="firstName" 
+            <div class="form-group mb-5">
+                <label for="formFirstName" class="form__label text-uppercase text-muted">First Name</label>
+                <input  class="form__input" type="text" name="firstName" id="formFirstName" 
                         placeholder="Enter your first name..." required>
             </div>
-            <div class="form-group">
-                <label for="">Last Name</label>
-                <input  class="form-control" type="text" name="lastName" 
-                        placeholder="Enter your last name..." id="" required>
+            <div class="form-group mb-5">
+                <label for="formLastName" class="form__label text-uppercase text-muted">Last Name</label>
+                <input  class="form__input" type="text" name="lastName" 
+                        placeholder="Enter your last name..." id="formLastName" required>
             </div>
-            <div class="form-group">
-                <label for="">Date of birth</label>
-                <input  class="form-control" type="date" name="dateOfBirth" 
+            <div class="form-group mb-5">
+                <label for="formDateOfBirth" class="form__label text-uppercase text-muted">Date of birth</label>
+                <input  class="form__input" type="date" name="dateOfBirth" id="formDateOfBirth"
                         value="<%= new Date().toLocaleDateString(('es-ES'), {year: 'numeric', month: '2-digit', day: '2-digit'}) %>" min="1900-01-01"> 
              </div>
-            <button class="btn btn-lg btn-default btn-block btn-primary">Register</button>
+            <button class="btn btn-md btn-block btn-outline-info">Register</button>
         </form>
-        <a class="btn btn-light btn-small float-right" href="/campgrounds"><i class="fas fa-long-arrow-alt-left pr-2"></i>Go Back</a>
+        <a class="btn btn-light btn-sm" href="/campgrounds">
+            <i class="fas fa-long-arrow-alt-left pr-1 text-muted"></i>
+            Go Back
+        </a>
     </div>
 </div>
 
