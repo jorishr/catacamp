@@ -1,4 +1,4 @@
-//  copy current page url to clipboard
+//  copy current page url to clipboard and show a tooltip confirmation
 const   dummy = document.createElement('input'),
         text = window.location.href;
 
