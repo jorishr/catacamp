@@ -191,7 +191,7 @@
                                                             method="POST" class="mb-3">
                                                     <div class="form-group">
                                                         <label for="formUpdate"><em>Update your comment for campground <%= campground.name %></em></label>
-                                                        <textarea   name="comment[text]" class="form__input p-3" id="formUpdate" 
+                                                        <textarea   name="comment[text]" class="form__input p-3"
                                                                     title="Min 10 and maximum 500 characters"
                                                                     minlength="10" maxlength="500"
                                                                     required><%= comment.text %></textarea>
@@ -216,6 +216,10 @@
         </div>
     </div> 
 </div>
+<!-- PAGE HAs SHAREBTNS -->
+<script>
+    document.body.classList.add('hasShare')
+</script>
 <!-- GOOGLE MAPS -->
 <script>
     function initMap() {
@@ -250,5 +254,5 @@
     let url=`https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
     document.getElementById('mapsApiScript').src = url;
 </script>
-<script src="/scripts/copyurl.js"></script>
+<!-- <script src="/scripts/copyurl.js"></script> -->
 <% include ../modules/_footer %>

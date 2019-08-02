@@ -1,20 +1,29 @@
-const   { series, watch, parallel, src, dest} = require('gulp'),
-        nodemon = require('nodemon'),
+const   { series, watch, parallel } = require('gulp'),
+        nodemon     = require('nodemon'),
         browserSync = require('browser-sync'),
-        stylesTasks = require('./stylesTasks');
+        styles      = require('./styles'),      //  import styles OBJECT
+        jsTask      = require('./scripts'),
+        copy        = require('./copy'),
+        build       = require('./build');       
 
-//  WATCH TASK 
+//  globs and paths
+const   baseDir     = './app'
+        styleFiles  = styles.sassGlob,
+        ejsFiles    = baseDir + '/views/**/*.ejs',
+        jsFiles     = baseDir + '/public/scripts/**/*.js';
 
-let styleFiles = './app/public/styles/**/*.scss';
-let htmlFiles = './app/views/**/*.ejs';
-
-function startNodemon (cb) {
+/*  
+    Nodemon config:
+    - watch core server file(s) that require server restart on change
+    - changes in js files in the public are handled seperately in jsTask 
+    - browser-sync delay to account for server loading time
+  */
+function startNodemon(cb) {
     let called = false;
     return nodemon({
-        // nodemon our expressjs server
-        script: './app/app.js',
-        // watch core server file(s) that require server restart on change
-        watch: ['./app/**/*.js']
+        script: baseDir + '/app.js',
+        watch:  baseDir + '/**/*.js',
+        ignore: baseDir + '/public'
     })
     .on('start', function onStart() {
         // ensure start only got called once
@@ -23,21 +32,23 @@ function startNodemon (cb) {
     })
     .on('restart', function onRestart() {
         // reload connected browsers after a slight delay
+        console.log('Restarting server...');
         setTimeout(function reload() {
             browserSync.reload({
                 stream: false
             });
-        }, 1000);
+        }, 4000);
     });
 };
 
+//  browser-sync
 function startBrowserSync (){
     browserSync({
-      // informs browser-sync to proxy our expressjs app 
+      //    proxy the expressjs app and use a different port 
       proxy: 'http://localhost:3000',
-      // informs browser-sync to use the following port for the proxied app
-      // notice that the default port is 3000, which would clash with our expressjs
-      port: 4000
+      port: 4000,
+      files: baseDir + '/public/*.css',   //  watch main css file changes and inject
+      tunnel: 'catacamp' 
     });
 };
 
@@ -48,9 +59,18 @@ function bsReload(cb) {
     cb();
 };
 
+//  watch task
 function watchFiles(){
-    watch(styleFiles, series(stylesTasks.scssTask, bsReload));
-    watch(htmlFiles, bsReload);
+    watch(styleFiles, styles.styleTask);
+    watch(ejsFiles, bsReload);
+    watch(jsFiles, series(jsTask, bsReload));
 };
 
 exports.watch = parallel(series(startNodemon, startBrowserSync), watchFiles);
+exports.js = jsTask;
+exports.copy = copy.copyDevTask;
+/* exports.img = build.optimizeImg;
+exports.css = build.cssBuild;
+exports.html = build.minifyHtml;
+exports.jsBuild = build.appJsBuild; */
+exports.build = build.build;

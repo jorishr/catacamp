@@ -1,12 +1,12 @@
 const path = require('path');
 module.exports = {
-    mode: '',
-    entry {
-        app: '',
-        vendor: ''
+    mode: 'development',
+    entry: {
+        app: './app/public/scripts/main.js',
+        vendor: './app/public/scripts/vendor.js'
     },
-    output {
-        path: path.resolve(__dirname, ''),
+    output: {
+        path: path.resolve(__dirname, './app/public'),
         filename: '[name]-bundle.js'
     },
     module: {

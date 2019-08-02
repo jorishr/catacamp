@@ -1,5 +1,5 @@
-@import 'vendor/bootstrap/scss/bootstrap.scss';
 @import 'modules/variables';
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 @import 'modules/general';
 @import 'modules/navbar';
 @import 'modules/jumbotron';
@@ -9,7 +9,7 @@
 @import 'modules/social';
 @import 'modules/footer';
 @import 'modules/error';
-@import 'vendor/fontawesome/scss/fontawesome.scss';
-@import 'vendor/fontawesome/scss/solid.scss';
-@import 'vendor/fontawesome/scss/regular.scss';
-@import 'vendor/fontawesome/scss/brands.scss';
+@import '../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '../../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss';
+@import '../../../node_modules/@fortawesome/fontawesome-free/scss/regular.scss';
+@import '../../../node_modules/@fortawesome/fontawesome-free/scss/brands.scss';
