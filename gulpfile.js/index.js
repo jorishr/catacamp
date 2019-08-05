@@ -1,10 +1,10 @@
 const   { series, watch, parallel } = require('gulp'),
         nodemon     = require('nodemon'),
         browserSync = require('browser-sync'),
-        styles      = require('./styles'),      //  import styles OBJECT
+        styles      = require('./styles'),      
         jsTask      = require('./scripts'),
-        copy        = require('./copy'),
-        build       = require('./build');       
+        copy        = require('./copy'),        
+        build       = require('./build');    
 
 //  globs and paths
 const   baseDir     = './app'
@@ -67,10 +67,12 @@ function watchFiles(){
 };
 
 exports.watch = parallel(series(startNodemon, startBrowserSync), watchFiles);
-exports.js = jsTask;
 exports.copy = copy.copyDevTask;
-/* exports.img = build.optimizeImg;
-exports.css = build.cssBuild;
+/*
+exports.js = jsTask;
+exports.styles = styles.styleTask; 
+exports.img = build.optimizeImg;
 exports.html = build.minifyHtml;
-exports.jsBuild = build.appJsBuild; */
+exports.jsBuild = build.appJsBuild; 
+*/
 exports.build = build.build;

@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx gulp watch"
+    "start": "cross-env NODE_ENV=development npx gulp watch ",
+    "build": "cross-env NODE_ENV=production npx gulp build"
   },
   "repository": {
     "type": "git",
@@ -25,12 +26,14 @@
     "autoprefixer": "^9.6.0",
     "babel-loader": "^8.0.6",
     "browser-sync": "^2.26.7",
+    "cross-env": "^5.2.0",
     "del": "^4.1.1",
     "google-closure-compiler": "^20190709.0.0",
     "gulp": "^4.0.2",
     "gulp-cssnano": "^2.1.3",
     "gulp-debug": "^4.0.0",
     "gulp-htmlmin": "^5.0.1",
+    "gulp-if": "^3.0.0",
     "gulp-imagemin": "^6.0.0",
     "gulp-postcss": "^8.0.0",
     "gulp-rev": "^9.0.0",

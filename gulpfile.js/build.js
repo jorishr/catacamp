@@ -1,27 +1,21 @@
 const   {src, dest, parallel}     = require('gulp'), 
-        del             = require('del'),
         imageMin        = require('gulp-imagemin'),
-        cssnano         = require('gulp-cssnano'),
-        rev             = require('gulp-rev'),
-        revReplace      = require('gulp-rev-replace'),
-        replaceInFile   = require('replace-in-file'),
+        //debug           = require('gulp-debug'),
         htmlMin         = require('gulp-htmlmin'),
         terser          = require('gulp-terser'),
-        debug           = require('gulp-debug'),
-        copy            = require('./copy');
+        copy            = require('./copy'),        //  import copy OJECT
+        styles          = require('./styles');      //  import styles OBJECT
 
-// paths and globs
+//  copy and styles task are added in the module.exports below
+
+//  paths and globs
 const   baseDir     = './app',
         buildDir    = './dist',
         imgGlob     = baseDir + '/public/images/**/*',
-        cssGlob     = baseDir + '/public/*.css',
         ejsGlob     = baseDir + '/views/**/*.ejs',
-        appJsGlob   = [baseDir + '/**/*.js', '!' + baseDir + '/public/scripts/**/*.js'],
-        scriptsGlob = baseDir + '/public/scripts/**/*.js';
+        appJsGlob   = [baseDir + '/**/*.js', '!' + baseDir + '/public/scripts/**/*.js'];
 
-
-//  copy fontawesome files into build/public
-
+//  optimize image files
 function optimizeImages(){
     return src(imgGlob, { base: 'app' })
         .pipe(imageMin({
@@ -29,13 +23,6 @@ function optimizeImages(){
             interlaced: true,   // gif
             multipass: true     // svg
         }))
-        .pipe(dest(buildDir));
-};
-
-//  minify css files
-function cssBuild(){
-    return src(cssGlob, { base: 'app' })
-        .pipe(cssnano())    
         .pipe(dest(buildDir));
 };
 
@@ -64,8 +51,7 @@ function minifyHtml(){
 
 module.exports = {
     optimizeImages: optimizeImages,
-    cssBuild: cssBuild,
     minifyHtml: minifyHtml,
     appJsBuild: appJsBuild,
-    build: parallel(optimizeImages, cssBuild, appJsBuild, minifyHtml, copy.copyBuildTask)
+    build: parallel(optimizeImages, styles.styleTask, appJsBuild, minifyHtml, copy.copyBuildTask)
 };
