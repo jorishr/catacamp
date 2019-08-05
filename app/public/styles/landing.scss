@@ -1,9 +1,3 @@
-
-body {
-    background-color: black;
-
-}
-
 .landing-header {
     position: relative;
     z-index: 1;
@@ -54,7 +48,7 @@ body {
     list-style: none;
 }
 
-.slideshow li { 
+.slideshow li {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -71,22 +65,22 @@ body {
   }
 
 .slideshow li:nth-child(1) { 
-    background-image: url(images/K3mPv14.jpg) 
+    background-image: url("/images/K3mPv14.jpg") 
   }
   .slideshow li:nth-child(2) { 
-    background-image: url(images/SBEmFpv.jpg);
-    animation-delay: 5s; 
+    background-image: url("/images/SBEmFpv.jpg");
+    animation-delay: 2.5s; 
   }
   .slideshow li:nth-child(3) { 
-    background-image: url(images/emvhOnb.jpg);
+    background-image: url("/images/emvhOnb.jpg");
     animation-delay: 10s; 
   }
   .slideshow li:nth-child(4) { 
-    background-image: url(images/2LSMCmJ.jpg);
+    background-image: url("/images/2LSMCmJ.jpg");
     animation-delay: 15s; 
   }
   .slideshow li:nth-child(5) { 
-    background-image: url(images/TVGe0Ef.jpg);
+    background-image: url("/images/TVGe0Ef.jpg");
     animation-delay: 20s; 
   }
 

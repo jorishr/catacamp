@@ -16,13 +16,22 @@ const   baseDir     = './app'
         sassGlob    = baseDir + '/public/styles/**/*.scss',
         publicDir   = baseDir + '/public';
         
+// cssnano options
+const cssnanoOptions = {
+    reduceIdents: {
+        keyframes: false
+    },
+    discardUnused: {
+        keyframes: false
+    }
+};
 
 function styleTask(){
     //console.log('Mode: ', process.env.NODE_ENV);
     return src(sassGlob, { sourcemaps: devMode ? true : false })
         .pipe(sass().on('error', sass.logError))
         .pipe(postcss([autoprefixer]))
-        .pipe(gulpif(buildMode, cssnano()))    
+        .pipe(gulpif(buildMode, cssnano(cssnanoOptions)))    
         .pipe(dest(devMode ? publicDir : buildDir + '/public', { sourcemaps: devMode ? true : false }))
 };
 
