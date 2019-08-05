@@ -94,7 +94,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_copyurl__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/copyurl */ \"./app/public/scripts/modules/copyurl.js\");\n/* harmony import */ var _modules_copyurl__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_modules_copyurl__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _modules_pwvisibility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/pwvisibility */ \"./app/public/scripts/modules/pwvisibility.js\");\n/* harmony import */ var _modules_pwvisibility__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_modules_pwvisibility__WEBPACK_IMPORTED_MODULE_1__);\n\n\n_modules_copyurl__WEBPACK_IMPORTED_MODULE_0___default()();\n_modules_pwvisibility__WEBPACK_IMPORTED_MODULE_1___default()();\n\n//# sourceURL=webpack:///./app/public/scripts/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_copyurl__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/copyurl */ \"./app/public/scripts/modules/copyurl.js\");\n/* harmony import */ var _modules_pwvisibility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/pwvisibility */ \"./app/public/scripts/modules/pwvisibility.js\");\n/* harmony import */ var _modules_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/form */ \"./app/public/scripts/modules/form.js\");\n\n\n\nObject(_modules_copyurl__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\nObject(_modules_pwvisibility__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\nObject(_modules_form__WEBPACK_IMPORTED_MODULE_2__[\"default\"])();\n\n//# sourceURL=webpack:///./app/public/scripts/main.js?");
 
 /***/ }),
 
@@ -102,10 +102,23 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _mod
 /*!***********************************************!*\
   !*** ./app/public/scripts/modules/copyurl.js ***!
   \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("//  copy current page url to clipboard and show a tooltip confirmation\nvar dummy = document.createElement('input'),\n    text = window.location.href,\n    shareBtn = document.getElementsByClassName('share-link'),\n    tooltip = document.getElementsByClassName('tooltip-link');\n/*  check if page has share btns via class added to the body on that page   */\n\nfunction addCopyUrl() {\n  if (document.body.classList.contains('hasShare')) {\n    shareBtn[0].addEventListener('click', function (event) {\n      document.body.appendChild(dummy);\n      dummy.value = text;\n      dummy.select();\n      document.execCommand('copy');\n      document.body.removeChild(dummy);\n      tooltip[0].classList.add('tooltip-link--visible');\n      setTimeout(function () {\n        tooltip[0].classList.remove('tooltip-link--visible');\n      }, 3000);\n    });\n  }\n\n  ;\n}\n\n;\nmodule.exports = addCopyUrl;\n\n//# sourceURL=webpack:///./app/public/scripts/modules/copyurl.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return addCopyUrl; });\n//  copy current page url to clipboard and show a tooltip confirmation\nvar dummy = document.createElement('input'),\n    text = window.location.href,\n    shareBtn = document.querySelector('.share-link'),\n    tooltip = document.querySelector('.tooltip-link');\n/*  check if page has share btns via class added to the body on that page   */\n\nfunction addCopyUrl() {\n  if (document.body.classList.contains('hasShare')) {\n    shareBtn.addEventListener('click', function (event) {\n      document.body.appendChild(dummy);\n      dummy.value = text;\n      dummy.select();\n      document.execCommand('copy');\n      document.body.removeChild(dummy);\n      tooltip.classList.add('tooltip-link--visible');\n      setTimeout(function () {\n        tooltip.classList.remove('tooltip-link--visible');\n      }, 3000);\n    });\n  }\n\n  ;\n}\n;\n\n//# sourceURL=webpack:///./app/public/scripts/modules/copyurl.js?");
+
+/***/ }),
+
+/***/ "./app/public/scripts/modules/form.js":
+/*!********************************************!*\
+  !*** ./app/public/scripts/modules/form.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return disableSubmit; });\n//  exclude delete btns\nvar fields = document.querySelectorAll('input[required], textarea');\nvar submit = document.querySelector('form > button:not(.delete)');\nfunction disableSubmit() {\n  if (fields.length !== 0) {\n    submit.disabled = true;\n\n    for (var i = 0; i < fields.length; i++) {\n      fields[i].addEventListener('input', function () {\n        var values = [];\n        fields.forEach(function (field) {\n          return values.push(field.value);\n        });\n        submit.disabled = values.includes('');\n      });\n    }\n\n    ;\n  }\n\n  ;\n}\n;\n\n//# sourceURL=webpack:///./app/public/scripts/modules/form.js?");
 
 /***/ }),
 
@@ -113,10 +126,11 @@ eval("//  copy current page url to clipboard and show a tooltip confirmation\nva
 /*!****************************************************!*\
   !*** ./app/public/scripts/modules/pwvisibility.js ***!
   \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("/*  toggle password visibility and change the icon \r\n    note: some forms have two pwfields (confirmation)   */\nvar icons = document.querySelectorAll('.password-box__icon');\n\nfunction passwordToggle() {\n  if (document.body.classList.contains('hasPw')) {\n    var _loop = function _loop(i) {\n      icons[i].addEventListener('click', function () {\n        if (icons[i].previousElementSibling.type === 'password') {\n          icons[i].previousElementSibling.type = 'text';\n          icons[i].classList.remove('fa-eye');\n          icons[i].classList.add('fa-eye-slash');\n        } else {\n          icons[i].previousElementSibling.type = 'password';\n          icons[i].classList.remove('fa-eye-slash');\n          icons[i].classList.add('fa-eye');\n        }\n\n        ;\n      });\n    };\n\n    for (var i = 0; i < icons.length; i++) {\n      _loop(i);\n    }\n\n    ;\n  }\n}\n\n;\nmodule.exports = passwordToggle;\n\n//# sourceURL=webpack:///./app/public/scripts/modules/pwvisibility.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return passwordToggle; });\n/*  toggle password visibility and change the icon \r\n    note: some forms have two pwfields (confirmation)   */\nvar icons = document.querySelectorAll('.password-box__icon');\nfunction passwordToggle() {\n  if (document.body.classList.contains('hasPw')) {\n    var _loop = function _loop(i) {\n      icons[i].addEventListener('click', function () {\n        if (icons[i].previousElementSibling.type === 'password') {\n          icons[i].previousElementSibling.type = 'text';\n          icons[i].classList.remove('fa-eye');\n          icons[i].classList.add('fa-eye-slash');\n        } else {\n          icons[i].previousElementSibling.type = 'password';\n          icons[i].classList.remove('fa-eye-slash');\n          icons[i].classList.add('fa-eye');\n        }\n\n        ;\n      });\n    };\n\n    for (var i = 0; i < icons.length; i++) {\n      _loop(i);\n    }\n\n    ;\n  }\n}\n;\n\n//# sourceURL=webpack:///./app/public/scripts/modules/pwvisibility.js?");
 
 /***/ })
 

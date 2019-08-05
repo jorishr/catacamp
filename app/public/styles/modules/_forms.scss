@@ -41,6 +41,15 @@ h1 > i {
     padding-left: 5px;
 }
 
+button {
+    opacity: 1;
+    transition: opacity .5s ease-in .2s;
+}
+
+button:disabled {
+    opacity: .35 !important;
+}
+
 // password-box
 
 .password-box { 

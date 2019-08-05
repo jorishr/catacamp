@@ -10,7 +10,7 @@
             <div class="form-group mb-5">
                 <label for="" class="form__label text-muted text-uppercase">Name</label>
                 <input  class="form__input" type="text" name="campground[name]" 
-                        autofocus required value="<%= campground.name %>">
+                        value="<%= campground.name %>" autofocus required>
             </div>
             <div class="form-group mb-5">
                 <label for="" class="form__label text-muted text-uppercase">Image</label>
@@ -20,13 +20,13 @@
             <div class="form-group mb-5">
                 <label for="location" class="form__label text-muted text-uppercase">Location</label>
                 <input  class="form__input" type="text" name="campground[location]" 
-                        id="location" value="<%= campground.location %>">
+                        id="location" value="<%= campground.location %>" required>
             </div>
             <div class="form-group mb-5">
                 <label for="" class="form__label text-muted text-uppercase">Price</label>
                 <input  class="form__input" type="number" name="campground[price]" 
                         placeholder="Update price of the new campsite..."
-                        min="0.01" step="0.01" value="<%= campground.price %>">
+                        min="0.01" step="0.01" value="<%= campground.price %>" required>
             </div>
             <div class="form-group mb-5">
                 <label for="formDescription" class="form__label text-muted text-uppercase">Description</label>

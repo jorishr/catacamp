@@ -1,7 +1,8 @@
 /*  toggle password visibility and change the icon 
     note: some forms have two pwfields (confirmation)   */
 const icons = document.querySelectorAll('.password-box__icon');
-function passwordToggle(){
+
+export default function passwordToggle(){
     if(document.body.classList.contains('hasPw')){
         for(let i = 0; i < icons.length; i++){
             icons[i].addEventListener('click', function(){
@@ -18,4 +19,3 @@ function passwordToggle(){
         };
     }
 };
-module.exports = passwordToggle;

@@ -11,7 +11,9 @@
                 <label  for="formName" class="form__label text-muted text-uppercase">Name</label>
                 <input  class="form__input" type="text" name="newName" id="formName" 
                         title="Enter a name of min 6 and max 20 characters. No symbols or special characters."
-                        placeholder="Enter name of new campsite..." pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{5,20}$" autofocus>
+                        placeholder="Enter name of new campsite..." 
+                        pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{5,20}$"
+                        autofocus required>
             </div>
             <div class="form-group mb-5">
                 <label  for="formImage" class="form__label text-muted text-uppercase">Image</label>
@@ -24,14 +26,14 @@
                 <label  for="formLocation" class="form__label text-muted text-uppercase">Location</label>
                 <input  class="form__input" type="text" name="newLocation" id="formLocation"
                         title="Enter the full address or just the city or town of the campground"
-                        placeholder="Indicate the address of the campground...">
+                        placeholder="Indicate the address of the campground..." required>
             </div>
 
             <div class="form-group mb-5">
                 <label for="formPrice" class="form__label text-muted text-uppercase">Price per night in EUR</label>
                 <input  class="form__input" type="number" name="newPrice" id="formPrice"
                         placeholder="Enter price of the new campsite..."
-                        min="0.01" step="0.01">
+                        min="0.01" step="0.01" required>
             </div>
 
             <div class="form-group mb-5">
@@ -40,7 +42,8 @@
                 </label>
                 <textarea   name="newDescription" class="p-3 form__input" maxlength="2000"
                             minlength="500" title="Add a description of min 500 and max 2000 characters"
-                            placeholder="Enter a desription of the campground...(min. 500 characters)"></textarea>
+                            placeholder="Enter a desription of the campground...(min. 500 characters)" 
+                            required></textarea>
             </div>
             <button class="btn btn-md btn-block btn-outline-info">
                 <i class="far fa-share-square pr-3"></i>
