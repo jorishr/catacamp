@@ -1,9 +1,15 @@
 /*  =======
     sharing 
     =======    */
+.social {
+    position: relative;
+}
 
 .social__text {
     font-size: 1.25em;
+    color: $firstColor;
+    position: relative;
+    top: -5px;
 } 
 
 .social__link {
@@ -22,6 +28,14 @@
     
     &--visible {
         opacity: 1;
+    }
+}
+
+@media (max-width: 503px) {
+    .tooltip-link {
+        position: absolute;
+        top: -40%;
+        left: 0;
     }
 }
 
@@ -44,8 +58,10 @@
     border-color: transparent $secondColor transparent transparent;
 }
 
-@media (max-width: 503px) {
-    .tooltip-link {
-        display: none;
+@media (max-width: 503px){
+    .tooltip-link__text::after {
+        right: 10%;
+        top: 100%;
+        border-color: $secondColor transparent transparent transparent ;
     }
 }

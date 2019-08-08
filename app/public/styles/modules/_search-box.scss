@@ -11,7 +11,7 @@
     height: calc(1.5em + 0.75rem + 2px);
     border-radius: calc(1.5em + 0.75rem + 2px);
     background-color: $mainBackground;
-    padding: 0 0 0 1em;
+    padding: 0 0 0 10px;
     // center the input element text
     line-height: 2.25;
 }
@@ -52,8 +52,12 @@
 }
 
 
-@media (max-width: 576px){
-    .search-box {
-        min-width: 240px;
+@media (max-width: 360px){
+    .search-box__btn {
+        display: none;
+    }
+
+    .search-box__text {
+        padding: 0 10px;
     }
 }

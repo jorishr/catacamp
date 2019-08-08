@@ -78,7 +78,7 @@ router.get('/', (req, res, next) => {
 router.post('/', middleware.isLoggedIn, (req, res, next) => {
     // get data from form at page 'new-campground' and add to campgrounds array
     console.log(`\n${req.user.username} submits a new campground.`);
-    let placeholderImg = '/via.placeholder.com/1600x1200.png?text=CataCamp!+All+the+best+campsites+in+Catalonia+in+one+place' 
+    let placeholderImg = 'images/catacamp_placeholder1920x1200.gif'; 
     let newName = req.body.newName;
     let newImage = req.body.newImage || placeholderImg;
     let newPrice = req.body.newPrice;
