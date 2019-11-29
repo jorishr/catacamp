@@ -5,19 +5,47 @@
 .jumbotron {
     background-color: $mainBackground; 
     background-image: var(--gradient-dark);
+    background-image: url(images/SBEmFpv.jpg);
+    background-size: cover;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+}
+
+.jumbotron .container {
+    background-color: rgba(0, 0, 0, .5);
+    padding: 2em;
 }
 
 .jumbotron__title {
     font-size: 1.5em;
-    color: $secondColor;
+    color: $mainBackground;
     text-transform: uppercase;
     letter-spacing: .2em;
+}
+
+.jumbotron__subtitle {
+    color: $mainBackground;
 }
 
 .jumbotron__btn {
     text-transform: uppercase;
     letter-spacing: .1em;
+}
+
+@media (min-width: 1024px){
+    .jumbotron::after {
+        content: '||';
+        color: $secondColor;
+        font-weight: bolder;
+        width: 20px;
+        height: 40px;
+        border: $secondColor 2px solid;
+        border-radius: 1em;
+        position: absolute;
+        transform: translateX(-50%);
+        left: 50%;
+        bottom: 10px;
+        animation: moveArrow 2s ease-in-out infinite;
+    }   
 }
 
 @media (max-width: 576px){
@@ -27,5 +55,31 @@
 
     .jumbotron__btn{
         font-size: .75rem;
+    }
+}
+
+@media (max-width: 420px){
+    .jumbotron__title {
+        display: none;
+    }
+
+    .jumbotron__subtitle {
+        font-size: .8rem;
+    }
+
+    .jumbotron__btn{
+        font-size: .6rem;
+    }
+}
+
+@keyframes moveArrow {
+    0% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(0, 20%);
+    }
+    100% {
+        transform: translate(0, 0);
     }
 }
