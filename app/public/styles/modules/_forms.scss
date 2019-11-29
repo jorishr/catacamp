@@ -35,7 +35,7 @@ h1 > i {
     font-size: .9em;
 }
 
-.form__label::after {
+.form__label:not(.optional)::after {
     content: '*';
     color: red;
     padding-left: 5px;
