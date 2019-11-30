@@ -1,5 +1,9 @@
 <% include ../modules/_header %>
 <div class="container flex-grow-1 p-0">
+    <a class="btn btn-light btn-sm mb-3 ml-3" href="/campgrounds" title="GO BACK HOME">
+        <i class="fas fa-long-arrow-alt-left pr-1 text-muted"></i>
+        Go Back
+    </a>
     <div class="row d-flex flex-column-reverse flex-lg-row">
         <!-- SIDEBAR SECTION -->
         <div class="col-lg-3">
@@ -29,7 +33,6 @@
         <div class="col-lg-9">
             <div class="card mb-3">
                 <div class="card-header">
-                    <a href="/campgrounds">&#8592; back</a>
                     <h1 class="text-muted text-right">
                         <%= campground.name %> <i class="fas fa-campground text-muted pr-lg-3 d-none d-lg-inline"></i>
                     </h1>
