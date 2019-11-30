@@ -1,8 +1,14 @@
 .navbar {
     background-image: var(--gradient-light);
     border-width: 5px !important;
+    /*override bootstrap default border-width*/
 }
 
 .navbar-brand {
     letter-spacing: .1em;
+    margin-right: 0;
+    display: inline-block;
+    padding: .5em 0em;
+    background: $secondColor;
 }
+
