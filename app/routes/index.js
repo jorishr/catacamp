@@ -36,7 +36,7 @@ router.post('/register', (req, res) => {
     (err) => {      
         if(err){
             console.log('Error while registering new user', err);
-            return res.render('register', {'error': err.message});
+            return res.render('users/register', {'error': err.message});
             //  if user already exists, the err.message is part of mongoose error reporting  
         }
         console.log('User registered successfully!');

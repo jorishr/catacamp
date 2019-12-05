@@ -10,22 +10,25 @@ Fullstack web app for listing campgrounds in Catalonia with MongoDb, Express, No
     - jumbotron, 
     - generic dark/light gradient, 
     - image zoom effect
+    - image blend animation on landing page (keyframes)
 
 - JS: 
     - social share button with with copy url to clipboard and tooltip,
     - toggle password visibility in forms,
     - all form submit buttons are disabled unless all requried form fields have a value
 
-- API Functionality
+- App structure and functionality
     - Models: users, campgrounds, comments with user data association 
     - Create, show, update, cascade delete (incl. associated data)
     - if user does not add image, a placeholder image is used
     - View: 
         - campground profile page with comment section
         - user profile page with access to user submitted campgrounds
+        - search box
 
 - EXPRESS features
     - view engine: Embedded JS (.ejs)
+    - search function
     - sessions with PassportJS Authentication
     - forgot password reset with email confirmation (Mailgun)
     - custom error page with status code
@@ -41,5 +44,4 @@ Fullstack web app for listing campgrounds in Catalonia with MongoDb, Express, No
     - buildtask: webpack for js bundling, minification, image optimization 
 
 # Credits
-
 This website is a highly modified version of the Yelp-camp project in the Webdeveloper Bootcamp by Colt Steele.

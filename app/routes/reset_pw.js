@@ -14,7 +14,8 @@ const   express     = require('express'),
 
 const mailgunDomain = process.env.MAILGUN_DOMAIN;
 const mailgunApiKey = process.env.MAILGUN_APIKEY;
-const mg = mailgun({apiKey: mailgunApiKey, domain: mailgunDomain});
+const mailgunHost   = process.env.MAILGUN_HOST;
+const mg = mailgun({apiKey: mailgunApiKey, domain: mailgunDomain, host: mailgunHost});
 
 //  forgot password route
 
