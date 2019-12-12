@@ -35,5 +35,5 @@ function copyConfigFiles(){
 
 module.exports = {
     copyDevTask: series(clean, copyDevFiles),
-    copyBuildTask: parallel(copyBuildFiles, copyConfigFiles)
+    copyBuildTask: copyBuildFiles
 }

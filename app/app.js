@@ -25,7 +25,8 @@ const   path            = require('path'),
 //  =================================
 //  BASIC EXPRESS AND MONGOOSE CONFIG
 //  =================================
-mongoose.connect(process.env.DB_CONN, { useNewUrlParser: true });
+//mongoose.connect(process.env.DB_CONN_LOCAL, { useNewUrlParser: true });
+mongoose.connect(process.env.DB_CONN_CLOUD, { useNewUrlParser: true });
 db.on('error', console.error.bind(console, '\nConnection error:\n'));
 db.once('open', () => {
     console.log('\nDatabase connection established');
