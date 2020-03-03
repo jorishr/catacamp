@@ -47,8 +47,7 @@ function startBrowserSync (){
       //    proxy the expressjs app and use a different port 
       proxy: 'http://localhost:3000',
       port: 4000,
-      files: baseDir + '/public/*.css',   //  watch main css file changes and inject
-      tunnel: 'catacamp' 
+      files: baseDir + '/public/*.css'   //  watch main css file changes and inject
     });
 };
 
