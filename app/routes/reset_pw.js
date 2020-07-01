@@ -4,7 +4,8 @@ const   express     = require('express'),
         User        = require('../models/user'),
         async       = require('async'),
         crypto      = require('crypto'),
-        mailgun     = require('mailgun-js');
+        mailgun     = require('mailgun-js'),
+        getMailTemplate = require('../helpers/mailgun');
 
 //  =====================
 //  RESET PASSWORD ROUTES
@@ -15,7 +16,11 @@ const   express     = require('express'),
 const mailgunDomain = process.env.MAILGUN_DOMAIN;
 const mailgunApiKey = process.env.MAILGUN_APIKEY;
 const mailgunHost   = process.env.MAILGUN_HOST;
-const mg = mailgun({apiKey: mailgunApiKey, domain: mailgunDomain, host: mailgunHost});
+const mg = mailgun({
+    apiKey: mailgunApiKey, 
+    domain: mailgunDomain, 
+    host: mailgunHost
+});
 
 //  forgot password route
 
@@ -30,54 +35,45 @@ router.post('/forgot', (req, res, next) => {
         //  create a token
         (cb) => {
             crypto.randomBytes(20, (err, bytes) => {
-                let token = bytes.toString('hex');  
+                const token = bytes.toString('hex');  
                 //  Encode each byte as two hexadecimal characters
                 cb(err, token);
             });
         },
         //  find the user email in db and add token to user data
         (token, cb) => {
-            User.findOne({email: req.body.email}, (err, foundUser) => {
-                if(err || !foundUser){
+            User.findOne({email: req.body.email}, (err, currentUser) => {
+                if(err || !currentUser){
                     console.log('Error: User not found or unexpected error.', err);
                     req.flash('error', 'No matching user data found. Try again with different email.');
                     res.redirect('/forgot');
                 } else {
-                    foundUser.resetPasswordToken = token;
-                    foundUser.resetPasswordExpires = Date.now() + 3600000; //  1 hour
-                    foundUser.save((err) => {
-                        cb(err, token, foundUser);
+                    currentUser.resetPasswordToken = token;
+                    currentUser.resetPasswordExpires = Date.now() + 3600000; //  1 hour
+                    currentUser.save((err) => {
+                        cb(err, token, currentUser);
                     });
                 };
             });
         },
         //  mailgun configuration
-        (token, foundUser, cb) => {
-            let mailData = {
-                to: foundUser.email,
-                from: 'CataCamp <catacamp@catacamp.com>',
-                subject: 'CataCamp Password Reset',
-                text: 
-`Hello CataCamp user,\n
-You are receiving this because you (or someone else) have requested the reset of the password for your account.\n 
-Please click on the following link, or paste this into your browser to complete the process:\n 
-\thttp://${req.headers.host}/reset/${token}\n\n
-If you did not request this, please ignore this email and your password will remain unchanged.`
-            }
+        (token, currentUser, cb) => {
+            const mailData = getMailTemplate(currentUser, req.headers.host, token);
             mg.messages().send(mailData, function (error, body) {
                 if(error){
-                    console.log(error);
+                    error.shouldRedirect = true;
+                    return next(error);
                 }
-                console.log('\nMailgun:\n', body);
-                req.flash('success', `An email has been sent to ${foundUser.email} with further instructions.`);
+                req.flash('success', `An email has been sent to ${currentUser.email} with further instructions.`);
                 cb(error, 'All Done');
             })
         }
     ], (err) =>{
         if(err){
+            err.shouldRedirect = true;
             return next(err);
         };
-        res.redirect('/forgot');
+        return res.redirect('/campgrounds');
     });
 });
 

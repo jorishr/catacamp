@@ -4,7 +4,7 @@ const   Campground  = require('../../models/campground'),
         router      = express.Router(),
         isCampgroundOwner  = require('../../middleware/isCampgroundOwner'),
         NodeGeocoder= require('node-geocoder'),
-        geoOptions  = require('../../middleware/geoDataOptions');
+        geoOptions  = require('../../helpers/geoDataOptions');
 
 //  EDIT ROUTE
 
