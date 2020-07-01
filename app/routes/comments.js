@@ -6,78 +6,99 @@ const   express     = require('express'),
         camprgound ID is accessible here in the comment routes. */ 
         Campground  = require('../models/campground'),
         Comment     = require('../models/comments'),
-        middleware  = require('../middleware');
+        isLoggedIn  = require('../middleware/isLoggedIn');
+        isCommentOwner = require('../middleware/isCommentOwner');
 
 //  create new comment route
 
-//  render form
-router.get('/new', middleware.isLoggedIn, (req, res, next) => {
-    Campground.findById(req.params.id, (err, foundData) => {
-        if(err){err.shouldRedirect = true; return next(err);};
-        res.render('comments/new-comment', {campground: foundData});
-    });
+//  render form for the correct Campground
+router.get('/new', isLoggedIn, async (req, res, next) => {
+    try {
+        const currentCampground = await Campground.findById(req.params.id);
+        res.render('comments/new-comment', {campground: currentCampground});
+
+    } catch (err){
+        err.shouldRedirect = true; 
+        return next(err);
+    }
+    
 });
 
-//  lookup current campground id
-//  store new comment in db
-//  associate comment to current campground
-//  isLoggedIn is a dependency thus req.user cannot be undefined
-router.post('/', middleware.isLoggedIn, (req, res, next) => {
-    Campground.findById(req.params.id, (err, currentCampground) => {
-        if (err){err.shouldRedirect = true; return next(err);};
-        Comment.create(req.body.comment, (err, newComment) => {
-            if (err){err.shouldRedirect = true; return next(err);}
-            newComment.author.id = req.user._id;  
-            newComment.author.username = req.user.username;
-            newComment.save();
-            //console.log(`Saved comment in DB:\n${newComment}\nComment made by: ${req.user.username}`)
-            currentCampground.comments.push(newComment);
-            currentCampground.save();   
-            req.flash('success', 'New comment added!');
-            res.redirect(`/campgrounds/${req.params.id}`);
-            //  or you could use the currentCampground._id
-        });
-    });
-});
+//  Store new comment
+//  - lookup current campground id
+//  - store new comment in db
+//  - associate comment to current campground
+//  - isLoggedIn is a dependency thus req.user cannot be undefined
+//  - re-render the page
+router.post('/', isLoggedIn, async (req, res, next) => {
+    try {
+        const currentCampground = 
+            await Campground.findById(req.params.id).populate('comments');
+        const newComment = await Comment.create(req.body.comment);
+
+        newComment.author.id = req.user._id;  
+        newComment.author.username = req.user.username;
+        newComment.save();
+
+        currentCampground.comments.push(newComment);
+        currentCampground.save();   
+
+        req.flash('success', 'New comment added!');
+        return res.render('campgrounds/show-campground', { 
+            campground: currentCampground,
+            api: process.env.GEOCODER_API_KEY_RESTRICTED,
+            success: 'Comment succesfully added!'
+         });
+        //  or you could use the currentCampground._id
+    } catch (err){
+        err.shouldRedirect = true; 
+        return next(err);        
+    }
+})
 
 //  edit comment route
 
 //render edit form with correct data
-router.get('/:comment_id/edit', middleware.isCommentOwner, (req, res, next) => {
-    Campground.findById(req.params.id, (err, currentCampground) => {
-        if(err){err.shouldRedirect = true; return next(err);};
-        Comment.findById(req.params.comment_id, (err, currentComment) => {
-            if(err){err.shouldRedirect = true; return next(err);};
-            res.render('comments/edit-comment', {
-                campground: currentCampground, 
-                comment: currentComment
-            });
+router.get('/:comment_id/edit', isCommentOwner, async (req, res, next) => {
+    try {
+        const currentCampground = await Campground.findById(req.params.id);
+        const currentComment = await Comment.findById(req.params.comment_id);
+        return res.render('comments/edit-comment', {
+            campground: currentCampground, 
+            comment: currentComment
         });
-    });
-})
+    } catch (err){
+        err.shouldRedirect = true; 
+        return next(err);
+    }
+});
 
 //  update comment in db and redirect
 
-router.put('/:comment_id', middleware.isCommentOwner, (req, res, next) => {
-    Comment.findByIdAndUpdate(
-        req.params.comment_id, 
-        req.body.comment, 
-        (err, updatedComment) => {
-            if(err){err.shouldRedirect = true; return next(err)};
-            req.flash('success', 'Comment succesfully updated!');
-            res.redirect(`/campgrounds/${req.params.id}`);
-        });
+router.put('/:comment_id', isCommentOwner, async (req, res, next) => {
+    try {
+        await Comment.findByIdAndUpdate(
+            req.params.comment_id, 
+            req.body.comment
+        ); 
+        req.flash('success', 'Comment succesfully updated!');
+        return res.redirect(`/campgrounds/${req.params.id}`);
+    } catch (err){
+        err.shouldRedirect = true; 
+        return next(err);
+    }
 });
 
 //  delete comment route
 
-router.delete('/:comment_id', middleware.isCommentOwner, (req, res, next) => {
-    Comment.findByIdAndRemove(req.params.comment_id, (err) => {
-        if(err){err.shouldRedirect = true; return next(err);};
+router.delete('/:comment_id', isCommentOwner, async (req, res, next) => {
+    try {
+        await Comment.findByIdAndRemove(req.params.comment_id)
         req.flash('success', 'Comment succesfully deleted!');
-        res.redirect(`/campgrounds/${req.params.id}`);
-        //console.log('Succesfully deleted comment');
-    });
+        return res.redirect(`/campgrounds/${req.params.id}`);
+    } catch (err){
+        err.shouldRedirect = true; 
+        return next(err);
+    }     
 });
-
 module.exports = router;
