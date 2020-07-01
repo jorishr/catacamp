@@ -99,7 +99,7 @@
 
 @keyframes imageAnimation { 
     0% { 
-      opacity: 0; 
+      opacity: .25; 
       animation-timing-function: ease-in;
     }
     10% {
@@ -107,10 +107,10 @@
       animation-timing-function: ease-out;
     }
     20% {
-      opacity: 1
+      opacity: 1;
     }
     30% {
-      opacity: 0
+      opacity: 0;
     }
   }
 

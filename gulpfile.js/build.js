@@ -1,6 +1,6 @@
-const   {src, dest, parallel}     = require('gulp'), 
+const   {src, dest, parallel} = require('gulp'), 
         imageMin        = require('gulp-imagemin'),
-        //debug           = require('gulp-debug'),
+        //debug         = require('gulp-debug'),
         htmlMin         = require('gulp-htmlmin'),
         terser          = require('gulp-terser'),
         copy            = require('./copy'),        //  import copy OJECT
@@ -18,11 +18,11 @@ const   baseDir     = './app',
 //  optimize image files
 function optimizeImages(){
     return src(imgGlob, { base: 'app' })
-        .pipe(imageMin({
-            progressive: true,  // jpeg
-            interlaced: true,   // gif
-            multipass: true     // svg
-        }))
+        .pipe(imageMin([
+            imageMin.gifsicle({interlaced: true}),
+            imageMin.jpegtran({quality: 75, progressive: true}),
+            imageMin.optipng({optimizationLevel: 5}),
+        ], { verbose: true }))
         .pipe(dest(buildDir));
 };
 

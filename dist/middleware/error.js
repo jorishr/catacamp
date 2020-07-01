@@ -1,1 +1,1 @@
-function errorHandler(r,e,o,s){console.error("\nError:\n",r.statusCode,r.messageForConsole),o.locals.error=r,r.statusCode||(r.statusCode=500),r.shouldRedirect?o.render("error"):o.status(r.statusCode).send(r.message)}module.exports=errorHandler;
+function errorHandler(r,e,o,s){return console.error("\nError:\n",r.statusCode,r.messageForConsole),o.locals.error=r,r.statusCode||(r.statusCode=500),r.shouldRedirect?o.render("error"):o.status(r.statusCode).send(r.message)}module.exports=errorHandler;
