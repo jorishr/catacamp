@@ -22,7 +22,7 @@ router.get('/:id', (req, res, next) => {
 
 //  edit profile route
 
-router.get('/:id/edit', middleware.checkProfileOwnership, (req, res, next) =>{
+router.get('/:id/edit', middleware.isProfileOwner, (req, res, next) =>{
     User.findById(req.params.id, (err, foundUser) => {
         if(err){err.shouldRedirect = true; return next(err);};
         res.render('users/edit', {userData: foundUser});
@@ -31,7 +31,7 @@ router.get('/:id/edit', middleware.checkProfileOwnership, (req, res, next) =>{
 
 //  update profile route
 
-router.put('/:id', middleware.checkProfileOwnership, (req, res, next) => {
+router.put('/:id', middleware.isProfileOwner, (req, res, next) => {
     User.findByIdAndUpdate(req.params.id, req.body.profile, (err, updatedUser) => {
         if(err){err.shouldRedirect = true; return next(err);};
         console.log('\nProfile update success!\n\n', updatedUser);
@@ -42,7 +42,7 @@ router.put('/:id', middleware.checkProfileOwnership, (req, res, next) => {
 
 //  delete user profile
 
-router.delete('/:id', middleware.checkProfileOwnership, (req, res, next) => {
+router.delete('/:id', middleware.isProfileOwner, (req, res, next) => {
     User.findById(req.params.id, (err, foundUser) => {
         if(err){err.shouldRedirect = true; return next(err);};
         Campground.find().where('author.id').equals(foundUser.id).exec((err, foundCampgrounds)=>{

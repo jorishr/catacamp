@@ -1,0 +1,15 @@
+require('dotenv').config({ debug: process.env.DEBUG });
+const   app      = require('../app'),
+        mongoose = require('mongoose'),
+        db       = mongoose.connection,
+        port     = process.env.DB_PORT;
+
+//db connection
+mongoose.connect(process.env.DB_CONN_LOCAL, { useNewUrlParser: true });
+db.on('error', console.error.bind(console, '\nConnection error:\n'));
+db.once('open', () => {
+    console.log('\nDatabase connection established');
+});
+
+///app server
+app.listen(port, () => console.log(`\nExpress Server is listening on port ${port}`));

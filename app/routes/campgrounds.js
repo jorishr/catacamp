@@ -129,7 +129,7 @@ router.get('/:id', (req, res, next) => {
 
 //  EDIT ROUTE
 
-router.get('/:id/edit', middleware.checkCampgroundOwnership, (req, res, next) => {
+router.get('/:id/edit', middleware.isCampgroundOwner, (req, res, next) => {
     Campground.findById(req.params.id, (err, foundData) => {
         if(err){err.shouldRedirect = true; return next(err);}
         res.render('campgrounds/edit-campground', {campground: foundData});
@@ -138,7 +138,7 @@ router.get('/:id/edit', middleware.checkCampgroundOwnership, (req, res, next) =>
 
 //  UPDATE ROUTE
 
-router.put('/:id', middleware.checkCampgroundOwnership, (req, res, next) => {
+router.put('/:id', middleware.isCampgroundOwner, (req, res, next) => {
     geocoder.geocode(req.body.campground.location, (err, locationData) => {
         if(err || !locationData.length){
             req.flash('error', 'Missing or invalid address');
@@ -157,7 +157,7 @@ router.put('/:id', middleware.checkCampgroundOwnership, (req, res, next) => {
 
 //  DESTROY ROUTE
 
-router.delete('/:id', middleware.checkCampgroundOwnership, (req, res, next) => {
+router.delete('/:id', middleware.isCampgroundOwner, (req, res, next) => {
     Campground.findById(req.params.id, (err, foundCampground) => {
         if(err){err.shouldRedirect = true; return next(err);}
         foundCampground.remove();

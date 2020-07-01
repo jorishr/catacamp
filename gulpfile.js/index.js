@@ -21,7 +21,7 @@ const   baseDir     = './app'
 function startNodemon(cb) {
     let called = false;
     return nodemon({
-        script: baseDir + '/app.js',
+        script: baseDir + '/bin/www',
         watch:  baseDir + '/**/*.js',
         ignore: baseDir + '/public'
     })

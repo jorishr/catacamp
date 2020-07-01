@@ -42,7 +42,7 @@ router.post('/', middleware.isLoggedIn, (req, res, next) => {
 
 //  edit comment route
 
-router.get('/:comment_id/edit', middleware.checkCommentOwnership, (req, res, next) => {
+router.get('/:comment_id/edit', middleware.isCommentOwner, (req, res, next) => {
     Campground.findById(req.params.id, (err, foundData) => {
         if(err){err.shouldRedirect = true; return next(err);};
         Comment.findById(req.params.comment_id, (err, foundCommentData) => {
@@ -53,7 +53,7 @@ router.get('/:comment_id/edit', middleware.checkCommentOwnership, (req, res, nex
 })
 //  update comment route
 
-router.put('/:comment_id', middleware.checkCommentOwnership, (req, res, next) => {
+router.put('/:comment_id', middleware.isCommentOwner, (req, res, next) => {
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
         if(err){err.shouldRedirect = true; return next(err)};
         req.flash('success', 'Comment succesfully updated!');
@@ -63,7 +63,7 @@ router.put('/:comment_id', middleware.checkCommentOwnership, (req, res, next) =>
 
 //  delete comment route
 
-router.delete('/:comment_id', middleware.checkCommentOwnership, (req, res, next) => {
+router.delete('/:comment_id', middleware.isCommentOwner, (req, res, next) => {
     Comment.findByIdAndRemove(req.params.comment_id, (err) => {
         if(err){err.shouldRedirect = true; return next(err);};
         req.flash('success', 'Comment succesfully deleted!');

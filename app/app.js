@@ -4,12 +4,8 @@ const   path            = require('path'),
         express         = require('express'),
         app             = express(),
         bodyParser      = require('body-parser'),
-        mongoose        = require('mongoose'),
-        db              = mongoose.connection,
-        port            = process.env.DB_PORT,
         methodOverride  = require('method-override'),
         flash           = require('connect-flash'),
-        seedDB          = require('./seeds'),
         passport        = require('passport'),
         LocalStrategy   = require('passport-local'),
         expressSession  = require('express-session'),
@@ -22,17 +18,6 @@ const   path            = require('path'),
         errorHandler        = require('./middleware/error'),
         favicon             = require('serve-favicon');
 
-//  =================================
-//  BASIC EXPRESS AND MONGOOSE CONFIG
-//  =================================
-//mongoose.connect(process.env.DB_CONN_LOCAL, { useNewUrlParser: true });
-mongoose.connect(process.env.DB_CONN_CLOUD, { useNewUrlParser: true });
-db.on('error', console.error.bind(console, '\nConnection error:\n'));
-db.once('open', () => {
-    console.log('\nDatabase connection established');
-});
-
-app.listen(port, () => console.log(`\nExpress Server is listening on port ${port}`));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
@@ -40,10 +25,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(flash());
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
-//  seeding the db with new ID's generated on server restart
-//  seedDB();
-//  no longer needed once user data association is setup   
-
+//view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -100,3 +82,5 @@ app.get('*', (req, res, next) => {
 
 //  error handling middleware
 app.use(errorHandler);
+
+module.exports = app;
