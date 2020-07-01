@@ -1,3 +1,6 @@
+//  ============
+//  SCHEMA SETUP FOR USER PROFILE DATA
+//  ============
 const   mongoose                = require('mongoose'),
         passportLocalMongoose   = require('passport-local-mongoose');
 

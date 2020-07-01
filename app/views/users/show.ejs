@@ -5,6 +5,7 @@
         Go Back
     </a>
     <div class="row">
+        <% if(currentUser && (userData._id.equals(currentUser._id) || currentUser.isAdmin)){ %>
         <div class="col-md-5 mb-4">
             <div class="card">
                 <div class="card-header text-muted text-center text-lg-left">
@@ -23,13 +24,13 @@
                     <p class="text"><strong>Email</strong></p>
                     <p class="text"><a href="mailto:<%= userData.email %>" ><%= userData.email %></a></p>
                 </div>
-                <% if(currentUser && (userData._id.equals(currentUser._id) || currentUser.isAdmin)){ %>
                 <div class="card-footer">
                     <a href="/user/<%= userData.id %>/edit" class="btn btn-outline-info"><i class="far fa-edit pr-1"></i>edit profile</a>
                 </div>
-                <% } %>
+
             </div>
         </div>
+        <% } %>
         <div class="col-md-7">
             <div class="card mb-4">
                 <div class="card-header text-muted text-center text-lg-left">

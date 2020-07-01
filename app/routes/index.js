@@ -31,7 +31,6 @@ router.post('/register', (req, res) => {
         lastname:       req.body.lastName,
         email:          req.body.email,
         dateOfBirth:    req.body.dateOfBirth,      
-        //isAdmin:        false
     }), req.body.password, 
     (err) => {      
         if(err){
@@ -39,7 +38,7 @@ router.post('/register', (req, res) => {
             return res.render('users/register', {'error': err.message});
             //  if user already exists, the err.message is part of mongoose error reporting  
         }
-        console.log('User registered successfully!');
+        //console.log('User registered successfully!');
         req.flash('success', `Welcome to Yelp Camp, ${req.body.username}! You are now registered successfully!`)
         //  auto-login after registration and redirect
         passport.authenticate('local')(req, res, function(){
@@ -68,7 +67,7 @@ router.post('/login', passport.authenticate('local', {
 
 router.get('/logout', (req, res, next) => {
     req.logout();
-    console.log('User logout success!');
+    //console.log('User logout success!');
     req.flash('success', 'Logged out successfully!')
     res.redirect('/campgrounds');
 });
