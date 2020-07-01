@@ -1,8 +1,10 @@
+require('dotenv').config({ debug: process.env.DEBUG });
 const   Campground  = require('../../models/campground'),
         express     = require('express'),
         router      = express.Router(),
         isLoggedIn  = require('../../middleware/isLoggedIn'),
-        geocoder    = require('../../middleware/getGeoData');
+        NodeGeocoder= require('node-geocoder'),
+        geoOptions  = require('../../middleware/geoDataOptions');
 
 // CREATE ROUTE
 
@@ -18,9 +20,10 @@ router.post('/', isLoggedIn, async (req, res, next) => {
         const { newName, newPrice, newDescription } = req.body;
         const placeholderImg = 'images/catacamp_placeholder1920x1200.gif'; 
         const newImage = req.body.newImage || placeholderImg;
-        const author = {id: req.user._id, username: req.user.username};
+        const author = { id: req.user._id, username: req.user.username };
         //get location data
-        const geoData = await geocoder.geocode(req.body.location);
+        const geocoder = NodeGeocoder(geoOptions);
+        const geoData = await geocoder.geocode(req.body.newLocation);
         if(!geoData.length){
             req.flash('error', 'Invalid campground location address');
             return res.redirect('/campgrounds/new');
@@ -44,6 +47,9 @@ router.post('/', isLoggedIn, async (req, res, next) => {
         req.flash('success', 'New campground succesfully added!');
         return res.redirect('campgrounds');
     } catch (err){
+        err.status = 500;
+        err.message = err;
+        console.log(err)
         req.flash('error', 'An error occurred. Try again or contact the administrator');
         return res.redirect('/campgrounds/new');
     }

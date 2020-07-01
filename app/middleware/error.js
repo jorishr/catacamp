@@ -7,9 +7,9 @@ function errorHandler (err, req, res, next) {
     res.locals.error = err;
     if (!err.statusCode){err.statusCode = 500;}; 
     if (err.shouldRedirect) {
-      res.render('error') 
+      return res.render('error') 
     } else {
-        res.status(err.statusCode).send(err.message);
+      return res.status(err.statusCode).send(err.message);
     };
 };
 

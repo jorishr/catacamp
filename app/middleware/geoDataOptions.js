@@ -1,4 +1,5 @@
-const NodeGeocoder = require('node-geocoder');
+require('dotenv').config({ debug: process.env.DEBUG });
+
 const options = {
     provider: 'google',
     httpAdapter: 'https',
@@ -6,4 +7,4 @@ const options = {
     formatter: null
 };
          
-module.exports = NodeGeocoder(options);
+module.exports = options;

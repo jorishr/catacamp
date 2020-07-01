@@ -10,14 +10,19 @@ const   path            = require('path'),
         LocalStrategy   = require('passport-local'),
         expressSession  = require('express-session'),
         User            = require('./models/user'),
-        testRoute       = require('./routes/campgrounds/index')
-        indexRoutes         = require('./routes/index'),
-        commentRoutes       = require('./routes/comments'),
-        campgroundRoutes    = require('./routes/campgrounds'),
-        resetPwRoutes       = require('./routes/reset_pw'),
-        userProfileRoutes   = require('./routes/profile'),
-        errorHandler        = require('./middleware/error'),
-        favicon             = require('serve-favicon');
+        errorHandler    = require('./middleware/error'),
+        favicon         = require('serve-favicon');
+
+//import routes
+const   index             = require('./routes/index'),
+        comments          = require('./routes/comments'),
+        resetPw           = require('./routes/reset_pw'),
+        userProfile       = require('./routes/profile'),
+        campgroundIndex   = require('./routes/campgrounds/index'),
+        campgroundShow    = require('./routes/campgrounds/show'),
+        campgroundCreate  = require('./routes/campgrounds/create'),
+        campgroundEdit    = require('./routes/campgrounds/edit'),
+        campgroundDestroy = require('./routes/campgrounds/destroy');
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -62,12 +67,15 @@ app.use((req, res, next) => {
 //  IMPORT ALL ROUTES
 //  =================
 
-app.use(indexRoutes);
-app.use('/campgrounds/:id/comments', commentRoutes);
-app.use('/campgrounds', campgroundRoutes),
-app.use(resetPwRoutes),
-app.use('/user', userProfileRoutes);
-app.use('/tester', testRoute)
+app.use(index);
+app.use('/campgrounds/:id/comments', comments);
+app.use('/campgrounds', campgroundIndex),
+app.use('/campgrounds', campgroundCreate),
+app.use('/campgrounds', campgroundShow),
+app.use('/campgrounds', campgroundEdit),
+app.use('/campgrounds', campgroundDestroy),
+app.use(resetPw),
+app.use('/user', userProfile);
 
 //  ==============
 //  ERROR HANDLING
