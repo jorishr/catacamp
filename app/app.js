@@ -10,6 +10,7 @@ const   path            = require('path'),
         LocalStrategy   = require('passport-local'),
         expressSession  = require('express-session'),
         User            = require('./models/user'),
+        testRoute       = require('./routes/campgrounds/index')
         indexRoutes         = require('./routes/index'),
         commentRoutes       = require('./routes/comments'),
         campgroundRoutes    = require('./routes/campgrounds'),
@@ -66,6 +67,7 @@ app.use('/campgrounds/:id/comments', commentRoutes);
 app.use('/campgrounds', campgroundRoutes),
 app.use(resetPwRoutes),
 app.use('/user', userProfileRoutes);
+app.use('/tester', testRoute)
 
 //  ==============
 //  ERROR HANDLING
