@@ -25,7 +25,6 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res, next) => {
     try {
-        console.log('Starting user registration!');
         await User.register(new User({
             username:       req.body.username,
             firstname:      req.body.firstName,
@@ -36,7 +35,6 @@ router.post('/register', async (req, res, next) => {
         req.flash('success', `Welcome to Yelp Camp, ${req.body.username}! You are now registered successfully!`)
         //  auto-login after registration and redirect
         passport.authenticate('local')(req, res, function(){
-            console.log('User logged-in successfully!');
             res.redirect('/campgrounds');
         });
     } catch (err){
@@ -64,7 +62,6 @@ router.post('/login', passport.authenticate('local', {
 
 router.get('/logout', (req, res, next) => {
     req.logout();
-    //console.log('User logout success!');
     req.flash('success', 'Logged out successfully!')
     res.redirect('/campgrounds');
 });

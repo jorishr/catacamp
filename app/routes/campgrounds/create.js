@@ -49,7 +49,7 @@ router.post('/', isLoggedIn, async (req, res, next) => {
     } catch (err){
         err.status = 500;
         err.message = err;
-        console.log(err)
+        //console.log(err)
         req.flash('error', 'An error occurred. Try again or contact the administrator');
         return res.redirect('/campgrounds/new');
     }
