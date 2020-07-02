@@ -29,7 +29,7 @@ let campgroundSchema = new mongoose.Schema({
 });
 
 campgroundSchema.pre('remove', async function(next){
-    console.log('\nStarting pre-hook\n');
+    //console.log('\nStarting pre-hook\n');
     try {
         await Comment.remove({
             "_id": {

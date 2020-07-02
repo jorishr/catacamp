@@ -23,32 +23,26 @@ router.get('/register', (req, res) => {
     res.render('users/register');
 });
 
-router.post('/register', (req, res) => {
-    console.log('Starting user registration!');
-    User.register(new User({
-        username:       req.body.username,
-        firstname:      req.body.firstName,
-        lastname:       req.body.lastName,
-        email:          req.body.email,
-        dateOfBirth:    req.body.dateOfBirth,      
-        //isAdmin:        false
-    }), req.body.password, 
-    (err) => {      
-        if(err){
-            console.log('Error while registering new user', err);
-            return res.render('users/register', {'error': err.message});
-            //  if user already exists, the err.message is part of mongoose error reporting  
-        }
-        console.log('User registered successfully!');
+router.post('/register', async (req, res, next) => {
+    try {
+        await User.register(new User({
+            username:       req.body.username,
+            firstname:      req.body.firstName,
+            lastname:       req.body.lastName,
+            email:          req.body.email,
+            dateOfBirth:    req.body.dateOfBirth,      
+        }), req.body.password)
         req.flash('success', `Welcome to Yelp Camp, ${req.body.username}! You are now registered successfully!`)
         //  auto-login after registration and redirect
         passport.authenticate('local')(req, res, function(){
-            console.log('User logged-in successfully!');
             res.redirect('/campgrounds');
         });
-    });
-});
-
+    } catch (err){
+        return res.render('users/register', {'error': err.message});
+        //  if user already exists, the err.message is part of mongoose 
+        //  error reporting  
+    }
+})
 //  login route
 
 router.get('/login', (req, res) => {
@@ -58,7 +52,7 @@ router.get('/login', (req, res) => {
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/campgrounds',
     failureRedirect: '/login',
-    failureFlash: true,
+    failureFlash: 'Invalid username or password.'
 }), 
     (req, res, next) => {
         if(err){err.shouldRedirect = true; return next(err);};
@@ -68,7 +62,6 @@ router.post('/login', passport.authenticate('local', {
 
 router.get('/logout', (req, res, next) => {
     req.logout();
-    console.log('User logout success!');
     req.flash('success', 'Logged out successfully!')
     res.redirect('/campgrounds');
 });

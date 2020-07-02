@@ -4,7 +4,8 @@ const   { series, watch, parallel } = require('gulp'),
         styles      = require('./styles'),      
         jsTask      = require('./scripts'),
         copy        = require('./copy'),        
-        build       = require('./build');    
+        build       = require('./build'),
+        prod        = require('./prod');    
 
 //  globs and paths
 const   baseDir     = './app'
@@ -21,7 +22,7 @@ const   baseDir     = './app'
 function startNodemon(cb) {
     let called = false;
     return nodemon({
-        script: baseDir + '/app.js',
+        script: baseDir + '/bin/www',
         watch:  baseDir + '/**/*.js',
         ignore: baseDir + '/public'
     })
@@ -75,3 +76,4 @@ exports.html = build.minifyHtml;
 exports.jsBuild = build.appJsBuild; 
 */
 exports.build = build.build;
+exports.prod  = prod;   //prod = simple server, no file watching
