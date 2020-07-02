@@ -1,26 +1,13 @@
-require('dotenv').config({ debug: process.env.DEBUG });
+const { sendConfEmail, sendTokenEmail } = require('../helpers/mailgun/send');
 const   express     = require('express'),
         router      = express.Router(),
         User        = require('../models/user'),
         async       = require('async'),
-        crypto      = require('crypto'),
-        mailgun     = require('mailgun-js'),
-        getMailTemplate = require('../helpers/mailgun');
+        crypto      = require('crypto');
 
 //  =====================
 //  RESET PASSWORD ROUTES
 //  =====================
-
-//  mailgun basic setup
-
-const mailgunDomain = process.env.MAILGUN_DOMAIN;
-const mailgunApiKey = process.env.MAILGUN_APIKEY;
-const mailgunHost   = process.env.MAILGUN_HOST;
-const mg = mailgun({
-    apiKey: mailgunApiKey, 
-    domain: mailgunDomain, 
-    host: mailgunHost
-});
 
 //  forgot password route
 
@@ -44,7 +31,7 @@ router.post('/forgot', (req, res, next) => {
         (token, cb) => {
             User.findOne({email: req.body.email}, (err, currentUser) => {
                 if(err || !currentUser){
-                    console.log('Error: User not found or unexpected error.', err);
+                    //console.log('Error: User not found or unexpected error.', err);
                     req.flash('error', 'No matching user data found. Try again with different email.');
                     res.redirect('/forgot');
                 } else {
@@ -56,17 +43,8 @@ router.post('/forgot', (req, res, next) => {
                 };
             });
         },
-        //  mailgun configuration
         (token, currentUser, cb) => {
-            const mailData = getMailTemplate(currentUser, req.headers.host, token);
-            mg.messages().send(mailData, function (error, body) {
-                if(error){
-                    error.shouldRedirect = true;
-                    return next(error);
-                }
-                req.flash('success', `An email has been sent to ${currentUser.email} with further instructions.`);
-                cb(error, 'All Done');
-            })
+            sendTokenEmail(token, currentUser, cb, req, next);
         }
     ], (err) =>{
         if(err){
@@ -79,6 +57,8 @@ router.post('/forgot', (req, res, next) => {
 
 //  reset password edit route
 
+//  accessible for users who received email link and token
+//  only render form if token is correct and corresponding user is found
 router.get('/reset/:token', (req, res) => {
     User.findOne({
         //  look for the user with corresponding token
@@ -87,7 +67,7 @@ router.get('/reset/:token', (req, res) => {
         resetPasswordExpires: {$gt: Date.now()}
     }, (err, foundUser) => {
         if(err || !foundUser){
-            console.log('Unexpected error', err);
+            //console.log('Unexpected error', err);
             req.flash('error', 'Your password reset token is invalid or has expired.');
             return res.redirect('/forgot');
         } else {
@@ -98,7 +78,7 @@ router.get('/reset/:token', (req, res) => {
 
 //  reset password update route
 
-router.post('/reset/:token', (req, res) => {
+router.post('/reset/:token', (req, res, next) => {
     async.waterfall([
         (cb) => {
             User.findOne({ 
@@ -106,7 +86,7 @@ router.post('/reset/:token', (req, res) => {
                 resetPasswordExpires: {$gt: Date.now()} 
             }, (err, foundUser) => {
                 if(err || !foundUser){
-                    console.log('\nUnexpected error:\n', err);
+                    //console.log('\nUnexpected error:\n', err);
                     req.flash('error', 'Password reset token is invalid or has expired.');
                     return res.redirect('back');
                 } 
@@ -114,37 +94,23 @@ router.post('/reset/:token', (req, res) => {
                     foundUser.setPassword(req.body.password, (err) => {
                         foundUser.resetPasswordToken = undefined;
                         foundUser.resetPasswordExpires = undefined;
-                        foundUser.save((err) => {
+                        foundUser.save(err => {
                             req.logIn(foundUser, (err) => {
-                                cb(err, foundUser);
+                                sendConfEmail(foundUser, cb, req, next);
                             });
                         });
-                    console.log('\nPassword changed successfully!\n')
                     });
                 } else {
                     req.flash('error', 'Passwords do not match.');
                     return res.redirect('back');
                 };
             });
-        },
-        (foundUser, cb) => {
-            //  mailgun config
-            let mailData = {
-                to: foundUser.email,
-                from: 'CataCamp <catacamp@catacamp.com>',
-                subject: 'Your CataCamp Password has changed',
-                text: `Hello CataCamp user,\nThis is a confirmation that the password for your account ${foundUser.email} has been changed.\n`
-            }
-            mg.messages().send(mailData, function (error, body) {
-                if(error){
-                    console.log(error);
-                }
-                console.log('\nMailgun:\n', body);
-                req.flash('success', `Your password has been changed successfully!`);
-                cb(error, 'All Done');
-            })
         }
     ], (err) => {
+        if(err){ 
+            err.shouldRedirect = true;
+            next(err);
+        }
         res.redirect('/campgrounds');
     })
 });
