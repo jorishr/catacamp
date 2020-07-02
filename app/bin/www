@@ -14,7 +14,10 @@ const   app      = require('../app'),
 //db connection
 (async () => {
     try {
-        await mongoose.connect(process.env.DB_CONN_LOCAL, { useNewUrlParser: true });
+        await mongoose.connect(process.env.DB_CONN_LOCAL, { 
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
     } catch (err) {
         console.error('Failed to setup initial db connection', err);
     }
