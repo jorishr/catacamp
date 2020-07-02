@@ -53,5 +53,10 @@ module.exports = {
     optimizeImages: optimizeImages,
     minifyHtml: minifyHtml,
     appJsBuild: appJsBuild,
-    build: parallel(optimizeImages, styles.styleTask, appJsBuild, minifyHtml, copy.copyBuildTask)
+    build: parallel(
+        optimizeImages, 
+        styles.styleTask, 
+        appJsBuild, 
+        minifyHtml, 
+        copy.copyBuildTask)
 };

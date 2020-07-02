@@ -7,8 +7,8 @@ const   baseDir         = './app'
         buildDir        = './dist'
         webfontsGlob    = './node_modules/@fortawesome/fontawesome-free/webfonts/**',
         vendorDir       = baseDir + '/public/styles/vendor',
-        buildVendorDir  = buildDir + '/public/styles/vendor';
-        configFiles     = ['.env', 'README.md']; 
+        buildVendorDir  = buildDir + '/public/styles/vendor',
+        configFiles     = ['.env', 'README.md'];
 
 //  copy fontawesome webfonts for development
 function copyDevFiles(){
@@ -29,6 +29,12 @@ function copyBuildFiles(){
 // copy .env and readme
 function copyConfigFiles(){
     return src(configFiles)
+    .pipe(debug())
+    .pipe(dest(buildDir));
+};
+
+function copyBinFiles(){
+    return src(serverBin)
     .pipe(debug())
     .pipe(dest(buildDir));
 };

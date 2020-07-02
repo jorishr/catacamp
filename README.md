@@ -1,9 +1,9 @@
 # Catacamp
 
-# Description
+## Description
 Fullstack web app for listing campgrounds in Catalonia with MongoDb, Express, NodeJS and Bootstrap 4.
 
-# Features
+## Features
 - CSS: 
     - css grid layout, 
     - card design, 
@@ -36,12 +36,12 @@ Fullstack web app for listing campgrounds in Catalonia with MongoDb, Express, No
     - google maps API integration for campground locations
     - ip restriction middleware
 
-# Dev notes
+## Dev notes
 - local install of Bootstrap v4 and FontAwesome 
 - GULP for:
     - SASS compilation
     - Nodemon+BrowserSync
     - buildtask: webpack for js bundling, minification, image optimization 
 
-# Credits
+## Credits
 This website is a highly modified version of the Yelp-camp project in the Webdeveloper Bootcamp by Colt Steele.

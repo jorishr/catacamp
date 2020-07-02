@@ -14,7 +14,7 @@ const   app      = require('../app'),
 //db connection
 (async () => {
     try {
-        await mongoose.connect(process.env.DB_CONN_LOCAL, { 
+        await mongoose.connect(process.env.DB_CONN_CLOUD, { 
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
