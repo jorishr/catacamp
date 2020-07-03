@@ -1,5 +1,5 @@
 require('dotenv').config({ debug: process.env.DEBUG });
-const   Campground  = require('../../models/campground'),
+const   { campgroundService } = require('../../services/index'),
         express     = require('express'),
         router      = express.Router(),
         isCampgroundOwner  = require('../../middleware/isCampgroundOwner'),
@@ -11,9 +11,9 @@ const   Campground  = require('../../models/campground'),
 //  render edit form with correct data
 router.get('/:id/edit', isCampgroundOwner, async (req, res, next) => {
     try {
-        const currentCampground = await Campground.findById(req.params.id);
+        const current = await campgroundService.findById(req.params.id);
         return res.render('campgrounds/edit-campground', {
-            campground: currentCampground
+            campground: current
         });
     } catch (err){
         err.shouldRedirect = true; 
@@ -41,7 +41,10 @@ router.put('/:id', isCampgroundOwner, async (req, res, next) => {
         req.body.campground.lng = geoData[0].longitude;
         req.body.campground.location = geoData[0].formattedAddress;
         //update db and redirect
-        await Campground.findByIdAndUpdate(req.params.id, req.body.campground);
+        await campgroundService.findByIdAndUpdate(
+            req.params.id, 
+            req.body.campground
+        );
         req.flash('success', 'Campground updated succesfully!');
         return res.redirect(`/campgrounds/${req.params.id}`);
     } catch (err){

@@ -1,4 +1,4 @@
-const   Campground  = require('../../models/campground'),
+const   { campgroundService } = require('../../services/index'),
         express     = require('express'),
         router      = express.Router(),
         isCampgroundOwner  = require('../../middleware/isCampgroundOwner');
@@ -8,8 +8,8 @@ const   Campground  = require('../../models/campground'),
 //  associated comment deleting is handled as pre-hook Schema method in data model
 router.delete('/:id', isCampgroundOwner, async (req, res, next) => {
     try {
-        const currentCampground = await Campground.findById(req.params.id);
-        currentCampground.remove();
+        const current = await campgroundService.findById(req.params.id);
+        current.deleteOne();
         req.flash('success', 'Campground succesfully deleted!');
         return res.redirect('/campgrounds');
     } catch (err){

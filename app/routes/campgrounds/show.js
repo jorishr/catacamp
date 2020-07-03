@@ -1,4 +1,4 @@
-const   Campground  = require('../../models/campground'),
+const   { campgroundService }  = require('../../services/index'),
         express     = require('express'),
         router      = express.Router();
 //  SHOW ROUTE
@@ -9,10 +9,11 @@ const   Campground  = require('../../models/campground'),
 //  this page require an API key render Google Maps 
 router.get('/:id', async (req, res, next) => {
     try {
-        const currentCampground = 
-            await Campground.findById(req.params.id).populate('comments');
+        const current = 
+            await campgroundService.findById(req.params.id);
+        await current.populate('comments').execPopulate();
         return res.render('campgrounds/show-campground', {
-            campground: currentCampground, 
+            campground: current, 
             api: process.env.GEOCODER_API_KEY_RESTRICTED
         });
     } catch (err){

@@ -1,5 +1,5 @@
 require('dotenv').config({ debug: process.env.DEBUG });
-const   Campground  = require('../../models/campground'),
+const   { campgroundService } = require('../../services/index'),
         express     = require('express'),
         router      = express.Router(),
         isLoggedIn  = require('../../middleware/isLoggedIn'),
@@ -43,7 +43,7 @@ router.post('/', isLoggedIn, async (req, res, next) => {
             lng: lng
         }
         //add to db and redirect
-        await Campground.create(newCampground);
+        await campgroundService.create(newCampground);
         req.flash('success', 'New campground succesfully added!');
         return res.redirect('campgrounds');
     } catch (err){
