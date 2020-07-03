@@ -1,7 +1,6 @@
 const   express     = require('express'),
         router      = express.Router(),
-        User        = require('../models/user'),
-        Campground  = require('../models/campground'),
+        { campgroundService, userService } = require('../services/index'), 
         isProfileOwner = require('../middleware/isProfileOwner');
 
 //  ==============
@@ -12,10 +11,11 @@ const   express     = require('express'),
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const currentUser = await User.findById(req.params.id);
-        const campgrounds = await Campground.find()
-            .where('author.username')
-            .equals(currentUser.username);
+        const currentUser = await userService.findById(req.params.id);
+        const campgrounds = await campgroundService.findAllMatches(
+            'author.username',
+            currentUser.username
+        );
         return res.render('users/show', {
             userData: currentUser, 
             campgroundData: campgrounds});
@@ -29,8 +29,8 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/:id/edit', isProfileOwner, async (req, res, next) => {
     try {
-        const currentUser = await User.findById(req.params.id);
-        return res.render('users/edit', {userData: currentUser});
+        const current = await userService.findById(req.params.id);
+        return res.render('users/edit', {userData: current});
     } catch (err){
         err.shouldRedirect = true; 
         return next(err);
@@ -41,7 +41,7 @@ router.get('/:id/edit', isProfileOwner, async (req, res, next) => {
 
 router.put('/:id', isProfileOwner, async (req, res, next) => {
     try {
-        await User.findByIdAndUpdate(
+        await userService.findByIdAndUpdate(
             req.params.id, 
             req.body.profile
         )
@@ -57,17 +57,18 @@ router.put('/:id', isProfileOwner, async (req, res, next) => {
 
 router.delete('/:id', isProfileOwner, async (req, res, next) => {
     try {
-        const currentUser = await User.findById(req.params.id);
-        const campgrounds = await Campground.find()
-            .where('author.id')
-            .equals(currentUser.id);
+        const currentUser = await userService.findById(req.params.id);
+        const campgrounds = await campgroundService.findAllMatches(
+            'author.id',
+            currentUser.id
+        );
         //  remove user and user associated data from db
         //  comments associated to each campground are taken care of 
         //  with pre-hook in the model
         campgrounds.forEach((campground)=> {
-            campground.remove();
+            campground.deleteOne();
         });
-        currentUser.remove();
+        currentUser.deleteOne();
         req.flash('success', 'Sad to see you go! Your profile was deleted succesfully.');
         return res.redirect('/campgrounds');
     } catch (err){

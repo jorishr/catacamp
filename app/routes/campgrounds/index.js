@@ -10,7 +10,7 @@
 //  EDIT            /campgrounds/:id/edit   GET     show edit form
 //  UPDATE          /campgrounds/:id        PUT     update db, then redirect
 //  DESTROY         /campgrounds/:id        DELETE  delete in DB, then redirect
-const   Campground  = require('../../models/campground'),
+const   { campgroundService } = require('../../services/index'),
         express     = require('express'),
         router      = express.Router();
 
@@ -33,7 +33,7 @@ router.get('/', async (req, res, next) => {
         //about the lack of meaningful search results 
         let noMatch = null;
         if(!req.query.search){
-            const allCampgrounds = await Campground.find({})
+            const allCampgrounds = await campgroundService.getAll()
             return res.render('campgrounds/index', {
                 campgrounds: allCampgrounds, 
                 noMatch: noMatch

@@ -4,24 +4,21 @@ const   express     = require('express'),
         Without it the parameter ID for campgrounds will not be 
         found when urls are shortened. mergeParams makes sure the 
         camprgound ID is accessible here in the comment routes. */ 
-        Campground  = require('../models/campground'),
-        Comment     = require('../models/comments'),
-        isLoggedIn  = require('../middleware/isLoggedIn');
-        isCommentOwner = require('../middleware/isCommentOwner');
+        { campgroundService, commentService } = require('../services/index'),
+        { isLoggedIn, isCommentOwner } = require('../middleware/index');
 
 //  create new comment route
 
 //  render form for the correct Campground
 router.get('/new', isLoggedIn, async (req, res, next) => {
     try {
-        const currentCampground = await Campground.findById(req.params.id);
-        res.render('comments/new-comment', {campground: currentCampground});
+        const current = await campgroundService.findById(req.params.id);
+        res.render('comments/new-comment', {campground: current});
 
     } catch (err){
         err.shouldRedirect = true; 
         return next(err);
     }
-    
 });
 
 //  Store new comment
@@ -32,20 +29,21 @@ router.get('/new', isLoggedIn, async (req, res, next) => {
 //  - re-render the page
 router.post('/', isLoggedIn, async (req, res, next) => {
     try {
-        const currentCampground = 
-            await Campground.findById(req.params.id).populate('comments');
-        const newComment = await Comment.create(req.body.comment);
+        const current = 
+            await campgroundService.findById(req.params.id);
+        await current.populate('comments').execPopulate();
 
+        const newComment = await commentService.create(req.body.comment);
         newComment.author.id = req.user._id;  
         newComment.author.username = req.user.username;
         newComment.save();
 
-        currentCampground.comments.push(newComment);
-        currentCampground.save();   
+        current.comments.push(newComment);
+        current.save();   
 
         req.flash('success', 'New comment added!');
         return res.render('campgrounds/show-campground', { 
-            campground: currentCampground,
+            campground: current,
             api: process.env.GEOCODER_API_KEY_RESTRICTED,
             success: 'Comment succesfully added!'
          });
@@ -61,8 +59,8 @@ router.post('/', isLoggedIn, async (req, res, next) => {
 //render edit form with correct data
 router.get('/:comment_id/edit', isCommentOwner, async (req, res, next) => {
     try {
-        const currentCampground = await Campground.findById(req.params.id);
-        const currentComment = await Comment.findById(req.params.comment_id);
+        const currentCampground = await campgroundService.findById(req.params.id);
+        const currentComment = await commentService.findById(req.params.comment_id);
         return res.render('comments/edit-comment', {
             campground: currentCampground, 
             comment: currentComment
@@ -77,7 +75,7 @@ router.get('/:comment_id/edit', isCommentOwner, async (req, res, next) => {
 
 router.put('/:comment_id', isCommentOwner, async (req, res, next) => {
     try {
-        await Comment.findByIdAndUpdate(
+        await commentService.findByIdAndUpdate(
             req.params.comment_id, 
             req.body.comment
         ); 
@@ -93,7 +91,7 @@ router.put('/:comment_id', isCommentOwner, async (req, res, next) => {
 
 router.delete('/:comment_id', isCommentOwner, async (req, res, next) => {
     try {
-        await Comment.findByIdAndRemove(req.params.comment_id)
+        await commentService.findByIdAndRemove(req.params.comment_id)
         req.flash('success', 'Comment succesfully deleted!');
         return res.redirect(`/campgrounds/${req.params.id}`);
     } catch (err){

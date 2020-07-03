@@ -3,7 +3,7 @@ require('dotenv').config({ debug: process.env.DEBUG });
 const   express     = require('express'),
         router      = express.Router(),
         passport    = require('passport'),
-        User        = require('../models/user');
+        { userService } = require('../services/index');
 
 //  ==================
 //  LANDING PAGE ROUTE
@@ -25,13 +25,13 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res, next) => {
     try {
-        await User.register(new User({
+        await userService.register({
             username:       req.body.username,
             firstname:      req.body.firstName,
             lastname:       req.body.lastName,
             email:          req.body.email,
             dateOfBirth:    req.body.dateOfBirth,      
-        }), req.body.password)
+        }, req.body.password)
         req.flash('success', `Welcome to Yelp Camp, ${req.body.username}! You are now registered successfully!`)
         //  auto-login after registration and redirect
         passport.authenticate('local')(req, res, function(){
