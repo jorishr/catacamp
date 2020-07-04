@@ -253,7 +253,7 @@
 </script>
 <script id="mapsApiScript" async defer></script>
 <script>
-    let apiKey = '<%= api %>';
+    let apiKey = `<%= api %>`;
     let url=`https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
     document.getElementById('mapsApiScript').src = url;
 </script>
