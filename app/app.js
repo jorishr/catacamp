@@ -24,7 +24,6 @@ const   index             = require('./routes/index'),
         campgroundEdit    = require('./routes/campgrounds/edit'),
         campgroundDestroy = require('./routes/campgrounds/destroy');
 
-
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -42,11 +41,29 @@ app.locals.moment = require('moment');
 //  EXPRESS SESSION AND PASSPORTJS CONFIG
 //  =====================================
 
-app.use(expressSession({
-    secret: process.env.EXPRESS_SECRET,
-    saveUninitialized: false,
-    resave: false
-}))
+if(process.env.NODE_ENV === 'production'){
+    const redis       = require('redis');
+    const RedisStore  = require('connect-redis')(expressSession);
+    const redisClient = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
+    redisClient.on('error', (err) => {
+        console.log('Redis error: ', err);
+    });
+    app.use(expressSession({
+        store: new RedisStore({
+            client: redisClient
+        }),
+        secret: process.env.EXPRESS_SECRET,
+        saveUninitialized: false,
+        resave: false
+    }))
+} else {
+    app.use(expressSession({
+        secret: process.env.EXPRESS_SECRET,
+        saveUninitialized: false,
+        resave: false
+    }))
+}
+
 
 app.use(passport.initialize());
 app.use(passport.session());
