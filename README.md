@@ -32,6 +32,7 @@ Fullstack web app for listing campgrounds in Catalonia with MongoDb, Express, No
     - view engine: Embedded JS (.ejs)
     - search function
     - sessions with PassportJS Authentication
+    - session storage with Redis in production
     - forgot password reset with email confirmation (Mailgun)
     - custom error page with status code
     - flash messages for user feedback (Connect-flash)
@@ -44,6 +45,18 @@ Fullstack web app for listing campgrounds in Catalonia with MongoDb, Express, No
     - SASS compilation
     - Nodemon+BrowserSync
     - buildtask: webpack for js bundling, minification, image optimization 
+
+## Commands
+### Development mode
+In dev mode the app is configured to connect to a local version of the MongoDB database. Use `npm start` to run the development server and start the Gulp file watch tasks.
+
+### Build
+Use `npm build` to build the production code.
+
+### Production
+In production mode the app is configured to connect to the remotely hosted live MongoDB database. Also, the app is configured to work with Redis in production on the live server. 
+
+If you want to check out the production code in a browser on a local machine you can Use `npm prod`. This local server will only work if you have a local version of Redis installed. Alternatively, you can adjust the environment variables to connect to a remote Redis server.  
 
 ## Credits
 This website is a highly modified version of the Yelp-camp project in the Webdeveloper Bootcamp by Colt Steele.
