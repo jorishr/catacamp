@@ -1,1 +1,0 @@
-const logger=require("../helpers/logger");async function errorHandler(e,r,s,o){return await logger.error(`${e.statusCode||500} - ${e.message} - ${r.originalUrl} - ${r.method} - ${r.ip}`),s.locals.error=e,e.statusCode||(e.statusCode=500),e.shouldRedirect?s.render("error"):s.status(e.statusCode).send(e.message)}module.exports=errorHandler;

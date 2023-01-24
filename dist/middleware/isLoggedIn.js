@@ -1,1 +1,0 @@
-module.exports=function(e,o,r){if(e.isAuthenticated())return r();e.flash("error","You need to be logged in!"),o.redirect("/login")};
