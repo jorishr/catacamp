@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  catacamp:
+    restart: always
+    build: 
+      context: .
+    ports:
+      - 3000:3000
+      - 3001:3001
+      - 4000:4000
+    volumes:
+      - ./:/app
+      - /app/node_modules
+
+  mongo:
+    image: 'mongo:5'
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
+
+volumes:
+  mongodb:
+  mongodb_config:

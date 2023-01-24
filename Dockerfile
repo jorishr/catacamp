@@ -1,11 +1,8 @@
 FROM node:12.16.1
+ENV NODE_ENV=development
 WORKDIR /app
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
 COPY package*.json ./
 RUN npm install
-# Bundle app source
 COPY . .
-EXPOSE 3000 3001 4000
 CMD [ "npm", "run", "start" ]
+EXPOSE 3000 3001 4000
