@@ -7,5 +7,5 @@ COPY package*.json ./
 RUN npm install
 # Bundle app source
 COPY . .
-EXPOSE 3000
-CMD [ "node", "./app/bin/www.js" ]
+EXPOSE 3000 3001 4000
+CMD [ "npm", "run", "start" ]
