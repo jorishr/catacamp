@@ -1,9 +1,20 @@
 # Catacamp
+- [Catacamp](#catacamp)
+  - [Live site](#live-site)
+  - [Description](#description)
+  - [Features](#features)
+  - [Dev notes](#dev-notes)
+  - [Commands](#commands)
+    - [Development mode](#development-mode)
+    - [Build](#build)
+    - [Production](#production)
+  - [Credits](#credits)
+
 ## Live site
-[Catacamp](https://catacamp.jorisr.com)
+[Catacamp](https://catacamp.liondigits.com)
 
 ## Description
-Fullstack web app for listing campgrounds in Catalonia with MongoDb, Express, NodeJS and Bootstrap 4.
+Fullstack web app for listing campgrounds in Catalonia with MongoDb, ExpressJs, NodeJS and Bootstrap 4.
 
 ## Features
 - CSS: 
@@ -17,10 +28,10 @@ Fullstack web app for listing campgrounds in Catalonia with MongoDb, Express, No
 - JS: 
     - social share button with with copy url to clipboard and tooltip,
     - toggle password visibility in forms,
-    - all form submit buttons are disabled unless all requried form fields have a value
+    - all form submit buttons are disabled unless all required form fields have a value
 
 - App structure and functionality
-    - Models: users, campgrounds, comments with user data association 
+    - Data models: users, campgrounds, comments with user data association 
     - Create, show, update, cascade delete (incl. associated data)
     - if user does not add image, a placeholder image is used
     - View: 
@@ -28,7 +39,7 @@ Fullstack web app for listing campgrounds in Catalonia with MongoDb, Express, No
         - user profile page with access to user submitted campgrounds
         - search box
 
-- EXPRESS features
+- ExpressJs features
     - view engine: Embedded JS (.ejs)
     - search function
     - sessions with PassportJS Authentication
@@ -40,11 +51,12 @@ Fullstack web app for listing campgrounds in Catalonia with MongoDb, Express, No
     - ip restriction middleware
 
 ## Dev notes
+- NodeJS v12.16.1
 - local install of Bootstrap v4 and FontAwesome 
 - GULP for:
     - SASS compilation
     - Nodemon+BrowserSync
-    - buildtask: webpack for js bundling, minification, image optimization 
+    - build task: webpack for js bundling, minification, image optimization 
 
 ## Commands
 ### Development mode
@@ -59,4 +71,4 @@ In production mode the app is configured to connect to the remotely hosted live 
 If you want to check out the production code in a browser on a local machine you can Use `npm prod`. This local server will only work if you have a local version of Redis installed. Alternatively, you can adjust the environment variables to connect to a remote Redis server.  
 
 ## Credits
-This website is a highly modified version of the Yelp-camp project in the Webdeveloper Bootcamp by Colt Steele.
+This website is a highly modified version of the Yelp-camp project in the Web developer Bootcamp by Colt Steele.
