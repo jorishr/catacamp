@@ -1,11 +1,9 @@
-const { hasInitData } = require('../helpers/seeds/seed');
-
 require('dotenv').config({ debug: process.env.DEBUG });
 const   app      = require('../app'),
         mongoose = require('mongoose'),
         db       = mongoose.connection,
         port     = process.env.APP_SERVER_PORT,
-        { hasInitData } = require('../helpers/seeds');
+        { hasInitData } = require('../helpers/seeds/seed');
 
 (async () => {
     try {

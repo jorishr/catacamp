@@ -5,7 +5,7 @@
         "firstname": "John",
         "lastname": "Doe",
         "email": "john@doe.com",
-        "dateOfBirth": null,
+        "dateOfBirth": "2000-05-09T04:00:09.730Z",
         "isAdmin": true,
         "resetPasswordToken": "",
         "resetPasswordExpires": null  
@@ -16,7 +16,7 @@
         "firstname": "Happy",
         "lastname": "Camper",
         "email": "happy@my-email.com",
-        "dateOfBirth": null,
+        "dateOfBirth": "2003-02-27T20:52:27.955Z",
         "isAdmin": false,
         "resetPasswordToken": "",
         "resetPasswordExpires": null  
