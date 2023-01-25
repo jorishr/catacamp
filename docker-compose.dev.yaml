@@ -11,6 +11,9 @@ services:
     volumes:
       - ./:/app
       - /app/node_modules
+    environment:
+      - APP_SERVER_PORT=3000
+      - DB_CONN_LOCAL=mongodb://mongo:27017/catacamp
 
   mongo:
     image: 'mongo:5'

@@ -2,7 +2,7 @@ require('dotenv').config({ debug: process.env.DEBUG });
 const   app      = require('../app'),
         mongoose = require('mongoose'),
         db       = mongoose.connection,
-        port     = process.env.DB_PORT;
+        port     = process.env.APP_SERVER_PORT;
 
 (async () => {
     try {
@@ -14,7 +14,7 @@ const   app      = require('../app'),
 //db connection
 (async () => {
     try {
-        await mongoose.connect(process.env.DB_CONN_CLOUD, { 
+        await mongoose.connect(process.env.DB_CONN_LOCAL, { 
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
