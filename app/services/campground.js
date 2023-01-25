@@ -1,11 +1,11 @@
 class CampgroundService {
     constructor(Campground){
-        this.Campground = Campground;
-        this.create   = this.create.bind(this); 
-        this.getAll  = this.getAll.bind(this);
-        this.findAllMatches = this.findAllMatches.bind(this);
-        this.findById = this.findById.bind(this); 
-        this.findByIdAndUpdate = this.findByIdAndUpdate.bind(this);
+        this.Campground         = Campground;
+        this.create             = this.create.bind(this); 
+        this.getAll             = this.getAll.bind(this);
+        this.findAllMatches     = this.findAllMatches.bind(this);
+        this.findById           = this.findById.bind(this); 
+        this.findByIdAndUpdate  = this.findByIdAndUpdate.bind(this);
 
     }
     async create(newCampground){

@@ -1,0 +1,24 @@
+[
+    {
+        "username": "admin",
+        "password": "!Admin123",
+        "firstname": "John",
+        "lastname": "Doe",
+        "email": "john@doe.com",
+        "dateOfBirth": null,
+        "isAdmin": true,
+        "resetPasswordToken": "",
+        "resetPasswordExpires": null  
+    },
+    {
+        "username": "camper",
+        "password": "!Camper123",
+        "firstname": "Happy",
+        "lastname": "Camper",
+        "email": "happy@my-email.com",
+        "dateOfBirth": null,
+        "isAdmin": false,
+        "resetPasswordToken": "",
+        "resetPasswordExpires": null  
+    }
+]

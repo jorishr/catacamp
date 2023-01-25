@@ -3,7 +3,7 @@ const   express     = require('express'),
     /*  Important: merge the params from campground and comments.
         Without it the parameter ID for campgrounds will not be 
         found when urls are shortened. mergeParams makes sure the 
-        camprgound ID is accessible here in the comment routes. */ 
+        campground ID is accessible here in the comment routes. */ 
         { campgroundService, commentService } = require('../services/index'),
         { isLoggedIn, isCommentOwner } = require('../middleware/index');
 
@@ -45,7 +45,7 @@ router.post('/', isLoggedIn, async (req, res, next) => {
         return res.render('campgrounds/show-campground', { 
             campground: current,
             api: process.env.GEOCODER_API_KEY_RESTRICTED,
-            success: 'Comment succesfully added!'
+            success: 'Comment successfully added!'
          });
         //  or you could use the currentCampground._id
     } catch (err){
@@ -79,7 +79,7 @@ router.put('/:comment_id', isCommentOwner, async (req, res, next) => {
             req.params.comment_id, 
             req.body.comment
         ); 
-        req.flash('success', 'Comment succesfully updated!');
+        req.flash('success', 'Comment successfully updated!');
         return res.redirect(`/campgrounds/${req.params.id}`);
     } catch (err){
         err.shouldRedirect = true; 
@@ -92,7 +92,7 @@ router.put('/:comment_id', isCommentOwner, async (req, res, next) => {
 router.delete('/:comment_id', isCommentOwner, async (req, res, next) => {
     try {
         await commentService.findByIdAndRemove(req.params.comment_id)
-        req.flash('success', 'Comment succesfully deleted!');
+        req.flash('success', 'Comment successfully deleted!');
         return res.redirect(`/campgrounds/${req.params.id}`);
     } catch (err){
         err.shouldRedirect = true; 

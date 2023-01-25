@@ -32,7 +32,7 @@ router.post('/register', async (req, res, next) => {
             email:          req.body.email,
             dateOfBirth:    req.body.dateOfBirth,      
         }, req.body.password)
-        req.flash('success', `Welcome to Yelp Camp, ${req.body.username}! You are now registered successfully!`)
+        req.flash('success', `Welcome to CataCamp, ${req.body.username}! You are now registered successfully!`)
         //  auto-login after registration and redirect
         passport.authenticate('local')(req, res, function(){
             res.redirect('/campgrounds');
