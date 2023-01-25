@@ -1,6 +1,6 @@
 const   fs   = require('fs'),
         path = require("path"),
-        { userService, campgroundService } = require('../../services/index'),
+        { userService, campgroundService, commentService } = require('../../services/index'),
         seedUsers         = 'seedUsers.json',
         seedCampgrounds   = 'seedCampgrounds.json',
         seedComments      = 'seedComments.json';
@@ -32,25 +32,38 @@ async function addUsers(){
 }
 
 
+async function getUser(){
+    return await userService.findByUsername('admin');
+}
+
+
 async function addCampgrounds(){
     console.log('Adding campgrounds from seed data.')
-    const data = await loadSeedData(seedCampgrounds); 
-    data.forEach(seed => {
-        const newCampground = {
-            name: seed.name,
-            image: seed.image,
-            price: seed.price, 
-            description: seed.description, 
-            author: {
-                id: '63d174513bfb0a0027a0e2c5',
-                username: ''
-            }, 
-            location: seed.location, 
-            lat: seed.lat, 
-            lng: seed.lng 
-        }
-        campgroundService.create(newCampground);
-    });
+    const campData = await loadSeedData(seedCampgrounds); 
+    const comment  = await loadSeedData(seedComments); 
+    await getUser().then(usr => {
+        campData.forEach(seed => {
+            const newCampground = {
+                name: seed.name,
+                image: seed.image,
+                price: seed.price, 
+                description: seed.description, 
+                author: {
+                    id: usr._id,
+                    username: 'admin'
+                }, 
+                location: seed.location, 
+                lat: seed.lat, 
+                lng: seed.lng 
+            }
+            campgroundService.create(newCampground).then((savedCampground) => {
+                commentService.create(comment).then(savedComment => {
+                    savedCampground.comments.push(savedComment);
+                    savedCampground.save();
+                })
+            })
+        })
+    })
     console.log('Database now has initial data to work with.')
 }
 
@@ -62,10 +75,12 @@ async function hasInitData(){
         await addUsers();
     }
     if (hasCampgrounds.length === 0){
-        await addCampgrounds();
+        //  wait 5 seconds for users to be added into the database
+        setTimeout( () => {addCampgrounds()}, 5000);     
     }
 }
 
 module.exports = {
     hasInitData,
+    getUser
 };

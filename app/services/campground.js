@@ -9,8 +9,7 @@ class CampgroundService {
 
     }
     async create(newCampground){
-        await this.Campground.create(newCampground);
-        return newCampground;
+        return await this.Campground.create(newCampground);
     }
     async getAll(){
         return await this.Campground.find({});
