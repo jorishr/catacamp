@@ -16,7 +16,7 @@ const   baseDir     = './app'
 /*  
     Nodemon config:
     - watch core server file(s) that require server restart on change
-    - changes in js files in the public are handled seperately in jsTask 
+    - changes in js files in the public are handled separately in jsTask 
     - browser-sync delay to account for server loading time
   */
 function startNodemon(cb) {
@@ -48,6 +48,7 @@ function startBrowserSync (){
       //    proxy the expressjs app and use a different port 
       proxy: 'http://localhost:3000',
       port: 4000,
+      open: false,
       files: baseDir + '/public/*.css'   //  watch main css file changes and inject
     });
 };

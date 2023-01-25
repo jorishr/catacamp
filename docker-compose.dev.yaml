@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  catacamp:
+    restart: always
+    build: 
+      context: .
+    ports:
+      - 3000:3000
+      - 3001:3001
+      - 4000:4000
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    environment:
+      - APP_SERVER_PORT=3000
+      - DB_CONN_LOCAL=mongodb://mongo:27017/catacamp
+
+  mongo:
+    image: 'mongo:5'
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
+  
+  redis:
+    image: 'redis:6'
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis:/data/redis
+
+volumes:
+  mongodb:
+  mongodb_config:
+  redis:

@@ -12,7 +12,7 @@ const   baseDir     = './dist'
 /*  
     Nodemon config:
     - watch core server file(s) that require server restart on change
-    - changes in js files in the public are handled seperately in jsTask 
+    - changes in js files in the public are handled separately in jsTask 
     - browser-sync delay to account for server loading time
   */
 function startNodemon(cb) {
