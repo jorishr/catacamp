@@ -19,3 +19,15 @@ services:
     volumes:
       - mongodb:/data/db
       - mongodb_config:/data/configdb
+  
+  redis:
+    image: 'redis:6'
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis:/data/redis
+
+volumes:
+  mongodb:
+  mongodb_config:
+  redis:
