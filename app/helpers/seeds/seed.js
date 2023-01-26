@@ -57,6 +57,7 @@ async function addCampgrounds(){
                 lng: seed.lng 
             }
             campgroundService.create(newCampground).then((savedCampground) => {
+                comment.author = {id: savedCampground.author.id}
                 commentService.create(comment).then(savedComment => {
                     savedCampground.comments.push(savedComment);
                     savedCampground.save();
