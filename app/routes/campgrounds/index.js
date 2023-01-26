@@ -40,11 +40,11 @@ router.get('/', async (req, res, next) => {
             }) 
         } else {
             const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-            const searchResult = await Campground.find({$or:[
+            const searchResult = await campgroundService.search([
                 {'name': regex},
                 {'location': regex},
                 {'author.username': regex}
-            ]})
+            ])
             if(searchResult.length < 1){
                 noMatch = 'No matching locations, campground names or users found. Try again!'
                 return res.render('campgrounds/index', {

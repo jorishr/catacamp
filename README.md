@@ -43,7 +43,6 @@ Fullstack web app for listing campgrounds in Catalonia. Built with NodeJs, Expre
   - generic dark/light gradient, 
   - image zoom effect,
   - image blend animation on landing page (keyframes),
-  - search box with autocomplete functionality
   - social share button with with copy url to clipboard and tooltip,
   - toggle password visibility in forms,
   - all form submit buttons are disabled unless all required form fields have a value

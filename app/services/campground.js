@@ -3,6 +3,7 @@ class CampgroundService {
         this.Campground         = Campground;
         this.create             = this.create.bind(this); 
         this.getAll             = this.getAll.bind(this);
+        this.search             = this.search.bind(this);
         this.findAllMatches     = this.findAllMatches.bind(this);
         this.findById           = this.findById.bind(this); 
         this.findByIdAndUpdate  = this.findByIdAndUpdate.bind(this);
@@ -13,6 +14,9 @@ class CampgroundService {
     }
     async getAll(){
         return await this.Campground.find({});
+    }
+    async search(query){
+        return await this.Campground.find().or(query);
     }
     async findAllMatches(query, match){
         return await this.Campground.find().where(query).equals(match);

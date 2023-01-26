@@ -45,7 +45,7 @@ router.put('/:id', isCampgroundOwner, async (req, res, next) => {
             req.params.id, 
             req.body.campground
         );
-        req.flash('success', 'Campground updated succesfully!');
+        req.flash('success', 'Campground updated successfully!');
         return res.redirect(`/campgrounds/${req.params.id}`);
     } catch (err){
         err.shouldRedirect = true; 
