@@ -86,13 +86,14 @@ app.use((req, res, next) => {
 
 app.use(index);
 app.use('/campgrounds/:id/comments', comments);
-app.use('/campgrounds', campgroundIndex),
-app.use('/campgrounds', campgroundCreate),
-app.use('/campgrounds', campgroundShow),
-app.use('/campgrounds', campgroundEdit),
-app.use('/campgrounds', campgroundDestroy),
-app.use(resetPw),
+app.use('/campgrounds', campgroundIndex);
+app.use('/campgrounds', campgroundCreate);
+app.use('/campgrounds', campgroundShow);
+app.use('/campgrounds', campgroundEdit);
+app.use('/campgrounds', campgroundDestroy);
+app.use(resetPw);
 app.use('/user', userProfile);
+
 
 //  ==============
 //  ERROR HANDLING
