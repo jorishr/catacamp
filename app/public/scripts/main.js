@@ -5,9 +5,9 @@
 import addCopyUrl from './modules/copyurl';
 import passwordToggle from './modules/pwvisibility';
 import disableSubmit from './modules/form';
-import listen from './modules/search';
+//import listen from './modules/search';
 
 addCopyUrl();
 passwordToggle();
 disableSubmit();
-listen();
+//listen();

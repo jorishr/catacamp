@@ -53,6 +53,11 @@ See `Dockerfile` and `docker-compose.dev.yaml` for dev environment setup. Overvi
 
 The app runs with a new local database. When empty and in development mode, the app will seed the database with some sample data.
 
+Two users are created by default: 
+- Username: `admin` password: `!Admin123`
+- Username: `camper` password: `!Camper123`
+The admin user can delete all campgrounds and comments.
+
 *NOTE*: To have access to all functionality you need the API keys for the mail server (Mailgun), maps (Google Maps) and you have to set an Express Session secret for the login functionality to work. 
 
 GULP task runner for:

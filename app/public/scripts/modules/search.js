@@ -44,7 +44,6 @@ function getHtmlString(campground){
 
 export default function listen(){
     if(document.getElementsByClassName('search-box').length !== 0){
-        console.log('search box found')
         searchBox.addEventListener('input', () => {
             search(searchBox.value)
         })
