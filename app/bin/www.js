@@ -2,7 +2,8 @@ require('dotenv').config({ debug: process.env.DEBUG });
 const   app      = require('../app'),
         mongoose = require('mongoose'),
         db       = mongoose.connection,
-        port     = process.env.APP_SERVER_PORT;
+        port     = process.env.APP_SERVER_PORT,
+        { hasInitData } = require('../helpers/seeds/seed');
 
 (async () => {
     try {
@@ -18,6 +19,8 @@ const   app      = require('../app'),
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
+        //load seed data if db is empty
+        await hasInitData()
     } catch (err) {
         console.error('Failed to setup initial db connection', err);
     }

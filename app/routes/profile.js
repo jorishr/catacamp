@@ -69,7 +69,7 @@ router.delete('/:id', isProfileOwner, async (req, res, next) => {
             campground.deleteOne();
         });
         currentUser.deleteOne();
-        req.flash('success', 'Sad to see you go! Your profile was deleted succesfully.');
+        req.flash('success', 'Sad to see you go! Your profile was deleted successfully.');
         return res.redirect('/campgrounds');
     } catch (err){
         err.shouldRedirect = true; 

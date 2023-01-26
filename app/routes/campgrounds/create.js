@@ -44,7 +44,7 @@ router.post('/', isLoggedIn, async (req, res, next) => {
         }
         //add to db and redirect
         await campgroundService.create(newCampground);
-        req.flash('success', 'New campground succesfully added!');
+        req.flash('success', 'New campground successfully added!');
         return res.redirect('campgrounds');
     } catch (err){
         err.status = 500;
