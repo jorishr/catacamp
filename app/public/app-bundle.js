@@ -94,7 +94,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_copyurl__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/copyurl */ \"./app/public/scripts/modules/copyurl.js\");\n/* harmony import */ var _modules_pwvisibility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/pwvisibility */ \"./app/public/scripts/modules/pwvisibility.js\");\n/* harmony import */ var _modules_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/form */ \"./app/public/scripts/modules/form.js\");\n/* \n*  Main JS is loaded on all pages but some of the code should only run on specific pages. Those pages have a special class added to the body tag.\n*/\n\n\n //import listen from './modules/search';\n\nObject(_modules_copyurl__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\nObject(_modules_pwvisibility__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\nObject(_modules_form__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(); //listen();\n\n//# sourceURL=webpack:///./app/public/scripts/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_copyurl__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/copyurl */ \"./app/public/scripts/modules/copyurl.js\");\n/* harmony import */ var _modules_pwvisibility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/pwvisibility */ \"./app/public/scripts/modules/pwvisibility.js\");\n/* harmony import */ var _modules_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/form */ \"./app/public/scripts/modules/form.js\");\n/* harmony import */ var _modules_scrollpos__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/scrollpos */ \"./app/public/scripts/modules/scrollpos.js\");\n/* harmony import */ var _modules_scrollpos__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_modules_scrollpos__WEBPACK_IMPORTED_MODULE_3__);\n/*\n *  Main JS is loaded on all pages but some of the code should only run on specific pages. Those pages have a special class added to the body tag.\n */\n\n\n\n //import listen from './modules/search';\n\nObject(_modules_copyurl__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\nObject(_modules_pwvisibility__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\nObject(_modules_form__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(); //listen();\n\n//# sourceURL=webpack:///./app/public/scripts/main.js?");
 
 /***/ }),
 
@@ -131,6 +131,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return passwordToggle; });\n/*  toggle password visibility and change the icon \n    note: some forms have two pwfields (confirmation)   */\nvar icons = document.querySelectorAll('.password-box__icon');\nfunction passwordToggle() {\n  if (document.body.classList.contains('hasPw')) {\n    var _loop = function _loop(i) {\n      icons[i].addEventListener('click', function () {\n        if (icons[i].previousElementSibling.type === 'password') {\n          icons[i].previousElementSibling.type = 'text';\n          icons[i].classList.remove('fa-eye');\n          icons[i].classList.add('fa-eye-slash');\n        } else {\n          icons[i].previousElementSibling.type = 'password';\n          icons[i].classList.remove('fa-eye-slash');\n          icons[i].classList.add('fa-eye');\n        }\n\n        ;\n      });\n    };\n\n    for (var i = 0; i < icons.length; i++) {\n      _loop(i);\n    }\n\n    ;\n  }\n}\n;\n\n//# sourceURL=webpack:///./app/public/scripts/modules/pwvisibility.js?");
+
+/***/ }),
+
+/***/ "./app/public/scripts/modules/scrollpos.js":
+/*!*************************************************!*\
+  !*** ./app/public/scripts/modules/scrollpos.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("document.addEventListener(\"DOMContentLoaded\", function () {\n  if (document.body.classList.contains(\"hasResults\")) {\n    var scrollPos = localStorage.getItem(\"scrollPos_indexRoute\");\n    if (scrollPos) window.scrollTo(0, scrollPos);\n  }\n});\n\nwindow.onbeforeunload = function () {\n  localStorage.setItem(\"scrollPos_indexRoute\", window.scrollY);\n};\n\n//# sourceURL=webpack:///./app/public/scripts/modules/scrollpos.js?");
 
 /***/ })
 
