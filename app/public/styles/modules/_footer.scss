@@ -6,78 +6,78 @@
     All pages have a container with flex-grow:1;
 */
 .footer {
-/*     height: 200px; */
-    background-color: $mainBackground;
-    background-image: var(--gradient-dark);
-    position: relative;
-    border-top: $secondColor solid 3px;
-    margin-top: 1em;
+  /*     height: 200px; */
+  background-color: $mainBackground;
+  background-image: var(--gradient-dark);
+  position: relative;
+  border-top: $secondColor solid 3px;
+  margin-top: 1em;
 }
 
 .footer p {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .footer i {
-    color: $secondColor;
+  color: $secondColor;
 }
 
 .footer__row {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 7em;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 7em;
 
-    a {
-        display: block;
-    }
+  a {
+    display: block;
+  }
 
-    .footer__legal-links {
-        text-align: right;
-    }
+  .footer__legal-links {
+    text-align: right;
+  }
 
-    .footer__help-links {
-        text-align: left;
-    }
+  .footer__help-links {
+    text-align: left;
+  }
 }
 
 .footer__copyright {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    padding: 1em;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 1em;
 }
 
 //  tooltip
 .footer a {
-    position: relative;
+  position: relative;
 }
 
 .footer__tooltip:hover::after {
-    content: 'Click to see more development work by Joris H. Raymaekers @ jorisr.com';
-    width: 330px;
-    height: 75px;
-    background: $secondColor;
-    color: $mainBackground;
-    position: absolute;
-    top: -80px; 
-    left: -210px;
-    padding: 15px;
-    border-radius: 75px;
+  content: "Click to see more development work by Joris H. Raymaekers @ liondigits.com";
+  width: 330px;
+  height: 75px;
+  background: $secondColor;
+  color: $mainBackground;
+  position: absolute;
+  top: -80px;
+  left: -210px;
+  padding: 15px;
+  border-radius: 75px;
 }
 
 @media (max-width: 765px) {
-    .footer__row {
-        flex-direction: column;
-    }
+  .footer__row {
+    flex-direction: column;
+  }
 
-    .footer__social-links {
-        margin: 2em 0;
-    }
+  .footer__social-links {
+    margin: 2em 0;
+  }
 
-    .footer__row .footer__help-links,
-    .footer__row .footer__legal-links {
-        text-align: center;
-    }
+  .footer__row .footer__help-links,
+  .footer__row .footer__legal-links {
+    text-align: center;
+  }
 }

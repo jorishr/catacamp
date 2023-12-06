@@ -1,10 +1,9 @@
 {
   "name": "Catacamp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Full-stack web app for listing campgrounds in Catalonia. Built with NodeJs, ExpressJs, NodeJS, MongoDb and Bootstrap 4.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=development npx gulp watch ",
     "build": "cross-env NODE_ENV=production npx gulp build",
     "prod": "cross-env NODE_ENV=production npx gulp prod"

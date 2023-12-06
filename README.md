@@ -6,8 +6,10 @@
   - [App structure and main functionality](#app-structure-and-main-functionality)
   - [Developer notes](#developer-notes)
     - [Development Environment](#development-environment)
+      - [Docker, NodeJs and databases](#docker-nodejs-and-databases)
+        - [Task runner](#task-runner)
+        - [Getting started](#getting-started)
     - [Build and production environment](#build-and-production-environment)
-    - [Deployment](#deployment)
 
 ## Live site
 
@@ -54,6 +56,8 @@ Fullstack web app for listing campgrounds in Catalonia. Built with NodeJs, Expre
 
 ### Development Environment
 
+#### Docker, NodeJs and databases
+
 Clone the repo and run `npm install` to install all dependencies. See `Dockerfile` and `docker-compose.dev.yaml` for dev environment setup. Overview: NodeJS v12.16.1, MongoDB v5, Redis v6.
 
 The app runs with a new local database. When empty and in development mode, the app will seed the database with some sample data.
@@ -64,15 +68,17 @@ Two users are created by default:
 - Username: `camper` password: `!Camper123`
   The admin user can delete all campgrounds and comments.
 
-_NOTE_: To have access to all functionality you need API keys for the mail server (Mailgun), maps (Google Maps). The docker-compose file does already set some environment variables for Session secret, Redis and MongoDB connection details but to create and edit campgrounds you need API keys.
+_Note_: To have access to all functionality you need API keys for the mail server (Mailgun API), maps (Google Maps API). The docker-compose file does already set some environment variables for session secrets, Redis and MongoDB connection details, but to create and edit campground data you need API keys.
 
-GULP task runner for:
+##### Task runner
+
+Gulp Task runner is used for:
 
 - SASS compilation
 - Nodemon + BrowserSync
-- build task: includes Webpack for js bundling, minification, image optimization
+- build task: includes Webpack for js bundling, minification and image optimization
 
-**Get started**:
+##### Getting started
 
 - Clone the repo.
 - Run `docker compose -f docker-compose.dev.yaml up --build`
@@ -81,12 +87,8 @@ This wil run the app in development mode on port 3000. BrowserSync on port 4000.
 
 ### Build and production environment
 
-Use `npm build` to build the production code in the `dist/` folder.
+Use `npm run build` to build the production code in the `dist` folder. This executes the build tasks defined in the Gulp task runner.
 
-In production mode the app is configured to connect to a hosted MongoDB database and a hosted Redis server.
+With access to the correct `.env` file with API credentials you can run a production version of the app on a local machine with `npm run prod`.
 
-With access to the correct `.env` file you can run a production version of the app on a local machine with `npm prod`.
-
-### Deployment
-
-Bash script available to deploy the app to a remote server. See `deploy.sh` for details.
+In production mode the app is configured to connect to a cloud hosted MongoDB database and a cloud hosted Redis server.
