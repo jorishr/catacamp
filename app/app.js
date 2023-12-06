@@ -43,10 +43,21 @@ app.locals.moment = require("moment");
 
 const redis = require("redis");
 const RedisStore = require("connect-redis")(expressSession);
-const redisClient = redis.createClient(
-  process.env.REDIS_PORT,
-  process.env.REDIS_HOST
-);
+let redisClient;
+process.env.NODE_ENV === "production"
+  ? (redisClient = redis.createClient(
+      process.env.REDIS_LOCAL_PORT,
+      process.env.REDIS_LOCAL_HOST
+    ))
+  : (redisClient = redis.createClient({
+      username: "default",
+      password: `${process.env.REDIS_CLOUD_PW}`,
+      socket: {
+        host: process.env.REDIS_CLOUD_HOST,
+        port: process.env.REDIS_CLOUD_PW,
+      },
+    }));
+
 redisClient.on("error", (err) => {
   console.log("Redis error: ", err);
 });

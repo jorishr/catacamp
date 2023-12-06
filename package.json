@@ -1,5 +1,5 @@
 {
-  "name": "Catacamp",
+  "name": "catacamp",
   "version": "1.0.1",
   "description": "Full-stack web app for listing campgrounds in Catalonia. Built with NodeJs, ExpressJs, NodeJS, MongoDb and Bootstrap 4.",
   "main": "app.js",
@@ -42,6 +42,7 @@
     "gulp-if": "^3.0.0",
     "gulp-imagemin": "^6.2.0",
     "gulp-postcss": "^8.0.0",
+    "gulp-replace": "^1.1.4",
     "gulp-rev": "^9.0.0",
     "gulp-rev-replace": "^0.4.4",
     "gulp-sass": "^4.1.0",

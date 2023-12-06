@@ -10,6 +10,7 @@
         - [Task runner](#task-runner)
         - [Getting started](#getting-started)
     - [Build and production environment](#build-and-production-environment)
+    - [Deployment](#deployment)
 
 ## Live site
 
@@ -92,3 +93,9 @@ Use `npm run build` to build the production code in the `dist` folder. This exec
 With access to the correct `.env` file with API credentials you can run a production version of the app on a local machine with `npm run prod`.
 
 In production mode the app is configured to connect to a cloud hosted MongoDB database and a cloud hosted Redis server.
+
+### Deployment
+
+Make sure proper keys, links and credentials are present in the NodeJs .env configuration on the server.
+
+While the local development environment relies upon Docker compose with a local database and a local redis server, the setup on the server is _cloud based_ with a hosted database via [MongoDB Cloud Services](https://cloud.mongodb.com/) and a hosted session management database via [Redis Labs Cloud](https://redis.com).
