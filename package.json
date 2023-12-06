@@ -1,7 +1,7 @@
 {
   "name": "Catacamp",
   "version": "1.0.0",
-  "description": "",
+  "description": "Full-stack web app for listing campgrounds in Catalonia. Built with NodeJs, ExpressJs, NodeJS, MongoDb and Bootstrap 4.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jorishr/yelp-camp.git"
+    "url": "git+https://github.com/jorishr/catacamp.git"
   },
   "keywords": [],
-  "author": "Joris Raymaekers <joris@jorisr.com> (jorisr.com)",
+  "author": "Joris Raymaekers <joris@liondigits.com> (liondigits.com)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jorishr/yelp-camp/issues"
+    "url": "https://github.com/jorishr/catacamp/issues"
   },
-  "homepage": "https://github.com/jorishr/yelp-camp#readme",
+  "homepage": "https://github.com/jorishr/catacamp#readme",
   "devDependencies": {
     "@babel/core": "^7.10.4",
     "@babel/plugin-transform-runtime": "^7.19.6",
