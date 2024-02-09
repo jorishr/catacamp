@@ -24,6 +24,7 @@ services:
     volumes:
       - mongodb:/data/db
       - mongodb_config:/data/configdb
+    command: mongod --quiet --logpath /dev/null
 
   redis:
     image: "redis:6"

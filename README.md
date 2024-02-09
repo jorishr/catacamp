@@ -59,7 +59,7 @@ Fullstack web app for listing campgrounds in Catalonia. Built with NodeJs, Expre
 
 #### Docker, NodeJs and databases
 
-Clone the repo and run `npm install` to install all dependencies. See `Dockerfile` and `docker-compose.dev.yaml` for dev environment setup. Overview: NodeJS v12.16.1, MongoDB v5, Redis v6.
+See `Dockerfile` and `docker-compose.dev.yaml` for the details of the development environment setup. Overview: NodeJS v12.16.1, MongoDB v5, Redis v6.
 
 The app runs with a new local database. When empty and in development mode, the app will seed the database with some sample data.
 
@@ -69,22 +69,24 @@ Two users are created by default:
 - Username: `camper` password: `!Camper123`
   The admin user can delete all campgrounds and comments.
 
-_Note_: To have access to all functionality you need API keys for the mail server (Mailgun API), maps (Google Maps API). The docker-compose file does already set some environment variables for session secrets, Redis and MongoDB connection details, but to create and edit campground data you need API keys.
+_Note_: To have access to all functionality you need API keys for the mail server (Mailgun API), maps (Google Maps API).
+
+The docker-compose file does already set some environment variables, and Redis and MongoDB connection details, but to effectively use the functionality of the app you need API keys for Mailgun and Google Maps.
 
 ##### Task runner
 
 Gulp Task runner is used for:
 
-- SASS compilation
-- Nodemon + BrowserSync
-- build task: includes Webpack for js bundling, minification and image optimization
+- SASS compilation;
+- Nodemon + BrowserSync;
+- Build task: includes Webpack for JavaScript bundling, minification and image optimization.
 
 ##### Getting started
 
 - Clone the repo.
 - Run `docker compose -f docker-compose.dev.yaml up --build`
 
-This wil run the app in development mode on port 3000. BrowserSync on port 4000. See NPM scripts and Gulpfile for more details.
+This wil run the app in development mode. You now should have a Redis container and a MongoDB container and a container for the Express app. The app will automatically run, listening on port 3000. BrowserSync runs on port 4000.
 
 ### Build and production environment
 
