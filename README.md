@@ -1,8 +1,16 @@
 # Catacamp
 
+## Description
+
+Fullstack web app for listing campgrounds in Catalonia. Built with NodeJs, ExpressJs, MongoDb and Bootstrap 4.
+
+## Live site
+
+[Catacamp](https://catacamp.liondigits.com)
+
 - [Catacamp](#catacamp)
-  - [Live site](#live-site)
   - [Description](#description)
+  - [Live site](#live-site)
   - [App structure and main functionality](#app-structure-and-main-functionality)
   - [Developer notes](#developer-notes)
     - [Development Environment](#development-environment)
@@ -12,36 +20,29 @@
     - [Build and production environment](#build-and-production-environment)
     - [Deployment](#deployment)
 
-## Live site
-
-[Catacamp](https://catacamp.liondigits.com)
-
-## Description
-
-Fullstack web app for listing campgrounds in Catalonia. Built with NodeJs, ExpressJs, NodeJS, MongoDb and Bootstrap 4.
-
 ## App structure and main functionality
 
 - Data models: users, campgrounds and comments with user data association
 - Create, show, update, cascade delete (incl. associated data)
-- View:
-  - landing page with search box
-  - campground profile page with comment section
-  - user profile page with access to user submitted campgrounds
-  - if user does not add image, a placeholder image is used
-  - view engine: Embedded JS
-  - custom error page with status code and end-user friendly message
-  - flash messages for user feedback (Connect-flash)
-- Authentication
-  - sessions with PassportJS
-  - session storage with Redis
-  - password reset with email confirmation (mail server via Mailgun API)
-  - various middleware functions to restrict access to certain routes
-- Other features
-  - Google maps API integration for campground locations
-  - IP restriction middleware (disabled by default)
-  - Error handling middleware
-  - Logging (Winston)
+- View and pages:
+  - view engine: Embedded JS,
+  - landing page with search box,
+  - campground index page with pagination,
+  - campground profile page with comment section,
+  - user profile page with access to user submitted campgrounds,
+  - if user does not add image, a placeholder image is used,
+  - custom error page with status code and end-user friendly message,
+  - flash messages for user feedback (connect-flash).
+- Authentication:
+  - sessions with PassportJS,
+  - session storage with Redis,
+  - password reset with email confirmation (mail server via Mailgun API),
+  - various middleware functions to restrict access to certain routes.
+- Other notable features:s
+  - Google Maps API integration for campground locations,
+  - ip restriction middleware (disabled by default),
+  - error handling middleware,
+  - logging (Winston).
 - UI features (CSS/JS):
   - css grid layout,
   - card design,
@@ -51,7 +52,7 @@ Fullstack web app for listing campgrounds in Catalonia. Built with NodeJs, Expre
   - image blend animation on landing page (keyframes),
   - social share button with with copy url to clipboard and tooltip,
   - toggle password visibility in forms,
-  - all form submit buttons are disabled unless all required form fields have a value
+  - all form submit buttons are disabled unless all required form fields have a value.
 
 ## Developer notes
 
@@ -101,3 +102,5 @@ In production mode the app is configured to connect to a cloud hosted MongoDB da
 Make sure proper keys, links and credentials are present in the NodeJs .env configuration on the server.
 
 While the local development environment relies upon Docker compose with a local database and a local redis server, the setup on the server is _cloud based_ with a hosted database via [MongoDB Cloud Services](https://cloud.mongodb.com/) and a hosted session management database via [Redis Labs Cloud](https://redis.com).
+
+The repo contains an example deploy bash to run on a server and which will stop the existing application, create a backup, fetch the latest release, build the final project files and restart the application.
